@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+
+[SelectionBase]
 [Serializable]
 public abstract class ObjectToSlice : MonoBehaviour
 {
@@ -18,16 +20,16 @@ public abstract class ObjectToSlice : MonoBehaviour
     float deathStartTime;
     float deathTime = .8f;
 
-    protected Rigidbody rb;
+    protected Rigidbody2D rb;
 
-    bool amActive = false;
+    [HideInInspector] public bool amActive = false;
     bool amDying = false;
     bool startedDying = false;
     #endregion
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody2D>();
         part1 = part1 ? part1 : transform.GetChild(0).transform;
         part2 = part2 ? part2 : transform.GetChild(1).transform;
         mainPartStartPos = transform.position;
@@ -63,7 +65,7 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (deathLerp <= 0 && !startedDying)
             {
-                rb.useGravity = false;
+                rb.simulated = false;
                 part1StartPos = part1.position;
                 part2StartPos = part2.position;
                 part1EndPos = part1.position + new Vector3(3, 0, 0);

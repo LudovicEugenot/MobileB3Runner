@@ -9,6 +9,8 @@ public class BasicEnemyFlying : ObjectToSlice
 
     public override void AliveBehaviour()
     {
+        rb.simulated = true;
+        //rb.isKinematic = true;
         transform.position += (Manager.Instance.player.position - transform.position).normalized * speed * Time.deltaTime; //            Vector3.Lerp(transform.position, Manager.Instance.player.position, speedLerp);
     }
 }
