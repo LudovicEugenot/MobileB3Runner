@@ -29,7 +29,7 @@ public class FingerController : MonoBehaviour
             cutCollider.enabled = false;
         }*/
 
-        //MouseControl();
+        MouseControl();
         TouchControl();
     }
 

@@ -8,7 +8,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     [SerializeField] Transform part1;
     [SerializeField] Transform part2;
     [SerializeField] AnimationCurve deathCurve;
-    [SerializeField] [Range(0f, 10f)] protected float distanceToActivation = 4f;
+    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
     protected Vector2 mainPartStartPos;
     Vector2 part1StartPos;
     Vector2 part2StartPos;
@@ -64,6 +64,8 @@ public abstract class ObjectToSlice : MonoBehaviour
             if (deathLerp <= 0 && !startedDying)
             {
                 rb.useGravity = false;
+                part1.GetComponent<Collider>().isTrigger = true;
+                part2.GetComponent<Collider>().isTrigger = true;
                 part1StartPos = part1.position;
                 part2StartPos = part2.position;
                 part1EndPos = part1.position + new Vector3(3, 0, 0);
