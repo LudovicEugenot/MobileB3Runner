@@ -37,23 +37,30 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     private void Update()
     {
-        if (!amActive)
+        if (Manager.Instance.gameOngoing)
         {
-            if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - distanceToActivation)) < 1f)
+            if (!amActive)
             {
-                GetActive();
+                if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - distanceToActivation)) < 1f)
+                {
+                    GetActive();
+                }
+            }
+            else
+            {
+                if (!amDying)
+                {
+                    AliveBehaviour();
+                }
+                else
+                {
+                    DyingAnimation();
+                }
             }
         }
         else
         {
-            if (!amDying)
-            {
-                AliveBehaviour();
-            }
-            else
-            {
-                DyingAnimation();
-            }
+            rb.simulated = false;
         }
     }
 

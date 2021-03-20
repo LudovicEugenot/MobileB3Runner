@@ -32,13 +32,16 @@ public class ObjectToSolve : MonoBehaviour
 
     private void Update()
     {
-        if (amSolved)
+        if (Manager.Instance.gameOngoing)
         {
-            IAmSolved();
-        }
-        else if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - placeToCheckIfSolved)) < 1f)
-        {
-            Manager.Instance.PlayerFail();
+            if (amSolved)
+            {
+                IAmSolved();
+            }
+            else if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - placeToCheckIfSolved)) < 1f)
+            {
+                Manager.Instance.PlayerFail();
+            }
         }
     }
 

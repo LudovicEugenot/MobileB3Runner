@@ -7,10 +7,11 @@ public class ProtectTheCube : MonoBehaviour
     public Rigidbody2D rb2D;
     public Collider2D myCollider;
 
+    bool amDying = false;
     bool amDead = false;
-    bool ragdollStarted = false;
 
     public float moveSpeed = 2f;
+    [SerializeField][Range(0f,2f)] float ohOhDeathTime = 1f;
     #endregion
 
     void Start()
@@ -27,7 +28,7 @@ public class ProtectTheCube : MonoBehaviour
 
     void Update()
     {
-        if (!amDead)
+        if (!amDying)
         {
             transform.position = new Vector3(transform.position.x + moveSpeed * Time.deltaTime, transform.position.y);
         }
@@ -39,16 +40,9 @@ public class ProtectTheCube : MonoBehaviour
 
     private void DeathAnimation()
     {
-        if (transform.position.y > -1 || Physics.Raycast(transform.position, Vector2.right, 0.6f))
+        if(amDead)//if (transform.position.y > -1 || Physics.Raycast(transform.position, Vector2.right, 0.6f))
         {
-            if (!ragdollStarted)
-            {
-                ragdollStarted = true;
-                myCollider.isTrigger = true;
-                //myCollider.enabled = false;
-                rb2D.AddForce(new Vector2(500, 1500)); //WIP
-            }
-            transform.Rotate(Vector3.forward, -90f * Time.deltaTime);
+            transform.Rotate(Vector3.forward, -145f * Time.deltaTime);
         }
     }
 
@@ -56,14 +50,27 @@ public class ProtectTheCube : MonoBehaviour
     {
         if (collision.transform.CompareTag("ToKill"))
         {
-            amDead = true;
-            collision.transform.GetComponent<ObjectToSlice>().amActive = false;
+            StartCoroutine(Die());
         }
     }
 
     public void FallInAPit()
     {
         rb2D.gravityScale = 1f;
+    }
+
+    public IEnumerator Die()
+    {
+        amDying = true;
+        Manager.Instance.gameOngoing = false;
+        gameObject.layer = LayerMask.NameToLayer("PlayerDead");
+        transform.GetChild(0).SetParent(transform.parent);
+        yield return new WaitForSeconds(ohOhDeathTime);
+        //Ragdoll start
+        transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);
+        rb2D.gravityScale = 2;
+        rb2D.AddForce(new Vector2(2500, 15000));
+
         amDead = true;
     }
 }
