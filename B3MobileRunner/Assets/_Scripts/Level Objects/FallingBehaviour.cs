@@ -30,7 +30,7 @@ public class FallingBehaviour : ObjectToSlice
         }
         else
         {
-            rb.useGravity = true;
+            rb.simulated = true;
         }
     }
     #endregion

@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[SelectionBase]
 public class ObjectToSolve : MonoBehaviour
 {
     #region Initialization
+    [SerializeField] Collider2D myCollider;
     [SerializeField] Transform myTransform;
     [SerializeField] GameObject endPlace;
     [SerializeField] AnimationCurve completedCurve;
@@ -21,19 +23,25 @@ public class ObjectToSolve : MonoBehaviour
 
     private void Start()
     {
+        myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
         myTransform = myTransform ? myTransform : transform.GetChild(0).transform;
         if (!endPlace) Debug.LogError("need l'objet", this);
+
+        myCollider.isTrigger = true;
     }
 
     private void Update()
     {
-        if (amSolved)
+        if (Manager.Instance.gameOngoing)
         {
-            IAmSolved();
-        }
-        else if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - placeToCheckIfSolved)) < 1f)
-        {
-            Manager.Instance.PlayerFail();
+            if (amSolved)
+            {
+                IAmSolved();
+            }
+            else if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - placeToCheckIfSolved)) < 1f)
+            {
+                Manager.Instance.PlayerFail();
+            }
         }
     }
 
@@ -54,6 +62,10 @@ public class ObjectToSolve : MonoBehaviour
 
                 myTransform.position = Vector3.Lerp(partStartPos, partEndPos, completedLerp);
             }
+        }
+        else
+        {
+            myCollider.isTrigger = false;
         }
     }
 

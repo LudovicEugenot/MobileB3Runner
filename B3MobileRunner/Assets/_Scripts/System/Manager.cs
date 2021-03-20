@@ -6,6 +6,7 @@ public class Manager : MonoBehaviour
 {
     #region Initiatlization
     public static Manager Instance;
+    public bool gameOngoing = false;
     public Transform player;
     #endregion
 
@@ -24,6 +25,8 @@ public class Manager : MonoBehaviour
     void Start()
     {
         if (!player) Debug.LogWarning("Il faut mettre le runner ici", this);
+
+        gameOngoing = true;
     }
 
     #region events
