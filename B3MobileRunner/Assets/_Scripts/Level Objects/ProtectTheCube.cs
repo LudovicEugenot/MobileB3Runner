@@ -27,7 +27,7 @@ public class ProtectTheCube : MonoBehaviour
     {
         if (!amDead)
         {
-            transform.position = new Vector3(transform.position.x + 2 * Time.deltaTime, transform.position.y);
+            transform.position = new Vector3(transform.position.x + 4 * Time.deltaTime, transform.position.y);
         }
         else
         {
