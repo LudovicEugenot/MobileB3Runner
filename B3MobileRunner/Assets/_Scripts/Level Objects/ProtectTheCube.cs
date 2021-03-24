@@ -64,7 +64,6 @@ public class ProtectTheCube : MonoBehaviour
         amDying = true;
         Manager.Instance.gameOngoing = false;
         gameObject.layer = LayerMask.NameToLayer("PlayerDead");
-        transform.GetChild(0).SetParent(transform.parent);
         yield return new WaitForSeconds(ohOhDeathTime);
         //Ragdoll start
         transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);

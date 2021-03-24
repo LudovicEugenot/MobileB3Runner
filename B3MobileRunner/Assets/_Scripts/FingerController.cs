@@ -3,8 +3,11 @@ using UnityEngine;
 
 public class FingerController : MonoBehaviour
 {
-    #region Initiatlization
+    #region Initialization
     Touch touch;
+    Vector3 touchScreenPosition;
+    Vector3 touchWorldPosition;
+    [SerializeField][Range(0f,10f)]float trailDistanceToZero = 3f;
     Vector2 touchLastPosition;
     [SerializeField] float minCuttingSpeed = 0.1f;
     Collider cutCollider;
@@ -61,6 +64,8 @@ public class FingerController : MonoBehaviour
                 if (touch.deltaPosition.magnitude * Time.deltaTime > minCuttingSpeed)
                 {
                     trail.enabled = true;
+                    //WIP plutôt que de travailler avec un collider, je peux tirer des raycasts et si l'espace est trop grand j'en tire plusieurs
+                    
                     Ray raycast = Camera.main.ScreenPointToRay(touch.position);
 
                     //swipe
@@ -75,13 +80,20 @@ public class FingerController : MonoBehaviour
 
                     isCutting = true;
                     //transform.position = touch.position;
-                    Vector3 brackeysTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                    brackeysTouchPosition.z = 0f;
-                    transform.position = brackeysTouchPosition;
+
+                    //Je prends la position de l'écran
+                    touchScreenPosition = Input.GetTouch(0).position;
+                    //Je ramène la position de l'écran en coordonnée 0 en Z (par rapport à la cam)
+                    touchScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z) - trailDistanceToZero;
+                    touchWorldPosition = Camera.main.ScreenToWorldPoint(touchScreenPosition);
+                    touchWorldPosition.z = -trailDistanceToZero;
+                    transform.position = touchWorldPosition;
+
                 }
                 else
                 {
                     isCutting = false;
+                    trail.Clear();
                     trail.enabled = false;
                 }
 
