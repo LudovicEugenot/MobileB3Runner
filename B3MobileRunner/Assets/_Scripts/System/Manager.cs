@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-    #region Initiatlization
-    public static Manager Instance;
+    #region Initialization
+    [Header("References")]
+    public UIManager UI;
+    public ProtectTheCube playerScript;
+    public Cinemachine.CinemachineVirtualCamera virtualCamera;
+
+    [Header("Game Info")]
     public bool gameOngoing = false;
-    public Transform player;
+
+    //other hidden useful stuff
+    public static Manager Instance;
+    [HideInInspector] public Transform playerTrsf;
     #endregion
 
     void Awake()
     {
+        #region Singleton
         if (!Instance)
         {
             Instance = this;
@@ -20,11 +29,13 @@ public class Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        #endregion
     }
 
     void Start()
     {
-        if (!player) Debug.LogWarning("Il faut mettre le runner ici", this);
+        if (!playerScript) Debug.LogWarning("Il faut mettre le runner ici", this);
+        playerTrsf = playerScript.transform;
 
         gameOngoing = true;
     }

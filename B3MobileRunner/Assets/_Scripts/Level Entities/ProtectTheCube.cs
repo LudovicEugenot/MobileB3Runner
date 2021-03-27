@@ -10,7 +10,7 @@ public class ProtectTheCube : MonoBehaviour
     bool amDying = false;
     bool amDead = false;
 
-    public float moveSpeed = 2f;
+    [Range(2f, 6f)] public float moveSpeed = 2f;
     [SerializeField][Range(0f,2f)] float ohOhDeathTime = 1f;
     #endregion
 
@@ -63,6 +63,8 @@ public class ProtectTheCube : MonoBehaviour
     {
         amDying = true;
         Manager.Instance.gameOngoing = false;
+        Manager.Instance.virtualCamera.Follow = null;
+        Manager.Instance.virtualCamera.LookAt = null;
         gameObject.layer = LayerMask.NameToLayer("PlayerDead");
         yield return new WaitForSeconds(ohOhDeathTime);
         //Ragdoll start

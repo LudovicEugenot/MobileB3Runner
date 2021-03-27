@@ -89,8 +89,8 @@ public class FingerController : MonoBehaviour
 
         if (tapResult != null)
         {
-            ObjectToSolve enemyScript = tapResult.GetComponentInParent<ObjectToSolve>();
-            enemyScript.GetSolvedNerd();
+            BoxFillPath enemyScript = tapResult.GetComponentInParent<BoxFillPath>();
+            enemyScript.GetTapped();
         }
     }
 
@@ -118,7 +118,7 @@ public class FingerController : MonoBehaviour
 
     private void IfBigSliceRaycast(Vector2 nextWorldPos)
     {
-        if (Vector2.Distance(transform.position, nextWorldPos) > 1f)
+        if (Vector2.Distance(transform.position, nextWorldPos) > .6f)
         {
             rayHit = Physics2D.Raycast(transform.position, nextWorldPos, Vector2.Distance(transform.position, nextWorldPos), LayerMask.GetMask("ToKill"));
 

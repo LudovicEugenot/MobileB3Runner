@@ -25,10 +25,13 @@ public abstract class ObjectToSlice : MonoBehaviour
     [HideInInspector] public bool amActive = false;
     bool amDying = false;
     bool startedDying = false;
+    protected abstract bool distanceToActivationVisualIsRelevant();
     #endregion
 
     private void Start()
     {
+        Init();
+
         rb = GetComponent<Rigidbody2D>();
         part1 = part1 ? part1 : transform.GetChild(0).transform;
         part2 = part2 ? part2 : transform.GetChild(1).transform;
@@ -39,23 +42,20 @@ public abstract class ObjectToSlice : MonoBehaviour
     {
         if (Manager.Instance.gameOngoing)
         {
-            if (!amActive)
+            if (amDying)
             {
-                if (Mathf.Abs(Manager.Instance.player.position.x - (transform.position.x - distanceToActivation)) < 1f)
+                DyingAnimation();
+            }
+            else if (!amActive)
+            {
+                if (Mathf.Abs(Manager.Instance.playerTrsf.position.x - (transform.position.x - distanceToActivation)) < 1f)
                 {
                     GetActive();
                 }
             }
             else
             {
-                if (!amDying)
-                {
-                    AliveBehaviour();
-                }
-                else
-                {
-                    DyingAnimation();
-                }
+                AliveBehaviour();
             }
         }
         else
@@ -64,6 +64,7 @@ public abstract class ObjectToSlice : MonoBehaviour
         }
     }
 
+    public abstract void Init();
     public abstract void AliveBehaviour();
 
     private void DyingAnimation()
@@ -102,9 +103,17 @@ public abstract class ObjectToSlice : MonoBehaviour
         amDying = true;
     }
 
+    protected virtual void OnDeath()
+    {
+
+    }
+
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = new Color(1, .92f, .16f, .5f);
-        Gizmos.DrawCube(transform.position - new Vector3(distanceToActivation, 0, 0), new Vector3(.1f, 100f, 5f));
+        if (distanceToActivationVisualIsRelevant())
+        {
+            Gizmos.color = new Color(1, .92f, .16f, .5f);
+            Gizmos.DrawCube(transform.position - new Vector3(distanceToActivation, 0, 0), new Vector3(.1f, 100f, 5f));
+        }
     }
 }
