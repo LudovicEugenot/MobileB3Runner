@@ -112,6 +112,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 10
+  amActive: 0
   speed: 3.81
 --- !u!50 &6190029097586140301
 Rigidbody2D:
@@ -228,8 +229,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 6190029097808416625}
+  placeToCheckIfSolved: -5
+  objectLinked: {fileID: 6190029098266117412}
   myTransform: {fileID: 6190029097808416624}
-  endPlace: {fileID: 6190029098266117412}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -263,7 +266,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -5
 --- !u!61 &6190029097808416625
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -300,7 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6190029097809580072}
   m_Layer: 0
-  m_Name: TW_LD10
+  m_Name: TW_LD10_WIP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -416,8 +418,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 6190029097906235193}
+  placeToCheckIfSolved: -1.1
+  objectLinked: {fileID: 6190029099012210190}
   myTransform: {fileID: 6190029097906235192}
-  endPlace: {fileID: 6190029099012210190}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -451,7 +455,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -1.1
 --- !u!61 &6190029097906235193
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1836,8 +1839,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 6190029098615260929}
+  placeToCheckIfSolved: -0.5
+  objectLinked: {fileID: 6190029097557436131}
   myTransform: {fileID: 6190029098615260928}
-  endPlace: {fileID: 6190029097557436131}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -1871,7 +1876,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -0.5
 --- !u!61 &6190029098615260929
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2234,6 +2238,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 10
+  amActive: 0
   speed: 3.81
 --- !u!50 &6190029099177885364
 Rigidbody2D:
@@ -2486,8 +2491,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 6190029099244652411}
+  placeToCheckIfSolved: -2.3
+  objectLinked: {fileID: 6190029098607248491}
   myTransform: {fileID: 6190029099244652410}
-  endPlace: {fileID: 6190029098607248491}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -2521,7 +2528,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -2.3
 --- !u!61 &6190029099244652411
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2642,8 +2648,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 6190029099343631007}
+  placeToCheckIfSolved: -3.6
+  objectLinked: {fileID: 6190029099191986530}
   myTransform: {fileID: 6190029099343631006}
-  endPlace: {fileID: 6190029099191986530}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -2677,7 +2685,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -3.6
 --- !u!61 &6190029099343631007
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2798,8 +2805,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 6190029099399214140}
+  placeToCheckIfSolved: -1.7
+  objectLinked: {fileID: 6190029098539852807}
   myTransform: {fileID: 6190029099399214139}
-  endPlace: {fileID: 6190029098539852807}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -2833,7 +2842,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -1.7
 --- !u!61 &6190029099399214140
 BoxCollider2D:
   m_ObjectHideFlags: 0
