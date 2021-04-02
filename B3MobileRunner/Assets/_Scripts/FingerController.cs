@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using EzySlice;
 
 public class FingerController : MonoBehaviour
 {
@@ -102,7 +103,7 @@ public class FingerController : MonoBehaviour
             isCutting = true;
 
             nextWorldPos = Vector2.Lerp(transform.position, WorldPositionFromInput(inputPosition), sliceLerp);
-            IfBigSliceRaycast(nextWorldPos);
+            IfBigSwipeInputRaycast(nextWorldPos);
             transform.position = nextWorldPos;
             TrailFollowInput(inputPosition);
         }
@@ -116,7 +117,7 @@ public class FingerController : MonoBehaviour
         inputLastPosition = inputPosition;
     }
 
-    private void IfBigSliceRaycast(Vector2 nextWorldPos)
+    private void IfBigSwipeInputRaycast(Vector2 nextWorldPos)
     {
         if (Vector2.Distance(transform.position, nextWorldPos) > .6f)
         {
@@ -124,7 +125,7 @@ public class FingerController : MonoBehaviour
 
             if (rayHit)
             {
-                rayHit.collider.transform.parent.GetComponent<ObjectToSlice>().Die();
+                rayHit.collider.transform.parent.GetComponent<ObjectToSlice>().GetSliced(rayHit.point, nextWorldPos - (Vector2)transform.position);
             }
         }
     }
@@ -157,7 +158,7 @@ public class FingerController : MonoBehaviour
         if (collision.transform.CompareTag("ToKill"))
         {
             ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
-            enemyScript.Die();
+            enemyScript.GetSliced(transform.position, nextWorldPos - (Vector2)transform.position);
         }
     }
 

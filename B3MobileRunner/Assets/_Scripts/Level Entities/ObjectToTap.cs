@@ -34,12 +34,21 @@ public abstract class ObjectToTap : MonoBehaviour
             }
             else if (Mathf.Abs(Manager.Instance.playerTrsf.position.x - (transform.position.x - placeToCheckIfSolved)) < 1f)
             {
-                Manager.Instance.PlayerFail();
+                PlayerFail();
             }
         }
     }
 
     protected abstract void Init();
     protected abstract void IHaveBeenTapped();
-    public abstract void GetTapped();
+    protected abstract void PlayerFail();
+    public void GetTapped()
+    {
+        amTapped = true;
+        GetTappedEvents();
+    }
+    public virtual void GetTappedEvents()
+    {
+
+    }
 }

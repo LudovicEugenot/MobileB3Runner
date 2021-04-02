@@ -18,12 +18,6 @@ public class ProtectTheCube : MonoBehaviour
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
         myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
-        Manager.Instance.OnPlayerFail += FallInAPit;
-    }
-
-    private void OnDestroy()
-    {
-        Manager.Instance.OnPlayerFail -= FallInAPit;
     }
 
     void Update()
@@ -57,6 +51,12 @@ public class ProtectTheCube : MonoBehaviour
     public void FallInAPit()
     {
         rb2D.gravityScale = 1f;
+        //ralentir quand plus rien sous le joueur histoire qu'il tombe à haute vitesse
+    }
+
+    public void DoorInMyFace()
+    {
+        Debug.Log("<Color=red>Bonk the door");
     }
 
     public IEnumerator Die()

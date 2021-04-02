@@ -6,7 +6,7 @@ public class FallingRock : ObjectToSlice //UI à faire
 {
     #region Initialization
     RectTransform rockWarning;
-    [SerializeField] float warningTextOffset = 20f;
+    [SerializeField] float warningTextYOffset = 20f;
 
     float warningTime = .4f;
 
@@ -67,7 +67,7 @@ public class FallingRock : ObjectToSlice //UI à faire
                 {
                     rockWarning.position = new Vector3(
                         UIPosFromWorldPos(transform.position).x, 
-                        Manager.Instance.UI.screenSize.height - warningTextOffset);
+                        Manager.Instance.UI.screenSize.height - warningTextYOffset);
                 }
             }
         }

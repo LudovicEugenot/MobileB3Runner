@@ -12,7 +12,6 @@ public class BoxFillPath : ObjectToTap
     float completedStartTime;
     float completedTime = .8f;
 
-    bool amCompleting = false;
     bool startedCompleting = false;
     #endregion
 
@@ -24,32 +23,29 @@ public class BoxFillPath : ObjectToTap
 
     protected override void IHaveBeenTapped()
     {
-        if (amCompleting)
+        if (completedLerp < .99)
         {
-            if (completedLerp < .99)
+            if (completedLerp <= 0 && !startedCompleting)
             {
-                if (completedLerp <= 0 && !startedCompleting)
-                {
-                    partStartPos = myTransform.position;
-                    partEndPos = objectLinked.transform.position;
-                    completedStartTime = Time.time;
-                    startedCompleting = true;
-                }
-                completedLerp = completedCurve.Evaluate((Time.time - completedStartTime) / completedTime);
+                partStartPos = myTransform.position;
+                partEndPos = objectLinked.transform.position;
+                completedStartTime = Time.time;
+                startedCompleting = true;
+            }
+            completedLerp = completedCurve.Evaluate((Time.time - completedStartTime) / completedTime);
 
-                myTransform.position = Vector3.Lerp(partStartPos, partEndPos, completedLerp);
-            }
-            else
-            {
-                myCollider.isTrigger = false;
-            }
+            myTransform.position = Vector3.Lerp(partStartPos, partEndPos, completedLerp);
         }
+        else
+        {
+            myCollider.isTrigger = false;
+        }
+
     }
 
-    public override void GetTapped()
+    protected override void PlayerFail()
     {
-        amTapped = true;
-        amCompleting = true;
+        Manager.Instance.playerScript.FallInAPit();
     }
 
     private void OnDrawGizmosSelected()

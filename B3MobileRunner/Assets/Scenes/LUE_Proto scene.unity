@@ -1334,6 +1334,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 10
+  deathTime: 1.9
   amActive: 0
   speed: 1
 --- !u!1 &963194225
@@ -2333,7 +2334,7 @@ GameObject:
   - component: {fileID: 1530938876}
   - component: {fileID: 1530938877}
   m_Layer: 8
-  m_Name: Falling Piano
+  m_Name: Falling Rock
   m_TagString: ToKill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2403,8 +2404,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  deathTime: 0.8
   amActive: 0
-  warningTextOffset: 20
+  warningTextYOffset: 20
 --- !u!50 &1530938877
 Rigidbody2D:
   serializedVersion: 4
@@ -2818,6 +2820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI: {fileID: 2099615425}
   playerScript: {fileID: 419410681}
+  fingerController: {fileID: 1647909546}
   virtualCamera: {fileID: 230299709}
   gameOngoing: 0
   playerTrsf: {fileID: 0}

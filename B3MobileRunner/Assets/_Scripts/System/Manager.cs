@@ -8,6 +8,7 @@ public class Manager : MonoBehaviour
     [Header("References")]
     public UIManager UI;
     public ProtectTheCube playerScript;
+    public FingerController fingerController;
     public Cinemachine.CinemachineVirtualCamera virtualCamera;
 
     [Header("Game Info")]
@@ -39,13 +40,4 @@ public class Manager : MonoBehaviour
 
         gameOngoing = true;
     }
-
-    #region events
-    public event Action OnPlayerFail;
-
-    public void PlayerFail()
-    {
-        OnPlayerFail?.Invoke();
-    }
-    #endregion
 }
