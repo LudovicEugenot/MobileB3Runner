@@ -11,7 +11,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     [SerializeField] Transform part1;
     //[SerializeField] Transform part2;
     [SerializeField] AnimationCurve deathCurve;
-    [SerializeField] [Range(0f, 10f)] protected float distanceToActivation = 4f;
+    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
     [SerializeField] [Range(0.1f, 3f)] float deathTime = .8f;
     protected Vector2 mainPartStartPos;
     Vector2 part1StartPos;

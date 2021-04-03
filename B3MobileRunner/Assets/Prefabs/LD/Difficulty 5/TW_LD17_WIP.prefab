@@ -573,6 +573,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 10
+  amActive: 0
   speed: 3.81
 --- !u!50 &3162441857133519831
 Rigidbody2D:
@@ -982,6 +983,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 6.9
+  amActive: 0
   speed: 3.81
 --- !u!50 &3162441857611086227
 Rigidbody2D:
@@ -2044,6 +2046,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &3162441858106224390
 Rigidbody2D:
   serializedVersion: 4
@@ -2553,8 +2557,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f33cf2f64b0c3e4e86e0e1b74edf435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myCollider: {fileID: 3162441858465059346}
+  placeToCheckIfSolved: -2
+  objectLinked: {fileID: 3162441858117457991}
   myTransform: {fileID: 3162441858465059347}
-  endPlace: {fileID: 3162441858117457991}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -2588,7 +2594,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -2
 --- !u!61 &3162441858465059346
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2625,7 +2630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3162441858468318539}
   m_Layer: 0
-  m_Name: TW_LD17
+  m_Name: TW_LD17_WIP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2941,6 +2946,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435263142218
 Rigidbody2D:
   serializedVersion: 4
@@ -3150,6 +3157,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435284339220
 Rigidbody2D:
   serializedVersion: 4
@@ -3571,6 +3580,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435399245627
 Rigidbody2D:
   serializedVersion: 4
@@ -3886,6 +3897,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435427357389
 Rigidbody2D:
   serializedVersion: 4
@@ -3989,6 +4002,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 10
+  amActive: 0
   speed: 3.81
 --- !u!50 &4760662435437661055
 Rigidbody2D:
@@ -4093,6 +4107,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 10
+  amActive: 0
   speed: 3.81
 --- !u!50 &4760662435455180649
 Rigidbody2D:
@@ -4515,6 +4530,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435626426968
 Rigidbody2D:
   serializedVersion: 4
@@ -4618,6 +4635,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435666452838
 Rigidbody2D:
   serializedVersion: 4
@@ -4827,6 +4846,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435680664101
 Rigidbody2D:
   serializedVersion: 4
@@ -5354,6 +5375,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662435912599505
 Rigidbody2D:
   serializedVersion: 4
@@ -5881,6 +5904,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662436187274786
 Rigidbody2D:
   serializedVersion: 4
@@ -6620,6 +6645,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662436561627304
 Rigidbody2D:
   serializedVersion: 4
@@ -7147,6 +7174,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662436747932128
 Rigidbody2D:
   serializedVersion: 4
@@ -7462,6 +7491,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662436865710977
 Rigidbody2D:
   serializedVersion: 4
@@ -7883,6 +7914,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662437136214122
 Rigidbody2D:
   serializedVersion: 4
@@ -7986,6 +8019,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662437173925722
 Rigidbody2D:
   serializedVersion: 4
@@ -8089,6 +8124,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   distanceToActivation: 2.36
+  amActive: 0
+  warningTextOffset: 20
 --- !u!50 &4760662437318751516
 Rigidbody2D:
   serializedVersion: 4
