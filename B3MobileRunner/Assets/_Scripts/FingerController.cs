@@ -1,131 +1,225 @@
 ﻿using System.Collections;
 using UnityEngine;
+using EzySlice;
 
 public class FingerController : MonoBehaviour
 {
-    #region Initiatlization
-    Touch touch;
-    Vector2 touchLastPosition;
+    #region Initialization
+    [Header("Touch Properties")]
     [SerializeField] float minCuttingSpeed = 0.1f;
-    Collider cutCollider;
-    TrailRenderer trail;
+    [SerializeField] [Range(.01f, 2f)] float fingerRadius = 0.1f;
+    /*[SerializeField] [Range(0f, 1f)]*/
+    float sliceLerp = 0.6f;
 
+    [Header("Other things")]
+    [SerializeField] [Range(0f, 10f)] float trail3dDistanceToPath = 3f;
     public bool isCutting = false;
+
+
+    [SerializeField] CircleCollider2D cutCollider;
+    [SerializeField] TrailRenderer trail;
+
+    Touch touch;
+    Vector3 inputScreenPosition;
+    Vector3 touchWorldPosition;
+    Vector2 inputLastPosition;
+    Vector2 nextWorldPos;
+    RaycastHit2D rayHit;
+
+    bool mouseInControl = false;
     #endregion
 
     private void Start()
     {
-        cutCollider = GetComponent<Collider>();
-        trail = GetComponent<TrailRenderer>();
+        cutCollider = cutCollider ? cutCollider : transform.GetComponent<CircleCollider2D>();
+        cutCollider.radius = fingerRadius;
     }
     void Update()
     {
-        /*if (isCutting)
-        {
-            cutCollider.enabled = true;
-        }
-        else
-        {
-            cutCollider.enabled = false;
-        }*/
+        cutCollider.enabled = isCutting;
 
-        //MouseControl();
-        TouchControl();
+        if (Input.touchCount > 0)
+        {
+            TouchControl();
+            mouseInControl = false;
+        }
+        else if (mouseInControl)
+        {
+            MouseControl();
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            mouseInControl = true;
+        }
     }
 
-    RaycastHit hit;
     void TouchControl()
     {
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
+            //StartCoroutine(DrawTapInput(touch.position));
             if (touch.phase == TouchPhase.Began)
             {
-                touchLastPosition = touch.position;
+                TapObjectsToSolve(touch.position);
 
-                Ray raycast = Camera.main.ScreenPointToRay(touch.position);
+                //StartCoroutine(DrawTapInput(touch.position));
 
-                //tap
-                if (Physics.Raycast(raycast, out hit, LayerMask.GetMask("ToSolve")))
-                {
-                    if (hit.transform.CompareTag("ToSolve"))
-                    {
-                        ObjectToSolve enemyScript = hit.collider.GetComponentInParent<ObjectToSolve>();
-                        enemyScript.GetSolvedNerd();
-                    }
-                }
+                inputLastPosition = touch.position;
             }
 
             if (touch.phase == TouchPhase.Moved)
             {
-                if (touch.deltaPosition.magnitude * Time.deltaTime > minCuttingSpeed)
-                {
-                    trail.enabled = true;
-                    Ray raycast = Camera.main.ScreenPointToRay(touch.position);
-
-                    //swipe
-                    if (Physics.Raycast(raycast, out hit, LayerMask.GetMask("ToKill")))
-                    {
-                        if (hit.transform.CompareTag("ToKill"))
-                        {
-                            ObjectToSlice enemyScript = hit.collider.GetComponentInParent<ObjectToSlice>();
-                            enemyScript.Die();
-                        }
-                    }
-
-                    isCutting = true;
-                    //transform.position = touch.position;
-                    Vector3 brackeysTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
-                    brackeysTouchPosition.z = 0f;
-                    transform.position = brackeysTouchPosition;
-                }
-                else
-                {
-                    isCutting = false;
-                    trail.enabled = false;
-                }
-
-
-                touchLastPosition = touch.position;
+                SliceObjectsToKill(touch.position);
             }
 
             if (touch.phase == TouchPhase.Ended)
             {
                 isCutting = false;
-                trail.enabled = false;
+                trail.Clear();
             }
-
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    Collider2D tapResult;
+    private void TapObjectsToSolve(Vector2 inputPosition)
+    {
+        transform.position = WorldPositionFromInput(inputPosition);
+
+        tapResult = Physics2D.OverlapCircle(transform.position, fingerRadius, LayerMask.GetMask("ToSolve"));
+
+        if (tapResult != null)
+        {
+            BoxFillPath enemyScript = tapResult.GetComponentInParent<BoxFillPath>();
+            enemyScript.GetTapped();
+        }
+    }
+
+    void SliceObjectsToKill(Vector2 inputPosition)
+    {
+        if (Vector2.Distance(inputLastPosition, inputPosition) * Time.deltaTime > minCuttingSpeed)
+        {
+            trail.emitting = true;
+            isCutting = true;
+
+            nextWorldPos = Vector2.Lerp(transform.position, WorldPositionFromInput(inputPosition), sliceLerp);
+            IfBigSwipeInputRaycast(nextWorldPos);
+            transform.position = nextWorldPos;
+            TrailFollowInput(inputPosition);
+        }
+        else
+        {
+            isCutting = false;
+            trail.emitting = false;
+            trail.Clear();
+        }
+
+        inputLastPosition = inputPosition;
+    }
+
+    private void IfBigSwipeInputRaycast(Vector2 nextWorldPos)
+    {
+        if (Vector2.Distance(transform.position, nextWorldPos) > .6f)
+        {
+            rayHit = Physics2D.Raycast(transform.position, nextWorldPos, Vector2.Distance(transform.position, nextWorldPos), LayerMask.GetMask("ToKill"));
+
+            if (rayHit)
+            {
+                ObjectToSlice slice;
+                if(rayHit.collider.transform.TryGetComponent(out slice))
+                slice.GetSliced(rayHit.point, nextWorldPos - (Vector2)transform.position);
+            }
+        }
+    }
+
+    Vector3 WorldPositionFromInput(Vector2 inputPosition)
+    {
+        //Je prends la position de l'écran
+        inputScreenPosition = inputPosition;
+        //Je ramène la position de l'écran en coordonnée 0 en Z (par rapport à la cam)
+        inputScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z);
+        touchWorldPosition = Camera.main.ScreenToWorldPoint(inputScreenPosition);
+        touchWorldPosition.z = 0f;
+        //Je set la cible du collider (ce transform) à où le collider doit aller
+        return touchWorldPosition;
+    }
+
+    void TrailFollowInput(Vector2 inputPosition)
+    {
+        //Je prends la position de l'écran
+        inputScreenPosition = inputPosition;
+        //Je ramène la position de l'écran en coordonnée trail3dDistanceToPath en Z (par rapport à la cam)
+        inputScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z) - trail3dDistanceToPath;
+        touchWorldPosition = Camera.main.ScreenToWorldPoint(inputScreenPosition);
+        touchWorldPosition.z = -trail3dDistanceToPath;
+        trail.transform.position = touchWorldPosition;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("ToKill"))
         {
             ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
-            enemyScript.Die();
+            enemyScript.GetSliced(transform.position, nextWorldPos - (Vector2)transform.position);
         }
     }
 
     void MouseControl()
     {
+        Vector2 mousePos = Input.mousePosition;
+        //StartCoroutine(DrawTapInput(mousePos));
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
-            Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(raycast, out hit, LayerMask.GetMask("ToKill", "ToSolve"));
+            TapObjectsToSolve(mousePos);
+            //StartCoroutine(DrawTapInput(mousePos));
+            inputLastPosition = mousePos;
+        }
 
-            if (hit.transform.CompareTag("ToKill"))
-            {
-                ObjectToSlice enemyScript = hit.collider.GetComponentInParent<ObjectToSlice>();
-                enemyScript.Die();
-            }
+        if (Input.GetMouseButton(0))
+        {
+            SliceObjectsToKill(mousePos);
+        }
 
-            if (hit.transform.CompareTag("ToSolve"))
-            {
-                ObjectToSolve enemyScript = hit.collider.GetComponentInParent<ObjectToSolve>();
-                enemyScript.GetSolvedNerd();
-            }
+        if (Input.GetMouseButtonUp(0))
+        {
+            isCutting = false;
+            trail.Clear();
         }
     }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, fingerRadius);
+    }
+
+
+    //DEBUG
+    /*IEnumerator DrawTapInput(Vector2 pos)
+    {
+        int segments = 360;
+        GameObject go = new GameObject();
+        go.transform.position = transform.position;
+        go.transform.rotation = Quaternion.identity;
+        LineRenderer line = go.AddComponent<LineRenderer>();
+        line.useWorldSpace = false;
+        line.startWidth = .2f;
+        line.endWidth = .2f;
+        line.positionCount = segments + 1;
+
+        var pointCount = segments + 1; // add extra point to make startpoint and endpoint the same to close the circle
+        var points = new Vector3[pointCount];
+
+        for (int i = 0; i < pointCount; i++)
+        {
+            var rad = Mathf.Deg2Rad * (i * 360f / segments);
+            points[i] = new Vector2(Mathf.Sin(rad) * fingerRadius, Mathf.Cos(rad) * fingerRadius);
+        }
+
+        line.SetPositions(points);
+
+        yield return new WaitForEndOfFrame();
+        //yield return new WaitForSeconds(1f);
+        Destroy(line.gameObject);
+    }*/
 }
