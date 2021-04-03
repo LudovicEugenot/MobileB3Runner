@@ -38,7 +38,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
     public void SetUp (Vector2 _spawnPos, Vector2 _direction, float _disappearanceTime, float _speed, float _spinForce)
     {
         spawnPos = _spawnPos;
-        direction = _direction;
+        direction = _direction.normalized;
         timeUntilDisappearance = _disappearanceTime + Time.time;
         speed = _speed;
         spinForce = _spinForce;

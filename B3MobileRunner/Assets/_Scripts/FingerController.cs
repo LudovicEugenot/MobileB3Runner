@@ -125,7 +125,9 @@ public class FingerController : MonoBehaviour
 
             if (rayHit)
             {
-                rayHit.collider.transform.parent.GetComponent<ObjectToSlice>().GetSliced(rayHit.point, nextWorldPos - (Vector2)transform.position);
+                ObjectToSlice slice;
+                if(rayHit.collider.transform.TryGetComponent(out slice))
+                slice.GetSliced(rayHit.point, nextWorldPos - (Vector2)transform.position);
             }
         }
     }

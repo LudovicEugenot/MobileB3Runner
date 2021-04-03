@@ -9,15 +9,15 @@ public abstract class ObjectToSlice : MonoBehaviour
 {
     #region Initialization
     [SerializeField] Transform part1;
-    [SerializeField] Transform part2;
+    //[SerializeField] Transform part2;
     [SerializeField] AnimationCurve deathCurve;
     [SerializeField] [Range(0f, 10f)] protected float distanceToActivation = 4f;
     [SerializeField] [Range(0.1f, 3f)] float deathTime = .8f;
     protected Vector2 mainPartStartPos;
     Vector2 part1StartPos;
-    Vector2 part2StartPos;
+    //Vector2 part2StartPos;
     Vector2 part1EndPos;
-    Vector2 part2EndPos;
+    //Vector2 part2EndPos;
     Mesh myMesh;
     float deathLerp;
     float deathStartTime;
@@ -35,9 +35,9 @@ public abstract class ObjectToSlice : MonoBehaviour
         Init();
 
         rb = GetComponent<Rigidbody2D>();
-        part1 = part1 ? part1 : transform.GetChild(0).transform;
+        part1 = part1 ? part1 : transform;// transform.GetChild(0).transform;
         myMesh = part1.GetComponent<Mesh>();
-        part2 = part2 ? part2 : transform.GetChild(1).transform;
+        //part2 = part2 ? part2 : transform.GetChild(1).transform;
         mainPartStartPos = transform.position;
     }
 
@@ -140,9 +140,9 @@ public abstract class ObjectToSlice : MonoBehaviour
         amDying = true;
 
         SlicedHull slicedHull = part1.gameObject.Slice(//GetPlane(cutImpact, cutDirection)
-            Vector3.Lerp(cutImpact, transform.position,  0.5f), // rapprocher la coupe du centre de l'objet
+            Vector3.Lerp(cutImpact, transform.position,  0.5f), // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), 
-            part2.GetComponent<MeshRenderer>().material);
+            part1.GetComponent<MeshRenderer>().material);
         if (slicedHull != null)
         {
             GameObject lower = slicedHull.CreateLowerHull();
