@@ -66,7 +66,7 @@ public class FallingRock : ObjectToSlice //UI à faire
                 else
                 {
                     rockWarning.position = new Vector3(
-                        UIPosFromWorldPos(transform.position).x, 
+                        UIPosFromWorldPos(transform.position).x,
                         Manager.Instance.UI.screenSize.height - warningTextYOffset);
                 }
             }

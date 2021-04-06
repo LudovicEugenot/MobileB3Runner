@@ -35,6 +35,6 @@ public class BasicEnemyFlying : ObjectToSlice
         Vector3 xOffset = Vector3.right * playerSpeed *
             //offset more reduced with fewer distance
             (Vector3.Distance(transform.position, Manager.Instance.playerTrsf.position) * .5f + transform.position.y * .5f);
-        return Manager.Instance.playerTrsf.position + xOffset *.2f - transform.position;
+        return Manager.Instance.playerTrsf.position + xOffset * .2f - transform.position;
     }
 }
