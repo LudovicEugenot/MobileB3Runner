@@ -9,7 +9,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
     float xSpinForce;
     float ySpinForce;
     float zSpinForce;
-    float speed;
+    float force;
     float randomForceAdded = 5f;
     float necessaryTimeUntilSlice = .2f;
     Vector3 startScale = Vector3.one;
@@ -40,7 +40,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
         rb.mass = OGScript.rb.mass;
-        rb.AddForce(direction * speed + new Vector2(Random.Range(-randomForceAdded, randomForceAdded), Random.Range(-randomForceAdded, randomForceAdded)), ForceMode2D.Impulse);
+        rb.AddForce(direction * force + new Vector2(Random.Range(-randomForceAdded, randomForceAdded), Random.Range(-randomForceAdded, randomForceAdded)), ForceMode2D.Impulse);
 
     }
     void Update()
@@ -53,13 +53,13 @@ public class SlicedObjectBehaviour : MonoBehaviour
         transform.localScale = Vector3.Lerp(startScale, startScale * .5f, Mathf.InverseLerp(startTime, timeUntilDisappearance, Time.time));
     }
 
-    public void SetUp(Vector2 _spawnPos, Vector2 _direction, float _disappearanceTime, float _speed, float _spinForce, ObjectToSlice myOGScript)
+    public void SetUp(Vector2 _spawnPos, Vector2 _direction, float _disappearanceTime, float _force, float _spinForce, ObjectToSlice myOGScript)
     {
         spawnPos = _spawnPos;
         direction = _direction.normalized;
         timeUntilDisappearance = _disappearanceTime + Time.time;
-        speed = _speed;
-        zSpinForce = _spinForce * speed;
+        force = _force;
+        zSpinForce = _spinForce * force;
         ySpinForce = (Random.Range(-zSpinForce, zSpinForce)) * .05f;
         xSpinForce = (Random.Range(-zSpinForce, zSpinForce)) * .05f;
         OGScript = myOGScript;
@@ -109,7 +109,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
             transform.position,
             _direction,
             timeUntilDisappearance,
-            speed,
+            force,
             Random.Range(-30f, 30f),
             OGScript);
         //////////////////WIP à enrichir quand on va vouloir couper plusieurs fois
