@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public class BridgeRope : ObjectToSlice
+﻿public class BridgeRope : ObjectToSlice
 {
     //BridgeScript bridge;
 

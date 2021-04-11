@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UnityEngine;
-using EzySlice;
 
 public class FingerController : MonoBehaviour
 {
@@ -92,7 +91,7 @@ public class FingerController : MonoBehaviour
 
         if (tapResult != null)
         {
-            BoxFillPath enemyScript = tapResult.GetComponentInParent<BoxFillPath>();
+            ObjectToTap enemyScript = tapResult.GetComponentInParent<ObjectToTap>();
             enemyScript.GetTapped();
         }
     }

@@ -9,18 +9,13 @@ public abstract class ObjectToSlice : MonoBehaviour
 {
     #region Initialization
     public Material cutMat;
-    [SerializeField] Transform part1;
+    [SerializeField] Transform myTransform;
     public int cutAmount = 0;
-    //[SerializeField] Transform part2;
     [SerializeField] AnimationCurve deathCurve;
     [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
     [Range(0.1f, 3f)] public float deathTime = .8f;
     protected Vector2 mainPartStartPos;
-    Vector2 part1StartPos;
-    //Vector2 part2StartPos;
-    Vector2 part1EndPos;
-    //Vector2 part2EndPos;
-    MeshRenderer myMesh;
+    MeshRenderer[] myMeshes;
     Collider2D myCollider;
     float deathLerp;
     float deathStartTime;
@@ -38,10 +33,9 @@ public abstract class ObjectToSlice : MonoBehaviour
         Init();
 
         rb = GetComponent<Rigidbody2D>();
-        part1 = part1 ? part1 : transform;// transform.GetChild(0).transform;
-        myMesh = part1.GetComponent<MeshRenderer>();
-        myCollider = part1.GetComponent<Collider2D>();
-        //part2 = part2 ? part2 : transform.GetChild(1).transform;
+        myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
+        myMeshes = myTransform.GetComponentsInChildren<MeshRenderer>();
+        myCollider = myTransform.GetComponent<Collider2D>();
         mainPartStartPos = transform.position;
     }
 
@@ -129,7 +123,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
 
 
-    EzySlice.Plane plane;
+    /*EzySlice.Plane plane;
     private EzySlice.Plane GetPlane(Vector2 cutImpact, Vector2 cutDirection)
     {
         plane = new EzySlice.Plane();
@@ -137,14 +131,14 @@ public abstract class ObjectToSlice : MonoBehaviour
             Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet
             Vector3.Cross(cutDirection, Camera.main.transform.forward));
         return plane;
-    }
+    }*/
 
     public virtual void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
     {
         cutAmount++;
         amDying = true;
 
-        GameObject[] gos = part1.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+        GameObject[] gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat);
         if (gos != null)
         {
@@ -162,7 +156,9 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     void GameObjectDisappear()
     {
-        myMesh.enabled = false;
+        foreach(MeshRenderer mesh in myMeshes)
+            mesh.enabled = false;
+
         myCollider.enabled = false;
 
         rb.velocity = Vector2.zero;

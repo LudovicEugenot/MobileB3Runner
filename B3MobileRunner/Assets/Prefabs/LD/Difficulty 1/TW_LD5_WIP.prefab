@@ -436,8 +436,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 4342879224566985940}
-  placeToCheckIfSolved: -2
-  objectLinked: {fileID: 4342879224151228033}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 4342879224151228032}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 4342879224566985941}
   completedCurve:
     serializedVersion: 2
@@ -627,8 +630,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 4342879225212807482}
-  placeToCheckIfSolved: -2
-  objectLinked: {fileID: 4342879225328800455}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 4342879225328800454}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 4342879225212807483}
   completedCurve:
     serializedVersion: 2

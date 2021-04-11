@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
 [SelectionBase]
@@ -10,18 +9,21 @@ public abstract class ObjectToTap : MonoBehaviour
     #region Initiatlization
     protected bool amTapped = false;
     [SerializeField] protected BoxCollider2D myCollider;
-    [SerializeField] [Range(-10f, 10f)] protected float placeToCheckIfSolved = 4f;
-    [SerializeField] protected GameObject objectLinked;
+    [SerializeField] [Range(-4f, 0f)] protected float placeToCheckIfSolvedOffset = -1f;
+    [SerializeField] protected ObjectLinked objectLinked;
+
+    protected abstract bool placeToCheckIfSolvedVisualIsRelevant();
+    private float PlaceToCheckIfSolved { get { return placeToCheckIfSolvedOffset + objectLinked.transform.position.x; } }
     #endregion
 
     protected void Start()
     {
         myCollider = myCollider ? myCollider : GetComponent<BoxCollider2D>();
-        if (!objectLinked) Debug.LogError("need l'objet", this);
+        if (objectLinked == null) Debug.LogError("need l'objet", this);
 
         myCollider.isTrigger = true;
 
-        Init();
+        OnStart();
     }
 
     private void Update()
@@ -32,14 +34,14 @@ public abstract class ObjectToTap : MonoBehaviour
             {
                 IHaveBeenTapped();
             }
-            else if (Mathf.Abs(Manager.Instance.playerTrsf.position.x - (transform.position.x - placeToCheckIfSolved)) < 1f)
+            else if (Manager.Instance.playerTrsf.position.x > PlaceToCheckIfSolved)
             {
                 PlayerFail();
             }
         }
     }
 
-    protected abstract void Init();
+    protected abstract void OnStart();
     protected abstract void IHaveBeenTapped();
     protected abstract void PlayerFail();
     public void GetTapped()
@@ -48,6 +50,21 @@ public abstract class ObjectToTap : MonoBehaviour
         GetTappedEvents();
     }
     public virtual void GetTappedEvents()
+    {
+
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (placeToCheckIfSolvedVisualIsRelevant())
+        {
+            Gizmos.color = new Color(.5f, 1f, .5f, .5f);
+            Gizmos.DrawCube(new Vector3(PlaceToCheckIfSolved, 0, 0), new Vector3(.1f, 100f, 5f));
+        }
+        MoreGizmos();
+    }
+
+    protected virtual void MoreGizmos()
     {
 
     }

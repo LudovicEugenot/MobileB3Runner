@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BoxFillPath : ObjectToTap
 {
@@ -16,7 +15,7 @@ public class BoxFillPath : ObjectToTap
     #endregion
 
 
-    protected override void Init()
+    protected override void OnStart()
     {
         myTransform = myTransform ? myTransform : transform.GetChild(0).transform;
     }
@@ -45,13 +44,16 @@ public class BoxFillPath : ObjectToTap
 
     protected override void PlayerFail()
     {
-        Manager.Instance.playerScript.FallInAPit();
+        Manager.Instance.playerScript.FallInASmallPit();
     }
 
-    private void OnDrawGizmosSelected()
+    protected override bool placeToCheckIfSolvedVisualIsRelevant()
     {
-        Gizmos.color = new Color(1, .92f, .16f, .5f);
-        Gizmos.DrawCube(transform.position - new Vector3(placeToCheckIfSolved, 0, 0), new Vector3(.1f, 100f, 5f));
+        return true;
+    }
+
+    protected override void MoreGizmos()
+    {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(objectLinked.transform.position /*+ (Vector2)transform.position*/, Vector3.one);
         Gizmos.DrawLine(transform.position, objectLinked.transform.position);

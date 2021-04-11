@@ -19,7 +19,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
     Collider2D col;
     Rigidbody2D rb; //SI perf nulles à dégager !
     ObjectToSlice OGScript;
-    AnimationCurve anim = new AnimationCurve(new Keyframe(0, 0, 0, 2.5f), new Keyframe(0.26f, 0.88f, 2f, .5f), new Keyframe(1, 1, 0, 0));
+    //AnimationCurve anim = new AnimationCurve(new Keyframe(0, 0, 0, 2.5f), new Keyframe(0.26f, 0.88f, 2f, .5f), new Keyframe(1, 1, 0, 0));
     /* 
      * |                             ~     x
      * |                ~

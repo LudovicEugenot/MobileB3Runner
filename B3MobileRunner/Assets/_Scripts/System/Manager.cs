@@ -13,10 +13,12 @@ public class Manager : MonoBehaviour
 
     [Header("Game Info")]
     public bool gameOngoing = false;
+    [Range(0f,300f)] public float gameTimeMaxSpeed = 30f;
 
     //other hidden useful stuff
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
+    public float gameStartTime;
     #endregion
 
     void Awake()
@@ -39,5 +41,7 @@ public class Manager : MonoBehaviour
         playerTrsf = playerScript.transform;
 
         gameOngoing = true;
+        gameStartTime = Time.time;
+        gameTimeMaxSpeed += gameStartTime;
     }
 }

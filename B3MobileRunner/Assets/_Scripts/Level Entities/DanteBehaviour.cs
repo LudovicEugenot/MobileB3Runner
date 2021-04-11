@@ -1,27 +1,33 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-public class ProtectTheCube : MonoBehaviour
+public class DanteBehaviour : MonoBehaviour
 {
-    #region Initiatlization
+    #region Initialization
+    [Header("References")]
     public Rigidbody2D rb2D;
     public Collider2D myCollider;
 
+    [Header("Values")]
+    [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
+
+    [Header("Testing")]
+    [Range(2f, 6f)] public float moveSpeed = 2f;
+    [SerializeField] bool isTestingSpeed = false;
+
+    //Code
     bool amDying = false;
     bool amDead = false;
     bool amFalling = false;
-
-    [Range(2f, 6f)] public float moveSpeed = 2f;
     float moveSpeedMalus = 0f;
-    [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
     #endregion
 
     void Start()
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
         myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
-        InitPlayerValues();
+        if (!isTestingSpeed)
+            InitPlayerValues();
     }
 
     private void InitPlayerValues()
@@ -33,16 +39,7 @@ public class ProtectTheCube : MonoBehaviour
     {
         if (!amDying)
         {
-            if (amFalling)
-            {
-                moveSpeedMalus += moveSpeed * .1f * Time.deltaTime;
-                if (transform.position.y < -1)
-                {
-                    StartCoroutine(Die());
-                }
-            }
-            transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
-
+            MovementUpdate();
         }
         else
         {
@@ -50,14 +47,31 @@ public class ProtectTheCube : MonoBehaviour
         }
     }
 
-    private void DeathAnimation()
+    void MovementUpdate()
     {
-        if (amDead)//if (transform.position.y > -1 || Physics.Raycast(transform.position, Vector2.right, 0.6f))
+        if (amFalling)
         {
-            transform.Rotate(Vector3.forward, -145f * Time.deltaTime);
+            moveSpeedMalus += moveSpeed * .5f * Time.deltaTime;
+            if (transform.position.y < -1)
+            {
+                StartCoroutine(Die());
+            }
         }
+
+        if (!isTestingSpeed)
+        {
+            moveSpeed = Mathf.Lerp(
+                ObjectsData.PlayerSlowestSpeed,
+                ObjectsData.PlayerFastestSpeed,
+                Mathf.InverseLerp(
+                    Manager.Instance.gameStartTime,
+                    Manager.Instance.gameTimeMaxSpeed,
+                    Time.time));
+        }
+        transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
     }
 
+    #region Death Related
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("ToKill"))
@@ -66,7 +80,7 @@ public class ProtectTheCube : MonoBehaviour
         }
     }
 
-    public void FallInAPit()
+    public void FallInASmallPit()
     {
         rb2D.gravityScale = 1f;
         amFalling = true;
@@ -75,7 +89,16 @@ public class ProtectTheCube : MonoBehaviour
 
     public void DoorInMyFace()
     {
-        Debug.Log("<Color=red>Bonk the door");
+        Debug.Log("<Color=red>Bonk the door (et prog la mort par porte btw)");
+        //Script de mort après avoir touché la porte
+    }
+
+    private void DeathAnimation()
+    {
+        if (amDead)//if (transform.position.y < -1 || Physics.Raycast(transform.position, Vector2.right, 0.6f))
+        {
+            transform.Rotate(Vector3.forward, -145f * Time.deltaTime);
+        }
     }
 
     public IEnumerator Die()
@@ -97,4 +120,5 @@ public class ProtectTheCube : MonoBehaviour
 
         amDead = true;
     }
+    #endregion
 }
