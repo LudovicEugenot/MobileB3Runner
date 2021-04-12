@@ -9,7 +9,7 @@ public class MenuManager : MonoBehaviour
 
     public void PlayGame()
     {
-        SceneManager.UnloadSceneAsync("TitleMenuUI");
+        //SceneManager.UnloadSceneAsync("TitleMenuUI");
         Time.timeScale = 1f;
         gamePaused = true;
     }
@@ -17,22 +17,22 @@ public class MenuManager : MonoBehaviour
     public void PauseGame()
     {
         Time.timeScale = 0f;
-        SceneManager.LoadScene("PauseMenuScene", LoadSceneMode.Additive);
+        //SceneManager.LoadScene("PauseMenuScene", LoadSceneMode.Additive);
         gamePaused = true;
     }
 
     public void Resume()
     {
-        SceneManager.UnloadSceneAsync("PauseMenuScene");
+        //SceneManager.UnloadSceneAsync("PauseMenuScene");
         Time.timeScale = 1f;
         gamePaused = false;
     }
 
     public void ExitGame()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.LoadScene("LTN_TestScene");
-        SceneManager.LoadScene("TitleMenuUI", LoadSceneMode.Additive);
+        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        //SceneManager.LoadScene("LTN_TestS.cene");
+        //SceneManager.LoadScene("TitleMenuUI", LoadSceneMode.Additive);
         Time.timeScale = 0f;
         gamePaused = true;
     }
