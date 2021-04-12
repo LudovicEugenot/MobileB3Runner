@@ -75,7 +75,7 @@ public class FallingRock : ObjectToSlice //UI à faire
     protected override void OnDeath()
     {
         if (rockWarning)
-            Destroy(rockWarning);
+            Destroy(rockWarning.gameObject);
     }
 
     Vector2 UIPosFromWorldPos(Vector2 worldPos)

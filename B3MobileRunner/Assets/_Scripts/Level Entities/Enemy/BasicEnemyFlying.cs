@@ -14,7 +14,7 @@ public class BasicEnemyFlying : ObjectToSlice
         rb.simulated = true;
         transform.position += TargetDirection().normalized
             * speed
-            * playerSpeed
+            / playerSpeed
             * Time.deltaTime;
     }
 
@@ -28,6 +28,7 @@ public class BasicEnemyFlying : ObjectToSlice
         return true;
     }
 
+    //Renvoie un offset à droite de Dante qui s'adapte à sa vitesse
     Vector3 TargetDirection()
     {
         //player direction with offset from his speed

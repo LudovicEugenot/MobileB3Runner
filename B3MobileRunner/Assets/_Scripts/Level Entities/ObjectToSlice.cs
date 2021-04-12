@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using EzySlice;
 
@@ -10,12 +9,14 @@ public abstract class ObjectToSlice : MonoBehaviour
     #region Initialization
     public Material cutMat;
     [SerializeField] Transform myTransform;
-    public int cutAmount = 0;
+    [HideInInspector] public int cutAmount = 0;
     [SerializeField] AnimationCurve deathCurve;
     [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
     [Range(0.1f, 3f)] public float deathTime = .8f;
     protected Vector2 mainPartStartPos;
-    MeshRenderer[] myMeshes;
+    MeshRenderer[] myMeshRenderers;
+    [SerializeField] SkinnedMeshRenderer mySkinnedMeshrenderer;
+    [SerializeField] bool isWithSkinnedMeshRenderer;
     Collider2D myCollider;
     float deathLerp;
     float deathStartTime;
@@ -34,7 +35,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
-        myMeshes = myTransform.GetComponentsInChildren<MeshRenderer>();
+        if(!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
         myCollider = myTransform.GetComponent<Collider2D>();
         mainPartStartPos = transform.position;
     }
@@ -49,7 +50,7 @@ public abstract class ObjectToSlice : MonoBehaviour
             }
             else if (!amActive)
             {
-                if (Mathf.Abs(Manager.Instance.playerTrsf.position.x - (transform.position.x - distanceToActivation)) < 1f)
+                if (Manager.Instance.playerTrsf.position.x > transform.position.x - distanceToActivation)
                 {
                     GetActive();
                 }
@@ -137,9 +138,17 @@ public abstract class ObjectToSlice : MonoBehaviour
     {
         cutAmount++;
         amDying = true;
-
-        GameObject[] gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
-            Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat);
+        GameObject[] gos;
+        if (isWithSkinnedMeshRenderer)
+        {
+            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+            Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
+        }
+        else
+        {
+            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+            Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
+        }
         if (gos != null)
         {
             foreach (GameObject gameObject in gos)
@@ -149,15 +158,22 @@ public abstract class ObjectToSlice : MonoBehaviour
         }
         else
         {
-            Debug.LogError(gameObject.name + "destroyed like a very bad boy.", this);
+            Debug.LogError(gameObject.name + " destroyed like a very bad boy.", this);
         }
         GameObjectDisappear();
     }
 
     void GameObjectDisappear()
     {
-        foreach(MeshRenderer mesh in myMeshes)
-            mesh.enabled = false;
+        if (isWithSkinnedMeshRenderer)
+        {
+            mySkinnedMeshrenderer.enabled = false;
+        }
+        else
+        {
+            foreach (MeshRenderer mesh in myMeshRenderers)
+                mesh.enabled = false;
+        }
 
         myCollider.enabled = false;
 

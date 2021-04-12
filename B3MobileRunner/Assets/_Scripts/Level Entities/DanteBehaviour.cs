@@ -89,7 +89,7 @@ public class DanteBehaviour : MonoBehaviour
 
     public void DoorInMyFace()
     {
-        Debug.Log("<Color=red>Bonk the door (et prog la mort par porte btw)");
+        Debug.Log("<Color=red> Bonk the door (et prog la mort par porte btw) </Color=red>");
         //Script de mort après avoir touché la porte
     }
 
