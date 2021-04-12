@@ -25,7 +25,7 @@ public class Manager : MonoBehaviour
     //other hidden useful stuff
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
-    public float gameStartTime;
+    [HideInInspector] public float gameStartTime;
     int _coinAmount = 0;
     #endregion
 

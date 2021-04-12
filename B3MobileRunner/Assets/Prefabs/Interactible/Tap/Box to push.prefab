@@ -95,8 +95,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 625342212457658165}
-  placeToCheckIfSolved: -2
-  objectLinked: {fileID: 625342212914314592}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 625342212914314593}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 625342212457658164}
   completedCurve:
     serializedVersion: 2

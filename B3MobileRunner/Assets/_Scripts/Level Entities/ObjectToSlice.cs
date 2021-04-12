@@ -141,7 +141,7 @@ public abstract class ObjectToSlice : MonoBehaviour
         GameObject[] gos;
         if (isWithSkinnedMeshRenderer)
         {
-            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 1f), //WIP le 1f // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
         }
         else
