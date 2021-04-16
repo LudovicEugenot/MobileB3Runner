@@ -6,7 +6,7 @@ public class FallingRock : ObjectToSlice //UI à faire
     #region Initialization
     RectTransform rockWarning;
     [SerializeField] float warningTextYOffset = 20f;
-    [SerializeField][Range(-20f,20f)] float warningTextXOffset = -10f;
+    [SerializeField] [Range(-100f, 100f)] float warningTextXOffset = -75f;
 
     float warningTime = .4f;
 
@@ -44,10 +44,10 @@ public class FallingRock : ObjectToSlice //UI à faire
         yield return new WaitForSeconds(
             warningTime -
             Mathf.InverseLerp(
-                ObjectsData.PlayerSpeedOverTime[0].y, 
-                ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length-1].y, 
-                Manager.Instance.playerScript.moveSpeed) 
-            * warningTime 
+                ObjectsData.PlayerSpeedOverTime[0].y,
+                ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].y,
+                Manager.Instance.playerScript.moveSpeed)
+            * warningTime
             * .3f);
         amFalling = true;
     }
@@ -71,8 +71,8 @@ public class FallingRock : ObjectToSlice //UI à faire
                 else
                 {
                     rockWarning.position = new Vector3(
-                        UIPosFromWorldPos(transform.position).x - warningTextXOffset,
-                        Manager.Instance.UI.screenSize.height - warningTextYOffset);
+                        UIPosFromWorldPos(transform.position).x + warningTextXOffset,
+                        Manager.Instance.UI.screenSize.height + warningTextYOffset);
                 }
             }
         }
@@ -80,7 +80,7 @@ public class FallingRock : ObjectToSlice //UI à faire
 
     protected override void OnUpdate()
     {
-        distanceToActivation = Manager.Instance.playerScript.moveSpeed * 1.4f +2 ;
+        distanceToActivation = Manager.Instance.playerScript.moveSpeed * 1.4f + 2;
     }
 
     protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
