@@ -18,6 +18,7 @@ public class Manager : MonoBehaviour
         set
         {
             UI.UpdateCoinsUI(value);
+            //le juice du menu (ou sinon au sein de l'ui plutôt)
             _coinAmount = value;
         }
     }
@@ -56,6 +57,6 @@ public class Manager : MonoBehaviour
         gameOngoing = true;
         gameStartTime = Time.time;
         gameTimeMaxSpeed += gameStartTime;
-        _coinAmount = 0;
+        CoinAmount = 0;
     }
 }

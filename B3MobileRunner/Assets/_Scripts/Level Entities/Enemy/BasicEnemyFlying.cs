@@ -3,7 +3,7 @@
 public class BasicEnemyFlying : ObjectToSlice
 {
     #region Initiatlization
-    [SerializeField] [Range(0f, 10f)] float speed = .5f;
+    [SerializeField] [Range(0f, 20f)] float speed = .5f;
 
     float playerSpeed;
     #endregion

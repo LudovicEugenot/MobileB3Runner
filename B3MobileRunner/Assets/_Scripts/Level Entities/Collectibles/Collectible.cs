@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Collectible : MonoBehaviour
 {
     #region Initialization
-    [SerializeField] [Range(0f, 200f)] protected float rotationSpeed = 30f;
+    [SerializeField] [Range(0f, 400f)] protected float rotationSpeed = 30f;
     #endregion
 
     void Start()

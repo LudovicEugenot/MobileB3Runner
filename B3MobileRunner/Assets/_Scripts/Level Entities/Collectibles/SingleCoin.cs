@@ -11,7 +11,7 @@ public class SingleCoin : Collectible
 
     public override void OnStart()
     {
-        if (rb = null) Debug.LogWarning("renseigne le rigidbody dans l'inspecteur !", this);
+        if (rb == null) Debug.LogWarning("renseigne le rigidbody dans l'inspecteur !", this);
 
         rb.AddForce(new Vector2(
             Random.Range(minSpawnEjectionForce.x, maxSpawnEjectionForce.x)+ Manager.Instance.playerScript.moveSpeed, 
@@ -27,9 +27,10 @@ public class SingleCoin : Collectible
 
     public override void OnUpdate()
     {
-        if (transform.position.y < -.5f)
+        if (transform.position.y < -.5f && rb.velocity.y<0)
         {
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
+            if (rb.velocity.magnitude < 1f) transform.position = new Vector2(transform.position.x, -0.5f);
         }
     }
 }

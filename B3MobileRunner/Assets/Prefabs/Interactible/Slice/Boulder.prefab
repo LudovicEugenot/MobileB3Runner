@@ -47,9 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutMat: {fileID: 2100000, guid: d494304d93527df44907a74fac41130f, type: 2}
+  rb: {fileID: 730038211202272185}
   myTransform: {fileID: 730038211202272191}
-  cutAmount: 0
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 2100000, guid: d494304d93527df44907a74fac41130f, type: 2}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -83,13 +87,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
   deathTime: 0.8
-  mySkinnedMeshrenderer: {fileID: 0}
-  isWithSkinnedMeshRenderer: 0
-  rb: {fileID: 730038211202272185}
+  cutAmount: 0
   amActive: 0
-  warningTextYOffset: 20
+  warningTextYOffset: -20
+  warningTextXOffset: -75
 --- !u!50 &730038211202272185
 Rigidbody2D:
   serializedVersion: 4

@@ -128,7 +128,7 @@ public class FingerController : MonoBehaviour
             {
                 ObjectToSlice slice;
                 if (rayHit.collider.transform.TryGetComponent(out slice))
-                    slice.GetSliced(rayHit.point, nextWorldPos - (Vector2)transform.position);
+                    slice.HitThis(rayHit.point, nextWorldPos - (Vector2)transform.position);
                 else
                 {
                     SlicedObjectBehaviour sob;
@@ -167,7 +167,7 @@ public class FingerController : MonoBehaviour
         if (collision.transform.CompareTag("ToKill"))
         {
             ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
-            enemyScript.GetSliced(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
+            enemyScript.HitThis(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
         }
     }
 

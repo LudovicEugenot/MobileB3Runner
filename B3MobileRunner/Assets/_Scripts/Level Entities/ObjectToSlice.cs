@@ -7,22 +7,27 @@ using EzySlice;
 public abstract class ObjectToSlice : MonoBehaviour
 {
     #region Initialization
-    public Material cutMat;
+    [Header("References")]
+    public Rigidbody2D rb;
     [SerializeField] Transform myTransform;
-    [HideInInspector] public int cutAmount = 0;
-    [SerializeField] AnimationCurve deathCurve;
-    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
-    [Range(0.1f, 3f)] public float deathTime = .8f;
-    protected Vector2 mainPartStartPos;
-    MeshRenderer[] myMeshRenderers;
-    [SerializeField] SkinnedMeshRenderer mySkinnedMeshrenderer;
     [SerializeField] bool isWithSkinnedMeshRenderer;
+    [SerializeField] SkinnedMeshRenderer mySkinnedMeshrenderer;
+    public Material cutMat;
+
+    [Header("Tweakable Values")]
+    [Range(1, 10)] public int healthPoints = 1;
+    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
+    [SerializeField] AnimationCurve deathCurve;
+    [Range(0.1f, 3f)] public float deathTime = .8f;
+
+
+    //Code related
+    [HideInInspector] public int cutAmount = 0;
+    MeshRenderer[] myMeshRenderers;
     Collider2D myCollider;
+    protected Vector2 mainPartStartPos;
     float deathLerp;
     float deathStartTime;
-
-    public Rigidbody2D rb;
-
     [HideInInspector] public bool amActive = false;
     bool amDying = false;
     bool startedDying = false;
@@ -35,7 +40,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
         myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
-        if(!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
+        if (!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
         myCollider = myTransform.GetComponent<Collider2D>();
         mainPartStartPos = transform.position;
     }
@@ -44,6 +49,8 @@ public abstract class ObjectToSlice : MonoBehaviour
     {
         if (Manager.Instance.gameOngoing)
         {
+            OnUpdate();
+
             if (amDying)
             {
                 DyingAnimation();
@@ -100,12 +107,35 @@ public abstract class ObjectToSlice : MonoBehaviour
         amActive = true;
     }
 
+    public void HitThis(Vector2 cutImpact, Vector2 cutDirection)
+    {
+        if (healthPoints > 1)
+        {
+            OnHit(cutImpact, cutDirection);
+        }
+        else
+        {
+            OnDeath(cutImpact, cutDirection);
+            GetSliced(cutImpact, cutDirection);
+        }
+    }
+
     public void Die()
     {
         amDying = true;
     }
 
-    protected virtual void OnDeath()
+    protected virtual void OnHit(Vector2 cutImpact, Vector2 cutDirection)
+    {
+
+    }
+
+    protected virtual void OnUpdate()
+    {
+
+    }
+
+    protected virtual void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
 
     }
@@ -133,15 +163,14 @@ public abstract class ObjectToSlice : MonoBehaviour
             Vector3.Cross(cutDirection, Camera.main.transform.forward));
         return plane;
     }*/
-
-    public virtual void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
+    protected virtual void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
     {
         cutAmount++;
         amDying = true;
         GameObject[] gos;
         if (isWithSkinnedMeshRenderer)
         {
-            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 1f), //WIP le 1f // rapprocher la coupe du centre de l'objet de moitié
+            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
         }
         else
@@ -198,7 +227,6 @@ public abstract class ObjectToSlice : MonoBehaviour
             5f,
             UnityEngine.Random.Range(-30f, 30f),
             this);
-        //////////////////WIP à enrichir quand on va vouloir couper plusieurs fois
 
         return slicedObject;
     }

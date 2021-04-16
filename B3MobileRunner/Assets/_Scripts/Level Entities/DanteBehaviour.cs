@@ -12,7 +12,7 @@ public class DanteBehaviour : MonoBehaviour
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
 
     [Header("Testing")]
-    [Range(2f, 6f)] public float moveSpeed = 2f;
+    [Range(4f, 8f)] public float moveSpeed = 4f;
     [SerializeField] bool isTestingSpeed = false;
 
     //Code
@@ -32,7 +32,7 @@ public class DanteBehaviour : MonoBehaviour
 
     private void InitPlayerValues()
     {
-        moveSpeed = ObjectsData.PlayerSlowestSpeed;
+        moveSpeed = ObjectsData.PlayerSpeedOverTime[0].y;
     }
 
     void Update()
@@ -60,15 +60,52 @@ public class DanteBehaviour : MonoBehaviour
 
         if (!isTestingSpeed)
         {
-            moveSpeed = Mathf.Lerp(
-                ObjectsData.PlayerSlowestSpeed,
-                ObjectsData.PlayerFastestSpeed,
-                Mathf.InverseLerp(
-                    Manager.Instance.gameStartTime,
-                    Manager.Instance.gameTimeMaxSpeed,
-                    Time.time));
+            moveSpeed = SpeedEvolution();
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
+    }
+
+    int speedLerpIndex = -1;
+    float previousSpeedValue; float nextSpeedValue;
+    float previousUpdateTime; float nextUpdateTime = 0f;
+    float SpeedEvolution()
+    {
+        if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime)
+        {
+            UpdateLerpValues();
+        }
+        return Mathf.Lerp(
+            previousSpeedValue,
+            nextSpeedValue,
+            Mathf.InverseLerp(
+                previousUpdateTime,
+                nextUpdateTime,
+                Time.time));
+    }
+
+    void UpdateLerpValues()
+    {
+        speedLerpIndex++;
+        previousUpdateTime = nextUpdateTime;
+        previousSpeedValue = nextSpeedValue;
+
+        //si l'in game time est compris dans les valeurs du tableau préfait, alors on augmente la vitesse selon ce tableau, 
+        //sinon, augmentation linéaire selon MaxSpeedGainOverTime
+        if (Time.time - Manager.Instance.gameStartTime < ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x)
+        {
+            //vitesses de PlayerSpeedOverTime
+            nextUpdateTime = ObjectsData.PlayerSpeedOverTime[speedLerpIndex + 1].x;
+            nextSpeedValue = ObjectsData.PlayerSpeedOverTime[speedLerpIndex + 1].y;
+        }
+        else
+        {
+            //gain de vitesse de MaxSpeedGainOverTime
+            nextUpdateTime =
+                Manager.Instance.gameStartTime +
+                ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x +
+                ObjectsData.MaxSpeedGainOverTime.x * speedLerpIndex - ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x;
+            nextSpeedValue += ObjectsData.MaxSpeedGainOverTime.y;
+        }
     }
 
     #region Death Related
@@ -109,7 +146,7 @@ public class DanteBehaviour : MonoBehaviour
         Manager.Instance.virtualCamera.LookAt = null;
         gameObject.layer = LayerMask.NameToLayer("PlayerDead");
 
-        rb2D.angularVelocity = 0f; //WIP le cube tourne avant sa mort et je veux pas qu'il tourne
+        rb2D.angularVelocity = 0f;
         rb2D.gravityScale = 0f;
         rb2D.velocity = Vector2.zero;
         yield return new WaitForSeconds(ohOhDeathTime);

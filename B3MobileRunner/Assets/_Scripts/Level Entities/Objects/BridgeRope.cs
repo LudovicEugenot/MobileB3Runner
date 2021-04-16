@@ -1,10 +1,11 @@
-﻿public class BridgeRope : ObjectToSlice
+﻿using UnityEngine;
+public class BridgeRope : ObjectToSlice
 {
-    //BridgeScript bridge;
+    [SerializeField]ObjectLinked bridgeLinked;
 
-    protected override void OnDeath()
+    protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
-        //bridge.Opened = true;
+        bridgeLinked.animator.SetTrigger("GetActivated");
     }
 
     public override void AliveBehaviour()

@@ -112,7 +112,6 @@ public class SlicedObjectBehaviour : MonoBehaviour
             force,
             Random.Range(-30f, 30f),
             OGScript);
-        //////////////////WIP à enrichir quand on va vouloir couper plusieurs fois
 
         return slicedObject;
     }
