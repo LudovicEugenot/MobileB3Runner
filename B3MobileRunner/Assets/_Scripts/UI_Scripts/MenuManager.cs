@@ -9,9 +9,10 @@ public class MenuManager : MonoBehaviour
 
     public void PlayGame()
     {
-        //SceneManager.UnloadSceneAsync("TitleMenuUI");
+        SceneManager.UnloadSceneAsync("TitleMenuUI");
+        SceneManager.LoadScene("LTN_TestScene");
         Time.timeScale = 1f;
-        gamePaused = true;
+        gamePaused = false;
     }
 
     public void PauseGame()
@@ -30,9 +31,9 @@ public class MenuManager : MonoBehaviour
 
     public void ExitGame()
     {
-        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        //SceneManager.LoadScene("LTN_TestS.cene");
-        //SceneManager.LoadScene("TitleMenuUI", LoadSceneMode.Additive);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        //SceneManager.UnloadSceneAsync("LTN_TestScene");
+        SceneManager.LoadScene("TitleMenuUI");
         Time.timeScale = 0f;
         gamePaused = true;
     }
