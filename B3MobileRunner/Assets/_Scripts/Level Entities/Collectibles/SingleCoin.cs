@@ -21,7 +21,7 @@ public class SingleCoin : Collectible
 
     public override void GetCollected()
     {
-        Manager.Instance.CoinAmount += ObjectsData.CoinValue;
+        Manager.Instance.CoinAmount += ObjectsData.CoinValue; //WIP feature mort qui collecte pièces quand il est au dessus du sol
         Destroy(gameObject);
     }
 
@@ -30,7 +30,8 @@ public class SingleCoin : Collectible
         if (transform.position.y < -.5f && rb.velocity.y<0)
         {
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
-            if (rb.velocity.magnitude < 1f) transform.position = new Vector2(transform.position.x, -0.5f);
+            if (rb.velocity.magnitude < 5f) transform.position = new Vector2(transform.position.x, -0.5f);
+            if (transform.position.y < -.6f) Debug.Log("HEY YO WTF, " + rb.velocity.magnitude, this);
         }
     }
 }

@@ -11,10 +11,25 @@ public abstract class ObjectToTap : MonoBehaviour
     [SerializeField] protected BoxCollider2D myCollider;
     [SerializeField] [Range(-4f, 0f)] protected float placeToCheckIfSolvedOffset = -1f;
     [SerializeField] protected ObjectLinked objectLinked;
+    [SerializeField] protected ParticleSystem FXParticleSystem;
 
     protected abstract bool placeToCheckIfSolvedVisualIsRelevant();
     private float PlaceToCheckIfSolved { get { return placeToCheckIfSolvedOffset + objectLinked.transform.position.x; } }
     #endregion
+
+    private void Awake()
+    {
+        #region set particle system
+        FXParticleSystem.gameObject.SetActive(true);
+        ParticleSystem.MainModule main = FXParticleSystem.main;
+        main.loop = false;
+        ParticleSystem.EmissionModule emission = FXParticleSystem.emission;
+        emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0f, 1, 1, 1, .01f) });
+        emission.rateOverTime = 0f;
+        FXParticleSystem.Stop(true);
+        FXParticleSystem.Clear(true);
+        #endregion
+    }
 
     protected void Start()
     {
@@ -47,6 +62,7 @@ public abstract class ObjectToTap : MonoBehaviour
     public void GetTapped()
     {
         amTapped = true;
+        FXParticleSystem.Play(true);
         GetTappedEvents();
     }
     public virtual void GetTappedEvents()
