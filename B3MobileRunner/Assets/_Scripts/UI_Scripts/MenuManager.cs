@@ -31,8 +31,8 @@ public class MenuManager : MonoBehaviour
 
     public void ExitGame()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        //SceneManager.UnloadSceneAsync("LTN_TestScene");
+        //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        SceneManager.UnloadSceneAsync("LTN_TestScene");
         SceneManager.LoadScene("TitleMenuUI");
         Time.timeScale = 0f;
         gamePaused = true;

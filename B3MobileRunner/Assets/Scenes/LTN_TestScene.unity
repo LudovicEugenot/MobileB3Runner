@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -151,6 +151,7 @@ RectTransform:
   - {fileID: 1750263568}
   - {fileID: 1525107233}
   - {fileID: 1440283233}
+  - {fileID: 672947104}
   m_Father: {fileID: 2135774271}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -762,8 +763,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 75089384}
-  part2: {fileID: 84284671}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 9
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -797,7 +803,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 9
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &83312239
@@ -1127,7 +1134,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &115406503
 BoxCollider2D:
@@ -1190,8 +1197,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb2D: {fileID: 115406504}
   myCollider: {fileID: 115406503}
-  moveSpeed: 2
   ohOhDeathTime: 1
+  moveSpeed: 2
+  isTestingSpeed: 0
 --- !u!23 &115406506
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1361,7 +1369,7 @@ Transform:
   m_Children:
   - {fileID: 69392024}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &142139038
 GameObject:
@@ -1625,6 +1633,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2118787428}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &183587937
 MonoBehaviour:
@@ -2272,7 +2291,7 @@ Transform:
   m_LocalScale: {x: 18, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &320100563
 GameObject:
@@ -3967,6 +3986,125 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670906110}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &672947103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 672947104}
+  - component: {fileID: 672947107}
+  - component: {fileID: 672947106}
+  - component: {fileID: 672947105}
+  m_Layer: 5
+  m_Name: Credits
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &672947104
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672947103}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1643085072}
+  m_Father: {fileID: 258276}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 143, y: -51}
+  m_SizeDelta: {x: 150, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &672947105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672947103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 672947106}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &672947106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672947103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &672947107
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 672947103}
+  m_CullTransparentMesh: 0
 --- !u!1 &682885422
 GameObject:
   m_ObjectHideFlags: 0
@@ -4396,8 +4534,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2502d692bdc58a8468b98f3d8fe3c8b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UI: {fileID: 0}
+  playerScript: {fileID: 0}
+  fingerController: {fileID: 0}
+  virtualCamera: {fileID: 0}
   gameOngoing: 0
-  player: {fileID: 115406502}
+  gameTimeMaxSpeed: 30
+  playerTrsf: {fileID: 0}
+  gameStartTime: 0
 --- !u!4 &756708105
 Transform:
   m_ObjectHideFlags: 0
@@ -4441,7 +4585,7 @@ Transform:
   m_Children:
   - {fileID: 1527787829}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &789370026
 GameObject:
@@ -5143,7 +5287,7 @@ Transform:
   m_LocalScale: {x: 30, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &894631264
 GameObject:
@@ -5233,7 +5377,7 @@ PrefabInstance:
     - target: {fileID: 2528620224705605579, guid: b55b7864404167f448188fdc1dafca1e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 24
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2528620224705605579, guid: b55b7864404167f448188fdc1dafca1e,
         type: 3}
@@ -5607,7 +5751,7 @@ Transform:
   m_Children:
   - {fileID: 1910425397}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006404691
 GameObject:
@@ -5837,7 +5981,7 @@ Transform:
   m_Children:
   - {fileID: 690360461}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1059912217
 GameObject:
@@ -5991,8 +6135,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 1100132178}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 0}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 1100132177}
-  endPlace: {fileID: 1735717551}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -6026,7 +6174,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -4.5
 --- !u!23 &1100132180
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6148,8 +6295,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 1108804984}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 0}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 1108804983}
-  endPlace: {fileID: 745622327}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -6183,7 +6334,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -4.5
 --- !u!23 &1108804986
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6777,7 +6927,7 @@ Transform:
   - {fileID: 1640734534}
   - {fileID: 1252980148}
   m_Father: {fileID: 0}
-  m_RootOrder: 20
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1252980147
 GameObject:
@@ -6846,8 +6996,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 43413485}
-  part2: {fileID: 355469076}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -6881,8 +7036,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!1 &1264028103
 GameObject:
   m_ObjectHideFlags: 0
@@ -7172,7 +7330,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 26
+  m_RootOrder: 27
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!1 &1283240872
 GameObject:
@@ -7462,7 +7620,7 @@ Transform:
   m_LocalScale: {x: 54, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1310909562
 GameObject:
@@ -7761,8 +7919,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 320100564}
-  part2: {fileID: 1264028104}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -7796,8 +7959,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!1 &1380443902
 GameObject:
   m_ObjectHideFlags: 0
@@ -8421,7 +8587,7 @@ Transform:
   - {fileID: 520272136}
   - {fileID: 974624822}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1458660772
 GameObject:
@@ -8693,8 +8859,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1678356530}
-  part2: {fileID: 803684431}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 6.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -8728,7 +8899,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 6.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &1496560659
@@ -9614,8 +9786,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 395154383}
-  part2: {fileID: 1854552448}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -9649,8 +9826,89 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
+--- !u!1 &1643085071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1643085072}
+  - component: {fileID: 1643085074}
+  - component: {fileID: 1643085073}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1643085072
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643085071}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 672947104}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1643085073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643085071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 27
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Credits
+--- !u!222 &1643085074
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643085071}
+  m_CullTransparentMesh: 0
 --- !u!1 &1644399309
 GameObject:
   m_ObjectHideFlags: 0
@@ -9711,7 +9969,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1678356529
 GameObject:
@@ -9849,7 +10107,7 @@ Transform:
   - {fileID: 1120426005}
   - {fileID: 1021854874}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1735717551
 GameObject:
@@ -10055,7 +10313,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1750263570}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2135774270}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1558673555}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1750263570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10126,7 +10406,7 @@ Transform:
   - {fileID: 1458660773}
   - {fileID: 645764513}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1768717071
 GameObject:
@@ -10394,8 +10674,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1560677677}
-  part2: {fileID: 37500795}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 5.5
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -10429,7 +10714,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 5.5
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &1851965554
@@ -11304,7 +11590,7 @@ Transform:
   - {fileID: 1100132177}
   - {fileID: 1108804983}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2020771276
 GameObject:
@@ -11337,7 +11623,7 @@ Transform:
   - {fileID: 2041355770}
   - {fileID: 66607724}
   m_Father: {fileID: 0}
-  m_RootOrder: 19
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2033189444
 GameObject:
@@ -11616,6 +11902,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049730499}
   m_CullTransparentMesh: 0
+--- !u!1 &2067054735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2067054738}
+  - component: {fileID: 2067054737}
+  - component: {fileID: 2067054736}
+  m_Layer: 5
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2067054736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067054735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &2067054737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067054735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &2067054738
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067054735}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 740, y: 360, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2097784711
 GameObject:
   m_ObjectHideFlags: 0
@@ -13324,8 +13676,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1062615025064411051}
-  part2: {fileID: 1062615024762328310}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -13359,8 +13716,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!1 &1062615024701687430
 GameObject:
   m_ObjectHideFlags: 0
@@ -13847,8 +14207,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1062615025401738474}
-  part2: {fileID: 1062615024331068185}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -13882,7 +14247,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!4 &1062615024962183912
@@ -14534,8 +14900,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1062615024429776550}
-  part2: {fileID: 1062615025105170362}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -14569,8 +14940,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!1 &1062615025214953840
 GameObject:
   m_ObjectHideFlags: 0
@@ -14750,8 +15124,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 1062615025277454624}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 0}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 1062615025277454627}
-  endPlace: {fileID: 1062615025841181917}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -14785,7 +15163,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -4.5
 --- !u!1 &1062615025277454626
 GameObject:
   m_ObjectHideFlags: 0
@@ -15147,8 +15524,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1062615025214953841}
-  part2: {fileID: 1062615024076497577}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -15182,8 +15564,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!50 &1062615025754161072
 Rigidbody2D:
   serializedVersion: 4
@@ -15217,8 +15602,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1062615025471155039}
-  part2: {fileID: 1062615024176550153}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -15252,7 +15642,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &1062615025754161074
@@ -15455,7 +15846,7 @@ Transform:
   - {fileID: 1062615025266277991}
   - {fileID: 1062615024962183912}
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1062615025940787589
 GameObject:
@@ -15487,8 +15878,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 1062615024994950637}
-  part2: {fileID: 1062615024428682448}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -15522,7 +15918,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!4 &1062615025940787594
@@ -15873,8 +16270,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913333122681027}
-  part2: {fileID: 4913913334013588117}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -15908,7 +16310,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &4913913332302847022
@@ -15978,8 +16381,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913333534261066}
-  part2: {fileID: 4913913332386481239}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 6.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -16013,7 +16421,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 6.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &4913913332311756476
@@ -16277,7 +16686,7 @@ Transform:
   - {fileID: 4913913332925931003}
   - {fileID: 4913913333632663924}
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 24
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4913913332438586677
 GameObject:
@@ -16403,8 +16812,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913333733080689}
-  part2: {fileID: 4913913334299275084}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -16438,7 +16852,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!4 &4913913332518834710
@@ -16529,8 +16944,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913332632674792}
-  part2: {fileID: 4913913333381533079}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -16564,7 +16984,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &4913913332521489314
@@ -16849,8 +17270,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913334050583042}
-  part2: {fileID: 4913913332391010954}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -16884,7 +17310,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &4913913332759641384
@@ -17185,8 +17612,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913333570518705}
-  part2: {fileID: 4913913333318858319}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -17220,7 +17652,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &4913913332875160370
@@ -17290,8 +17723,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913334296157498}
-  part2: {fileID: 4913913332815416358}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -17325,8 +17763,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!1 &4913913332881198052
 GameObject:
   m_ObjectHideFlags: 0
@@ -17447,8 +17888,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myCollider: {fileID: 4913913332911696572}
+  placeToCheckIfSolvedOffset: -1
+  objectLinked:
+    transform: {fileID: 0}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
   myTransform: {fileID: 4913913332911696575}
-  endPlace: {fileID: 4913913332482160449}
   completedCurve:
     serializedVersion: 2
     m_Curve:
@@ -17482,7 +17927,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  placeToCheckIfSolved: -4.5
 --- !u!1 &4913913332911696574
 GameObject:
   m_ObjectHideFlags: 0
@@ -18312,8 +18756,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913333797805111}
-  part2: {fileID: 4913913333428893546}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.8
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -18347,8 +18796,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.8
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!1 &4913913333489362202
 GameObject:
   m_ObjectHideFlags: 0
@@ -18395,8 +18847,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913333057722230}
-  part2: {fileID: 4913913334129569925}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -18430,7 +18887,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!4 &4913913333501917528
@@ -19396,8 +19854,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 4913913334042624006}
-  part2: {fileID: 4913913334062207249}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -19431,7 +19894,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!1 &4913913334037343874
@@ -21120,8 +21584,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 8266843709186488971}
-  part2: {fileID: 8266843708250942359}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -21155,8 +21624,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!50 &8266843708302568531
 Rigidbody2D:
   serializedVersion: 4
@@ -21320,8 +21792,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 8266843709699234240}
-  part2: {fileID: 8266843709183232253}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 5
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -21355,7 +21832,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 5
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!50 &8266843708480812454
@@ -21501,8 +21979,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 8266843708275858780}
-  part2: {fileID: 8266843709266994820}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -21536,8 +22019,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!50 &8266843708738813964
 Rigidbody2D:
   serializedVersion: 4
@@ -21605,8 +22091,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 8266843708010917746}
-  part2: {fileID: 8266843709435532580}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 10
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -21640,7 +22131,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 10
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!50 &8266843708797434781
@@ -21818,7 +22310,7 @@ Transform:
   - {fileID: 8266843708358900298}
   - {fileID: 8266843709598312133}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 23
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8266843708946805380
 GameObject:
@@ -23293,8 +23785,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd271c5caef2f1f4d9f20b8cb94110cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 8266843709768629126}
-  part2: {fileID: 8266843709936046299}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 2.36
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -23328,8 +23825,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 2.36
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
+  warningTextYOffset: 20
+  warningTextXOffset: -10
 --- !u!50 &8266843709992911529
 Rigidbody2D:
   serializedVersion: 4
@@ -23397,8 +23897,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  part1: {fileID: 8266843707941761223}
-  part2: {fileID: 8266843709017265972}
+  rb: {fileID: 0}
+  myTransform: {fileID: 0}
+  isWithSkinnedMeshRenderer: 0
+  mySkinnedMeshrenderer: {fileID: 0}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 7.4
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -23432,7 +23937,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 7.4
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
   speed: 3.81
 --- !u!50 &8266843709997539048
