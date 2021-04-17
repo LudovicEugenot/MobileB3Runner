@@ -1,17 +1,38 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-    #region Initiatlization
-    public static Manager Instance;
+    #region Initialization
+    [Header("References")]
+    public UIManager UI;
+    public DanteBehaviour playerScript;
+    public FingerController fingerController;
+    public Cinemachine.CinemachineVirtualCamera virtualCamera;
+
+    [Header("Game Info")]
     public bool gameOngoing = false;
-    public Transform player;
+    [Range(0f,300f)] public float gameTimeMaxSpeed = 30f;
+    public int CoinAmount
+    {
+        get { return _coinAmount; }
+        set
+        {
+            UI.UpdateCoinsUI(value);
+            //le juice du menu (ou sinon au sein de l'ui plutôt)
+            _coinAmount = value;
+        }
+    }
+
+    //other hidden useful stuff
+    public static Manager Instance;
+    [HideInInspector] public Transform playerTrsf;
+    [HideInInspector] public float gameStartTime;
+    int _coinAmount = 0;
     #endregion
 
     void Awake()
     {
+        #region Singleton
         if (!Instance)
         {
             Instance = this;
@@ -20,21 +41,22 @@ public class Manager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        #endregion
     }
 
     void Start()
     {
-        if (!player) Debug.LogWarning("Il faut mettre le runner ici", this);
+        if (!playerScript) Debug.LogWarning("Il faut mettre le runner ici", this);
+        playerTrsf = playerScript.transform;
 
-        gameOngoing = true;
+        GameInit();
     }
 
-    #region events
-    public event Action OnPlayerFail;
-
-    public void PlayerFail()
+    public void GameInit()
     {
-        OnPlayerFail?.Invoke();
+        gameOngoing = true;
+        gameStartTime = Time.time;
+        gameTimeMaxSpeed += gameStartTime;
+        CoinAmount = 0;
     }
-    #endregion
 }

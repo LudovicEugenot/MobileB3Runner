@@ -124,6 +124,64 @@ namespace EzySlice {
             return Slice(mesh, pl, crossRegion, crossIndex);
         }
 
+        /*
+         * Fonction de Ludo censée fonctionner avec des skinnedMeshRenderer
+         */
+        public static SlicedHull SliceSkinnedMeshRenderer(GameObject obj, Plane pl, TextureRegion crossRegion, Material crossMaterial, SkinnedMeshRenderer smr)
+        {
+            // cannot continue without a proper filter
+            if (smr == null)
+            {
+                Debug.LogWarning("EzySlice::Slice -> Provided GameObject must have a SkinnedMeshRenderer Component.");
+
+                return null;
+            }
+
+            Material[] materials = smr.sharedMaterials;
+
+            Mesh mesh = smr.sharedMesh;
+
+            // cannot slice a mesh that doesn't exist
+            if (mesh == null)
+            {
+                Debug.LogWarning("EzySlice::Slice -> Provided GameObject must have a Mesh that is not NULL.");
+
+                return null;
+            }
+
+            int submeshCount = mesh.subMeshCount;
+
+            // to make things straightforward, exit without slicing if the materials and mesh
+            // array don't match. This shouldn't happen anyway
+            if (materials.Length != submeshCount)
+            {
+                Debug.LogWarning("EzySlice::Slice -> Provided Material array must match the length of submeshes.");
+
+                return null;
+            }
+
+            // we need to find the index of the material for the cross section.
+            // default to the end of the array
+            int crossIndex = materials.Length;
+
+            // for cases where the sliced material is null, we will append the cross section to the end
+            // of the submesh array, this is because the application may want to set/change the material
+            // after slicing has occured, so we don't assume anything
+            if (crossMaterial != null)
+            {
+                for (int i = 0; i < crossIndex; i++)
+                {
+                    if (materials[i] == crossMaterial)
+                    {
+                        crossIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            return Slice(mesh, pl, crossRegion, crossIndex);
+        }
+
         /**
          * Slice the gameobject mesh (if any) using the Plane, which will generate
          * a maximum of 2 other Meshes.

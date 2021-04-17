@@ -22,6 +22,7 @@ public class FingerController : MonoBehaviour
     Vector3 inputScreenPosition;
     Vector3 touchWorldPosition;
     Vector2 inputLastPosition;
+    Vector2 inputPreviousPosition;
     Vector2 nextWorldPos;
     RaycastHit2D rayHit;
 
@@ -64,6 +65,7 @@ public class FingerController : MonoBehaviour
 
                 //StartCoroutine(DrawTapInput(touch.position));
 
+                inputPreviousPosition = inputLastPosition;
                 inputLastPosition = touch.position;
             }
 
@@ -89,8 +91,8 @@ public class FingerController : MonoBehaviour
 
         if (tapResult != null)
         {
-            ObjectToSolve enemyScript = tapResult.GetComponentInParent<ObjectToSolve>();
-            enemyScript.GetSolvedNerd();
+            ObjectToTap enemyScript = tapResult.GetComponentInParent<ObjectToTap>();
+            enemyScript.GetTapped();
         }
     }
 
@@ -102,7 +104,7 @@ public class FingerController : MonoBehaviour
             isCutting = true;
 
             nextWorldPos = Vector2.Lerp(transform.position, WorldPositionFromInput(inputPosition), sliceLerp);
-            IfBigSliceRaycast(nextWorldPos);
+            IfBigSwipeInputRaycast(nextWorldPos);
             transform.position = nextWorldPos;
             TrailFollowInput(inputPosition);
         }
@@ -112,19 +114,27 @@ public class FingerController : MonoBehaviour
             trail.emitting = false;
             trail.Clear();
         }
-
+        inputPreviousPosition = inputLastPosition;
         inputLastPosition = inputPosition;
     }
 
-    private void IfBigSliceRaycast(Vector2 nextWorldPos)
+    private void IfBigSwipeInputRaycast(Vector2 nextWorldPos)
     {
-        if (Vector2.Distance(transform.position, nextWorldPos) > 1f)
+        if (Vector2.Distance(transform.position, nextWorldPos) > .6f)
         {
-            rayHit = Physics2D.Raycast(transform.position, nextWorldPos, Vector2.Distance(transform.position, nextWorldPos), LayerMask.GetMask("ToKill"));
+            rayHit = Physics2D.Raycast(transform.position, nextWorldPos, Vector2.Distance(transform.position, nextWorldPos), LayerMask.GetMask("ToKill", "SlicedObject"));
 
             if (rayHit)
             {
-                rayHit.collider.transform.parent.GetComponent<ObjectToSlice>().Die();
+                ObjectToSlice slice;
+                if (rayHit.collider.transform.TryGetComponent(out slice))
+                    slice.HitThis(rayHit.point, nextWorldPos - (Vector2)transform.position);
+                else
+                {
+                    SlicedObjectBehaviour sob;
+                    if (rayHit.collider.transform.TryGetComponent(out sob))
+                        sob.GetSliced(rayHit.point, nextWorldPos - (Vector2)transform.position);
+                }
             }
         }
     }
@@ -157,7 +167,7 @@ public class FingerController : MonoBehaviour
         if (collision.transform.CompareTag("ToKill"))
         {
             ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
-            enemyScript.Die();
+            enemyScript.HitThis(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
         }
     }
 
@@ -189,7 +199,6 @@ public class FingerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, fingerRadius);
     }
-
 
     //DEBUG
     /*IEnumerator DrawTapInput(Vector2 pos)
