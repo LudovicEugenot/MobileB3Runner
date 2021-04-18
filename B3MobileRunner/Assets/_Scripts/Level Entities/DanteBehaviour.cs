@@ -113,6 +113,7 @@ public class DanteBehaviour : MonoBehaviour
     {
         if (collision.transform.CompareTag("ToKill"))
         {
+            Debug.Log(collision.transform.name + " killed me.",collision.transform.gameObject);
             StartCoroutine(Die());
         }
     }
@@ -127,6 +128,7 @@ public class DanteBehaviour : MonoBehaviour
     public void DoorInMyFace()
     {
         Debug.Log("<Color=red> Bonk the door (et prog la mort par porte btw) </Color=red>");
+        StartCoroutine(Die());
         //Script de mort après avoir touché la porte
     }
 

@@ -65,9 +65,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutMat: {fileID: 0}
+  rb: {fileID: 5554104353278364178}
   myTransform: {fileID: 5554104353278364205}
-  cutAmount: 0
+  isWithSkinnedMeshRenderer: 1
+  mySkinnedMeshrenderer: {fileID: 9097572456529329705}
+  cutMat: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 9
   deathCurve:
     serializedVersion: 2
     m_Curve:
@@ -101,11 +105,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  distanceToActivation: 9
   deathTime: 0.8
-  mySkinnedMeshrenderer: {fileID: 9097572456529329705}
-  isWithSkinnedMeshRenderer: 1
-  rb: {fileID: 5554104353278364178}
+  cutAmount: 0
   amActive: 0
   speed: 10
 --- !u!61 &5554104353278364179
@@ -232,6 +233,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 155.6405
       objectReference: {fileID: 0}
+    - target: {fileID: -132619189760919362, guid: 90099dfb6e1b22941a1473247e18d9ab,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9724c45f8e73dbc4db761563412508fe, type: 2}
     - target: {fileID: 919132149155446097, guid: 90099dfb6e1b22941a1473247e18d9ab,
         type: 3}
       propertyPath: m_Name

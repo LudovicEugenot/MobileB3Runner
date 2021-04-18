@@ -49,7 +49,7 @@ public abstract class ObjectToTap : MonoBehaviour
             {
                 IHaveBeenTapped();
             }
-            else if (Manager.Instance.playerTrsf.position.x > PlaceToCheckIfSolved)
+            else if (Manager.Instance.playerTrsf.position.x > PlaceToCheckIfSolved && Manager.Instance.playerTrsf.position.x - PlaceToCheckIfSolved < 5f)
             {
                 PlayerFail();
             }
