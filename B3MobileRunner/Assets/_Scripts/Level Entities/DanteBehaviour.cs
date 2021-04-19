@@ -21,13 +21,15 @@ public class DanteBehaviour : MonoBehaviour
     bool amFalling = false;
     float moveSpeedMalus = 0f;
     #endregion
-
     void Start()
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
         myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
         if (!isTestingSpeed)
+        {
+            UpdateLerpValues();
             InitPlayerValues();
+        }
     }
 
     private void InitPlayerValues()
@@ -63,10 +65,12 @@ public class DanteBehaviour : MonoBehaviour
             moveSpeed = SpeedEvolution();
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
+
+        if (transform.position.x > 200f) UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
     }
 
     int speedLerpIndex = -1;
-    float previousSpeedValue; float nextSpeedValue;
+    float previousSpeedValue = 1; float nextSpeedValue = 1;
     float previousUpdateTime; float nextUpdateTime = 0f;
     float SpeedEvolution()
     {
@@ -113,7 +117,7 @@ public class DanteBehaviour : MonoBehaviour
     {
         if (collision.transform.CompareTag("ToKill"))
         {
-            Debug.Log(collision.transform.name + " killed me.",collision.transform.gameObject);
+            Debug.Log(collision.transform.name + " killed me.", collision.transform.gameObject);
             StartCoroutine(Die());
         }
     }
@@ -137,6 +141,11 @@ public class DanteBehaviour : MonoBehaviour
         if (amDead)//if (transform.position.y < -1 || Physics.Raycast(transform.position, Vector2.right, 0.6f))
         {
             transform.Rotate(Vector3.forward, -145f * Time.deltaTime);
+
+            if (transform.position.y < -20)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
+            }
         }
     }
 
@@ -151,6 +160,7 @@ public class DanteBehaviour : MonoBehaviour
         rb2D.angularVelocity = 0f;
         rb2D.gravityScale = 0f;
         rb2D.velocity = Vector2.zero;
+        transform.GetChild(0).GetComponent<Animator>().enabled = false; //WIP
         yield return new WaitForSeconds(ohOhDeathTime);
         //Ragdoll start
         transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);

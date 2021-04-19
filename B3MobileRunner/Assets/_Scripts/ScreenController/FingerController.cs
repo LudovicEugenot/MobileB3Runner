@@ -26,7 +26,7 @@ public class FingerController : MonoBehaviour
     Vector3 touchWorldPosition;
     Vector2 inputLastPosition;
     Vector2 inputPreviousPosition;
-    Vector2 nextWorldPos;
+    Vector2 nextWorldPos = new Vector2(-55,0);//WIP
     RaycastHit2D rayHit;
 
     int emptyTapFXIndex = 0;
