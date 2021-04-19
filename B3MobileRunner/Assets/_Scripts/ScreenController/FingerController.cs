@@ -126,7 +126,6 @@ public class FingerController : MonoBehaviour
     private void TapObjectsToSolve(Vector2 inputPosition)
     {
         transform.position = WorldPositionFromInput(inputPosition);
-        point2 = transform.position;
 
         tapResult = Physics2D.OverlapCircle(transform.position, fingerRadius, LayerMask.GetMask("ToSolve"));
 
@@ -188,9 +187,7 @@ public class FingerController : MonoBehaviour
     Vector3 WorldPositionFromInput(Vector2 inputPosition)
     {
         viewportPoint = Camera.main.ScreenToViewportPoint(inputPosition);
-        point0 = viewportPoint;
         viewportPoint.z = Mathf.Abs(Camera.main.transform.position.z);
-        point1 = viewportPoint;
         return Camera.main.ViewportToWorldPoint(viewportPoint);
     }
 
@@ -204,28 +201,14 @@ public class FingerController : MonoBehaviour
         touchWorldPosition.z = -trail3dDistanceToPath;
         trail.transform.position = touchWorldPosition;
     }
-    Vector3 point0 = new Vector3(1000,1000,1000), point1 = new Vector3(1000, 1000, 1000), point2 = new Vector3(1000, 1000, 1000), point3 = new Vector3(1000, 1000, 1000), point4 = new Vector3(1000, 1000, 1000);
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(point1 + new Vector3(.05f, 0), point0 + new Vector3(.05f, 0));
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(point1, point2);
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(point2 + new Vector3(.1f, 0), point3 + new Vector3(.1f, 0));
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(point3 + new Vector3(.15f, 0), point4 + new Vector3(.15f, 0));
+    #endregion
 
-    }
-
+    #region DEBUG
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, fingerRadius);
     }
-    #endregion
-
-    #region DEBUG
     /*IEnumerator DrawTapInput(Vector2 pos)
     {
         int segments = 360;
