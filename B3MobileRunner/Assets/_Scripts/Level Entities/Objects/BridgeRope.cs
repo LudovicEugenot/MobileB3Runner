@@ -6,6 +6,7 @@ public class BridgeRope : ObjectToSlice
     protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
         bridgeLinked.animator.SetTrigger("GetActivated");
+        base.OnDeath(cutImpact, cutDirection);
     }
 
     public override void AliveBehaviour()

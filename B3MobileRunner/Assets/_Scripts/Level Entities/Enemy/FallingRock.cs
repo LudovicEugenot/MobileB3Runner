@@ -87,6 +87,7 @@ public class FallingRock : ObjectToSlice //UI à faire
     {
         if (rockWarning)
             Destroy(rockWarning.gameObject);
+        base.OnDeath(cutImpact, cutDirection);
     }
 
     Vector2 UIPosFromWorldPos(Vector2 worldPos)

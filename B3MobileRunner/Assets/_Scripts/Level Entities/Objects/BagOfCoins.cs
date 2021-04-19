@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BagOfCoins : ObjectToSlice
+public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et c'est problématique
 {
     #region Initialization
     [SerializeField] GameObject coinPrefabToRelease;
@@ -20,10 +20,10 @@ public class BagOfCoins : ObjectToSlice
     {
         if (lerpValue > 0f)
         {
-            lerpValue = Mathf.InverseLerp(startTimeNoise, startTimeNoise + delayBetweenHits, Time.time);
+            lerpValue = Mathf.InverseLerp(startTimeNoise + delayBetweenHits, startTimeNoise, Time.time);
             transform.position = Vector2.Lerp(
-                originalPosition + new Vector2(Random.Range(-noiseAmount, noiseAmount), Random.Range(-noiseAmount, noiseAmount)),
                 originalPosition,
+                originalPosition + new Vector2(Random.Range(-noiseAmount, noiseAmount), Random.Range(-noiseAmount, noiseAmount)),
                 lerpValue);
         }
         else
@@ -36,9 +36,11 @@ public class BagOfCoins : ObjectToSlice
     {
         if (canBeHit)
         {
+            healthPoints--;
             canBeHit = false;
             lerpValue = 1;
             startTimeNoise = Time.time;
+
             for (int i = 0; i < coinsReleasedOnHit; i++)
             {
                 Instantiate(coinPrefabToRelease, transform.position, Quaternion.identity);
@@ -50,9 +52,13 @@ public class BagOfCoins : ObjectToSlice
 
     protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
-        for (int i = 0; i < coinsReleasedOnDeath; i++)
+        if (canBeHit)
         {
-            Instantiate(coinPrefabToRelease, transform.position, Quaternion.identity);
+            for (int i = 0; i < coinsReleasedOnDeath - coinsReleasedOnHit; i++)
+            {
+                Instantiate(coinPrefabToRelease, transform.position, Quaternion.identity);
+            }
+            base.OnDeath(cutImpact, cutDirection);
         }
     }
 

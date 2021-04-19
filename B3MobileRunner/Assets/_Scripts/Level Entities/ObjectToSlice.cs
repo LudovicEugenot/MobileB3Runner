@@ -116,7 +116,6 @@ public abstract class ObjectToSlice : MonoBehaviour
         else
         {
             OnDeath(cutImpact, cutDirection);
-            GetSliced(cutImpact, cutDirection);
         }
     }
 
@@ -137,7 +136,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     protected virtual void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
-
+        GetSliced(cutImpact, cutDirection);
     }
 
     private void OnDrawGizmosSelected()
