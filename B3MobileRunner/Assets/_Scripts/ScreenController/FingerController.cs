@@ -10,13 +10,16 @@ public class FingerController : MonoBehaviour
     /*[SerializeField] [Range(0f, 1f)]*/
     float sliceLerp = 0.6f;
 
-    [Header("Other things")]
-    [SerializeField] [Range(0f, 10f)] float trail3dDistanceToPath = 3f;
-    public bool isCutting = false;
-
-
+    [Header("References")]
     [SerializeField] CircleCollider2D cutCollider;
     [SerializeField] TrailRenderer trail;
+    [SerializeField] EmptyTapFX[] emptyTapFX;
+
+    [Header("Other things")]
+    [SerializeField] [Range(0f, 10f)] float trail3dDistanceToPath = 3f;
+    [HideInInspector] public bool isCutting = false;
+
+
 
     Touch touch;
     Vector3 inputScreenPosition;
@@ -26,14 +29,17 @@ public class FingerController : MonoBehaviour
     Vector2 nextWorldPos;
     RaycastHit2D rayHit;
 
+    int emptyTapFXIndex = 0;
     bool mouseInControl = false;
     #endregion
 
+    #region UNITY_CALLBACKS
     private void Start()
     {
         cutCollider = cutCollider ? cutCollider : transform.GetComponent<CircleCollider2D>();
         cutCollider.radius = fingerRadius;
     }
+
     void Update()
     {
         cutCollider.enabled = isCutting;
@@ -53,6 +59,17 @@ public class FingerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.CompareTag("ToKill"))
+        {
+            ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
+            enemyScript.HitThis(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
+        }
+    }
+    #endregion
+
+    #region PRIVATE_FUNCTIONS
     void TouchControl()
     {
         if (Input.touchCount > 0)
@@ -82,10 +99,34 @@ public class FingerController : MonoBehaviour
         }
     }
 
+    void MouseControl()
+    {
+        Vector2 mousePos = Input.mousePosition;
+        //StartCoroutine(DrawTapInput(mousePos));
+        if (Input.GetMouseButtonDown(0))
+        {
+            TapObjectsToSolve(mousePos);
+            //StartCoroutine(DrawTapInput(mousePos));
+            inputLastPosition = mousePos;
+        }
+
+        if (Input.GetMouseButton(0))
+        {
+            SliceObjectsToKill(mousePos);
+        }
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            isCutting = false;
+            trail.Clear();
+        }
+    }
+
     Collider2D tapResult;
     private void TapObjectsToSolve(Vector2 inputPosition)
     {
         transform.position = WorldPositionFromInput(inputPosition);
+        point2 = transform.position;
 
         tapResult = Physics2D.OverlapCircle(transform.position, fingerRadius, LayerMask.GetMask("ToSolve"));
 
@@ -93,6 +134,10 @@ public class FingerController : MonoBehaviour
         {
             ObjectToTap enemyScript = tapResult.GetComponentInParent<ObjectToTap>();
             enemyScript.GetTapped();
+        }
+        else
+        {
+            emptyTapFX[emptyTapFXIndex++ % emptyTapFX.Length].EmptyTapThisWorldPosition(transform.position);
         }
     }
 
@@ -139,16 +184,14 @@ public class FingerController : MonoBehaviour
         }
     }
 
+    Vector3 viewportPoint;
     Vector3 WorldPositionFromInput(Vector2 inputPosition)
     {
-        //Je prends la position de l'écran
-        inputScreenPosition = inputPosition;
-        //Je ramène la position de l'écran en coordonnée 0 en Z (par rapport à la cam)
-        inputScreenPosition.z = Mathf.Abs(Camera.main.transform.position.z);
-        touchWorldPosition = Camera.main.ScreenToWorldPoint(inputScreenPosition);
-        touchWorldPosition.z = 0f;
-        //Je set la cible du collider (ce transform) à où le collider doit aller
-        return touchWorldPosition;
+        viewportPoint = Camera.main.ScreenToViewportPoint(inputPosition);
+        point0 = viewportPoint;
+        viewportPoint.z = Mathf.Abs(Camera.main.transform.position.z);
+        point1 = viewportPoint;
+        return Camera.main.ViewportToWorldPoint(viewportPoint);
     }
 
     void TrailFollowInput(Vector2 inputPosition)
@@ -161,37 +204,18 @@ public class FingerController : MonoBehaviour
         touchWorldPosition.z = -trail3dDistanceToPath;
         trail.transform.position = touchWorldPosition;
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
+    Vector3 point0 = new Vector3(1000,1000,1000), point1 = new Vector3(1000, 1000, 1000), point2 = new Vector3(1000, 1000, 1000), point3 = new Vector3(1000, 1000, 1000), point4 = new Vector3(1000, 1000, 1000);
+    private void OnDrawGizmos()
     {
-        if (collision.transform.CompareTag("ToKill"))
-        {
-            ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
-            enemyScript.HitThis(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
-        }
-    }
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(point1 + new Vector3(.05f, 0), point0 + new Vector3(.05f, 0));
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(point1, point2);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawLine(point2 + new Vector3(.1f, 0), point3 + new Vector3(.1f, 0));
+        Gizmos.color = Color.blue;
+        Gizmos.DrawLine(point3 + new Vector3(.15f, 0), point4 + new Vector3(.15f, 0));
 
-    void MouseControl()
-    {
-        Vector2 mousePos = Input.mousePosition;
-        //StartCoroutine(DrawTapInput(mousePos));
-        if (Input.GetMouseButtonDown(0))
-        {
-            TapObjectsToSolve(mousePos);
-            //StartCoroutine(DrawTapInput(mousePos));
-            inputLastPosition = mousePos;
-        }
-
-        if (Input.GetMouseButton(0))
-        {
-            SliceObjectsToKill(mousePos);
-        }
-
-        if (Input.GetMouseButtonUp(0))
-        {
-            isCutting = false;
-            trail.Clear();
-        }
     }
 
     private void OnDrawGizmosSelected()
@@ -199,8 +223,9 @@ public class FingerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, fingerRadius);
     }
+    #endregion
 
-    //DEBUG
+    #region DEBUG
     /*IEnumerator DrawTapInput(Vector2 pos)
     {
         int segments = 360;
@@ -228,4 +253,5 @@ public class FingerController : MonoBehaviour
         //yield return new WaitForSeconds(1f);
         Destroy(line.gameObject);
     }*/
+    #endregion
 }

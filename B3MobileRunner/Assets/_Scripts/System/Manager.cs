@@ -30,6 +30,7 @@ public class Manager : MonoBehaviour
     int _coinAmount = 0;
     #endregion
 
+    #region UNITY_CALLBACKS
     void Awake()
     {
         #region Singleton
@@ -51,7 +52,9 @@ public class Manager : MonoBehaviour
 
         GameInit();
     }
+    #endregion
 
+    #region PUBLIC_FUNCTIONS
     public void GameInit()
     {
         gameOngoing = true;
@@ -59,4 +62,5 @@ public class Manager : MonoBehaviour
         gameTimeMaxSpeed += gameStartTime;
         CoinAmount = 0;
     }
+    #endregion
 }
