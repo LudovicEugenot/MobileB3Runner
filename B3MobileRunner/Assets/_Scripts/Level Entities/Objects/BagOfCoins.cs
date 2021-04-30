@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et c'est problématique
+public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et c'est problématique lors du noise par exemple
 {
     #region Initialization
     [SerializeField] GameObject coinPrefabToRelease;
@@ -12,6 +12,7 @@ public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et 
 
     //code related
     Vector2 originalPosition;
+    Quaternion originalRotation;
     bool canBeHit;
     float lerpValue = 0f;
     float startTimeNoise = 0f;
@@ -25,6 +26,7 @@ public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et 
                 originalPosition,
                 originalPosition + new Vector2(Random.Range(-noiseAmount, noiseAmount), Random.Range(-noiseAmount, noiseAmount)),
                 lerpValue);
+            if (lerpValue < .3f) transform.rotation = Quaternion.Lerp(originalRotation, transform.rotation, .2f);
         }
         else
         {
@@ -66,6 +68,7 @@ public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et 
     public override void Init()
     {
         originalPosition = transform.position;
+        originalRotation = transform.rotation;
         distanceToActivation = 100f;
     }
 

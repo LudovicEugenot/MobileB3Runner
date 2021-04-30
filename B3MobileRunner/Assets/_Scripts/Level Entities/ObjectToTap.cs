@@ -61,9 +61,12 @@ public abstract class ObjectToTap : MonoBehaviour
     protected abstract void PlayerFail();
     public void GetTapped()
     {
-        amTapped = true;
-        FXParticleSystem.Play(true);
-        GetTappedEvents();
+        if (!amTapped)
+        {
+            amTapped = true;
+            FXParticleSystem.Play(true);
+            GetTappedEvents();
+        }
     }
     public virtual void GetTappedEvents()
     {

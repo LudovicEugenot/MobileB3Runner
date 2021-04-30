@@ -70,8 +70,8 @@ public class DanteBehaviour : MonoBehaviour
     }
 
     int speedLerpIndex = -1;
-    float previousSpeedValue = 1; float nextSpeedValue = 1;
-    float previousUpdateTime; float nextUpdateTime = 0f;
+    float previousSpeedValue = 1; float nextSpeedValue = -1f;
+    float previousUpdateTime; float nextUpdateTime = -1f;
     float SpeedEvolution()
     {
         if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime)
@@ -90,6 +90,11 @@ public class DanteBehaviour : MonoBehaviour
     void UpdateLerpValues()
     {
         speedLerpIndex++;
+        if (nextSpeedValue < 0) //première frame
+        {
+            nextUpdateTime = ObjectsData.PlayerSpeedOverTime[0].x;
+            nextSpeedValue = ObjectsData.PlayerSpeedOverTime[0].y;
+        }
         previousUpdateTime = nextUpdateTime;
         previousSpeedValue = nextSpeedValue;
 

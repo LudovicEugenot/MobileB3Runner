@@ -16,8 +16,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     [Header("Tweakable Values")]
     [Range(1, 10)] public int healthPoints = 1;
-    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
-    [SerializeField] AnimationCurve deathCurve;
+    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 9f;
     [Range(0.1f, 3f)] public float deathTime = .8f;
 
 
@@ -82,19 +81,11 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (deathLerp <= 0 && !startedDying)
             {
-                /*rb.simulated = false;
-                part1StartPos = part1.position;
-                part2StartPos = part2.position;
-                part1EndPos = part1.position + new Vector3(3, 0, 0);
-                part2EndPos = part2.position - new Vector3(3, 0, 0);*/
                 deathStartTime = Time.time;
                 startedDying = true;
 
             }
-            deathLerp = deathCurve.Evaluate((Time.time - deathStartTime) / deathTime);
-            /*
-            part1.position = Vector3.Lerp(part1StartPos, part1EndPos, deathLerp);
-            part2.position = Vector3.Lerp(part2StartPos, part2EndPos, deathLerp);*/
+            deathLerp = (Time.time - deathStartTime) / deathTime;
         }
         else
         {
