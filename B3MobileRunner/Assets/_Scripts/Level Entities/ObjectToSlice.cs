@@ -24,7 +24,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     [HideInInspector] public int cutAmount = 0;
     MeshRenderer[] myMeshRenderers;
     Collider2D myCollider;
-    protected Vector2 mainPartStartPos;
+    protected Vector2 startPos;
     float deathLerp;
     float deathStartTime;
     [HideInInspector] public bool amActive = false;
@@ -35,13 +35,13 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     private void Start()
     {
-        Init();
-
-        rb = GetComponent<Rigidbody2D>();
+        rb = rb ? rb : GetComponent<Rigidbody2D>();
         myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
         if (!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
         myCollider = myTransform.GetComponent<Collider2D>();
-        mainPartStartPos = transform.position;
+        startPos = transform.position;
+
+        Init();
     }
 
     private void Update()
@@ -117,7 +117,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     protected virtual void OnHit(Vector2 cutImpact, Vector2 cutDirection)
     {
-
+        healthPoints--;
     }
 
     protected virtual void OnUpdate()
@@ -168,6 +168,7 @@ public abstract class ObjectToSlice : MonoBehaviour
             gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
         }
+
         if (gos != null)
         {
             foreach (GameObject gameObject in gos)

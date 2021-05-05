@@ -15,7 +15,7 @@ public class FlyingTombStone : ObjectToSlice
     bool startedBehaviour = false;
 
     //arrêt et noise
-    float noiseAmount = .8f; //WIP à enleer quand l'anim est là
+    float noiseAmount = .5f; //WIP à enleer quand l'anim est là
     bool startedNoise = false;
     bool finishedNoise = false;
     bool startedFalling = false;
@@ -32,17 +32,18 @@ public class FlyingTombStone : ObjectToSlice
         //flag 1 si j'ai pas dépassé la coordonnée originale : 
         if (transform.position.x < endBehaviourPosX)
         {
-            outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
-            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ 1 * playerSpeed, ObjectsData.TombstoneMenacingPlayerHeight);
-            lerpValue = Mathf.Clamp01(Mathf.InverseLerp(startBehaviourPosX, endBehaviourPosX, transform.position.x) * 2.5f);
-
-            transform.position = Vector2.Lerp(outsideScreenLeftPos, menacingPlayerPos, lerpValue);
-
             if (!startedBehaviour)
             {
-                startBehaviourPosX = transform.position.x;
+                transform.position = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
+                startBehaviourPosX = playerPos.x + ObjectsData.ScreenLimitLeft;
                 startedBehaviour = true;
             }
+
+            outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
+            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .4f * playerSpeed+3.2f, ObjectsData.TombstoneMenacingPlayerHeight);
+            lerpValue = Mathf.Clamp01(Mathf.InverseLerp(startBehaviourPosX, endBehaviourPosX, transform.position.x) * 1.5f);
+
+            transform.position = Vector2.Lerp(outsideScreenLeftPos, menacingPlayerPos, lerpValue);
         }
         else if (!finishedNoise)
         {
@@ -51,7 +52,7 @@ public class FlyingTombStone : ObjectToSlice
                 startedNoise = true;
                 lerpValue = 0;
                 startTimeNoise = Time.time;
-                endTimeNoise = startTimeNoise + 1;//WIP (voir tombé rocher)
+                endTimeNoise = startTimeNoise + 1f - .08f * playerSpeed;
                 noisePos = transform.position;
             }
 
@@ -69,7 +70,7 @@ public class FlyingTombStone : ObjectToSlice
             {
                 startedFalling = true;
                 rb.simulated = true;
-                rb.AddForce(Vector2.down * 1.5f, ForceMode2D.Impulse);
+                rb.AddForce(Vector2.down * playerSpeed * 10f, ForceMode2D.Impulse);
             }
             //continue de tomber avec gravité
         }
@@ -83,7 +84,7 @@ public class FlyingTombStone : ObjectToSlice
     {
         rb.simulated = false;
         endBehaviourPosX = transform.position.x;
-        transform.position = new Vector3(transform.position.x - .1f, 20f, 0f); //mettre la pierre bien au dessus de l'écran et à gauche pour le if ligne 22
+        transform.position = new Vector3(transform.position.x - .1f, 20f, 0f); //mettre la pierre bien au dessus de l'écran et à gauche pour le if ligne 33
     }
 
     protected override void OnUpdate()

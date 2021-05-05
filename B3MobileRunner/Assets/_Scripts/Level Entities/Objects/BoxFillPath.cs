@@ -58,4 +58,9 @@ public class BoxFillPath : ObjectToTap
         Gizmos.DrawCube(objectLinked.transform.position /*+ (Vector2)transform.position*/, Vector3.one);
         Gizmos.DrawLine(transform.position, objectLinked.transform.position);
     }
+
+    protected override void BehaviourBeforeGettingTapped()
+    {
+
+    }
 }

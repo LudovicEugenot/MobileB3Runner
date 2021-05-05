@@ -25,7 +25,7 @@ public static class ObjectsData
 
     //Scene names
     public static string MainMenu { get { return "TitleMenuUI"; } }
-    public static string GameScene { get { return "Milestone19_04"; } }
+    public static string MainGameScene { get { return "Milestone19_04"; } }
 
 
     //Limites de l'écran en coordonnées monde par rapport à la position de Dante sur l'écran (si la cam bouge au fur et à mesure de la partie : à update WIP)

@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8776779016968859344}
-  - component: {fileID: 5748751430006275987}
+  - component: {fileID: 3985087865397297284}
   - component: {fileID: 2051158308184481278}
   - component: {fileID: 5827397477288718235}
   - component: {fileID: 2427016385157969902}
   - component: {fileID: 3768096124780590070}
   m_Layer: 8
-  m_Name: CoinBag
+  m_Name: CoinBagTap
   m_TagString: ToKill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,34 +35,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5748751430006275987
+--- !u!114 &3985087865397297284
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6594335724116408410}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 337360c17cb2a654180204dfdf7c3806, type: 3}
+  m_Script: {fileID: 11500000, guid: efb14c5162dd6af42a88e1bf8227cf3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 3768096124780590070}
-  myTransform: {fileID: 8776779016968859344}
-  isWithSkinnedMeshRenderer: 0
-  mySkinnedMeshrenderer: {fileID: 0}
-  cutMat: {fileID: 0}
-  healthPoints: 3
-  distanceToActivation: 4
-  deathTime: 0.8
-  cutAmount: 0
-  amActive: 0
-  coinPrefabToRelease: {fileID: 3152434857113397856, guid: 608425184f2866944974716eb2bb27eb,
-    type: 3}
-  coinsReleasedOnHit: 3
-  coinsReleasedOnDeath: 12
-  delayBetweenHits: 0.5
-  noiseAmount: 1
+  myCollider: {fileID: 2427016385157969902}
+  placeToCheckIfSolvedOffset: -1
+  tapCount: 3
+  objectLinked:
+    transform: {fileID: 0}
+    collider: {fileID: 0}
+    animator: {fileID: 0}
+  FXParticleSystem: {fileID: 0}
+  coinPrefabToRelease: {fileID: 6594335724116408410}
+  coinsReleasedOnHit: 2
+  coinsReleasedOnDeath: 8
+  delayBetweenHits: 0.15
+  noiseAmount: 0.42
 --- !u!33 &2051158308184481278
 MeshFilter:
   m_ObjectHideFlags: 0

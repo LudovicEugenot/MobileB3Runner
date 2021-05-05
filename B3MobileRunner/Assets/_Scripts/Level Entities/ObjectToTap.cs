@@ -6,10 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class ObjectToTap : MonoBehaviour
 {
-    #region Initiatlization
-    protected bool amTapped = false;
+    #region Initialization
+    protected bool amTappedOut = false;
+    protected bool amTappedNotMax = false;
     [SerializeField] protected BoxCollider2D myCollider;
     [SerializeField] [Range(-4f, 0f)] protected float placeToCheckIfSolvedOffset = -1f;
+    [SerializeField] [Range(1, 15)] protected int tapCount = 1;
     [SerializeField] protected ObjectLinked objectLinked;
     [SerializeField] protected ParticleSystem FXParticleSystem;
 
@@ -45,7 +47,7 @@ public abstract class ObjectToTap : MonoBehaviour
     {
         if (Manager.Instance.gameOngoing)
         {
-            if (amTapped)
+            if (amTappedOut)
             {
                 IHaveBeenTapped();
             }
@@ -53,21 +55,36 @@ public abstract class ObjectToTap : MonoBehaviour
             {
                 PlayerFail();
             }
+            else
+            {
+                BehaviourBeforeGettingTapped();
+            }
         }
     }
 
     protected abstract void OnStart();
+    protected abstract void BehaviourBeforeGettingTapped();
     protected abstract void IHaveBeenTapped();
     protected abstract void PlayerFail();
     public void GetTapped()
     {
-        if (!amTapped)
+        if (tapCount > 1)
         {
-            amTapped = true;
+            GetTappedNotMax();
+        }
+        else if (!amTappedOut)
+        {
+            amTappedOut = true;
             FXParticleSystem.Play(true);
             GetTappedEvents();
         }
     }
+
+    protected virtual void GetTappedNotMax()
+    {
+
+    }
+
     public virtual void GetTappedEvents()
     {
 

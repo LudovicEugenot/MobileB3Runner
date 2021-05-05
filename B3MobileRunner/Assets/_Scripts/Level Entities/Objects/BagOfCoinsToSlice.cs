@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class BagOfCoins : ObjectToSlice //WIP C'est des ennemis actuellement et c'est problématique lors du noise par exemple
+public class BagOfCoinsToSlice : ObjectToSlice //WIP C'est des ennemis actuellement et c'est problématique lors du noise par exemple
 {
     #region Initialization
     [SerializeField] GameObject coinPrefabToRelease;

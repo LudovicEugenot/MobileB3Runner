@@ -7,6 +7,7 @@ public class DanteBehaviour : MonoBehaviour
     [Header("References")]
     public Rigidbody2D rb2D;
     public Collider2D myCollider;
+    public Animator animator;
 
     [Header("Values")]
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
@@ -25,6 +26,7 @@ public class DanteBehaviour : MonoBehaviour
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
         myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
+        animator = animator ? animator : GetComponentInChildren<Animator>();
         if (!isTestingSpeed)
         {
             UpdateLerpValues();
@@ -39,6 +41,7 @@ public class DanteBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K)) Debug.Break();
         if (!amDying)
         {
             MovementUpdate();
@@ -63,6 +66,11 @@ public class DanteBehaviour : MonoBehaviour
         if (!isTestingSpeed)
         {
             moveSpeed = SpeedEvolution();
+            //adaptation de l'animation à chaque palier de vitesse
+            if (moveSpeed % 1f < .05f)
+            {
+                animator.speed = moveSpeed*.15f;
+            }
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
 
