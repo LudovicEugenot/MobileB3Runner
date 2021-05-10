@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     [Header("References")]
     public RectTransform rockWarningParent;
     public RectTransform rockWarningPrefab;
+    [SerializeField] TMP_Text coinText;
 
     //Useful hidden renferences
     [HideInInspector] public Rect screenSize; 
@@ -15,5 +16,10 @@ public class UIManager : MonoBehaviour
     void Start()
     {
         screenSize = GetComponent<Canvas>().pixelRect;
+    }
+
+    public void UpdateCoinsUI(int coinsAmount)
+    {
+        coinText.text = "Coins : " + coinsAmount.ToString();
     }
 }

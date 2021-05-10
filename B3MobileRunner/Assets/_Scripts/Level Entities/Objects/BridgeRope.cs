@@ -1,13 +1,12 @@
-﻿using System.Collections;
-using UnityEngine;
-
+﻿using UnityEngine;
 public class BridgeRope : ObjectToSlice
 {
-    //BridgeScript bridge;
+    [SerializeField]ObjectLinked bridgeLinked;
 
-    protected override void OnDeath()
+    protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
-        //bridge.Opened = true;
+        bridgeLinked.animator.SetTrigger("GetActivated");
+        base.OnDeath(cutImpact, cutDirection);
     }
 
     public override void AliveBehaviour()

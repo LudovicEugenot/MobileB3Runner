@@ -1,29 +1,28 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Levier : ObjectToTap
 {
-    Collider2D doorCollider;
-    float doorOpeningLerp = 0f;
+    [SerializeField] Animator leverAnimator;
     //objectLinked = ouverture porte
 
-    protected override void Init()
+    protected override void OnStart()
     {
-        doorCollider = objectLinked.GetComponent<Collider2D>();
-        doorCollider.isTrigger = false;
+        objectLinked.collider.isTrigger = false;
     }
 
     protected override void IHaveBeenTapped()
     {
-        if (doorOpeningLerp < .99f)
+        leverAnimator.SetTrigger("GetActivated");
+        objectLinked.GetActivated();
+        /*if (doorOpeningLerp < .99f)
         {
             //événements sur la première frame
             if (doorOpeningLerp <= 0f)
             {
-                doorCollider.isTrigger = true;
+                objectLinked.collider.isTrigger = true;
             }
             doorOpeningLerp += Time.deltaTime;
-        }
+        }*/
     }
     public override void GetTappedEvents()
     {
@@ -32,5 +31,10 @@ public class Levier : ObjectToTap
     protected override void PlayerFail()
     {
         Manager.Instance.playerScript.DoorInMyFace();
+    }
+
+    protected override bool placeToCheckIfSolvedVisualIsRelevant()
+    {
+        return true;
     }
 }

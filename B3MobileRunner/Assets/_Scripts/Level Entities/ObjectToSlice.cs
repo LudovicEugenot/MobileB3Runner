@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using EzySlice;
 
@@ -8,22 +7,27 @@ using EzySlice;
 public abstract class ObjectToSlice : MonoBehaviour
 {
     #region Initialization
-    [SerializeField] Transform part1;
-    //[SerializeField] Transform part2;
-    [SerializeField] AnimationCurve deathCurve;
+    [Header("References")]
+    public Rigidbody2D rb;
+    [SerializeField] Transform myTransform;
+    [SerializeField] bool isWithSkinnedMeshRenderer;
+    [SerializeField] SkinnedMeshRenderer mySkinnedMeshrenderer;
+    public Material cutMat;
+
+    [Header("Tweakable Values")]
+    [Range(1, 10)] public int healthPoints = 1;
     [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
-    [SerializeField] [Range(0.1f, 3f)] float deathTime = .8f;
+    [SerializeField] AnimationCurve deathCurve;
+    [Range(0.1f, 3f)] public float deathTime = .8f;
+
+
+    //Code related
+    [HideInInspector] public int cutAmount = 0;
+    MeshRenderer[] myMeshRenderers;
+    Collider2D myCollider;
     protected Vector2 mainPartStartPos;
-    Vector2 part1StartPos;
-    //Vector2 part2StartPos;
-    Vector2 part1EndPos;
-    //Vector2 part2EndPos;
-    Mesh myMesh;
     float deathLerp;
     float deathStartTime;
-
-    protected Rigidbody2D rb;
-
     [HideInInspector] public bool amActive = false;
     bool amDying = false;
     bool startedDying = false;
@@ -35,9 +39,9 @@ public abstract class ObjectToSlice : MonoBehaviour
         Init();
 
         rb = GetComponent<Rigidbody2D>();
-        part1 = part1 ? part1 : transform;// transform.GetChild(0).transform;
-        myMesh = part1.GetComponent<Mesh>();
-        //part2 = part2 ? part2 : transform.GetChild(1).transform;
+        myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
+        if (!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
+        myCollider = myTransform.GetComponent<Collider2D>();
         mainPartStartPos = transform.position;
     }
 
@@ -45,13 +49,15 @@ public abstract class ObjectToSlice : MonoBehaviour
     {
         if (Manager.Instance.gameOngoing)
         {
+            OnUpdate();
+
             if (amDying)
             {
                 DyingAnimation();
             }
             else if (!amActive)
             {
-                if (Mathf.Abs(Manager.Instance.playerTrsf.position.x - (transform.position.x - distanceToActivation)) < 1f)
+                if (Manager.Instance.playerTrsf.position.x > transform.position.x - distanceToActivation)
                 {
                     GetActive();
                 }
@@ -101,14 +107,36 @@ public abstract class ObjectToSlice : MonoBehaviour
         amActive = true;
     }
 
+    public void HitThis(Vector2 cutImpact, Vector2 cutDirection)
+    {
+        if (healthPoints > 1)
+        {
+            OnHit(cutImpact, cutDirection);
+        }
+        else
+        {
+            OnDeath(cutImpact, cutDirection);
+        }
+    }
+
     public void Die()
     {
         amDying = true;
     }
 
-    protected virtual void OnDeath()
+    protected virtual void OnHit(Vector2 cutImpact, Vector2 cutDirection)
     {
 
+    }
+
+    protected virtual void OnUpdate()
+    {
+
+    }
+
+    protected virtual void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
+    {
+        GetSliced(cutImpact, cutDirection);
     }
 
     private void OnDrawGizmosSelected()
@@ -125,7 +153,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
 
 
-    EzySlice.Plane plane;
+    /*EzySlice.Plane plane;
     private EzySlice.Plane GetPlane(Vector2 cutImpact, Vector2 cutDirection)
     {
         plane = new EzySlice.Plane();
@@ -133,43 +161,55 @@ public abstract class ObjectToSlice : MonoBehaviour
             Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet
             Vector3.Cross(cutDirection, Camera.main.transform.forward));
         return plane;
-    }
-
-    public virtual void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
+    }*/
+    protected virtual void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
     {
+        cutAmount++;
         amDying = true;
-
-        SlicedHull slicedHull = part1.gameObject.Slice(//GetPlane(cutImpact, cutDirection)
-            Vector3.Lerp(cutImpact, transform.position,  0.5f), // rapprocher la coupe du centre de l'objet de moitié
-            Vector3.Cross(cutDirection, Camera.main.transform.forward), 
-            part1.GetComponent<MeshRenderer>().material);
-        if (slicedHull != null)
+        GameObject[] gos;
+        if (isWithSkinnedMeshRenderer)
         {
-            GameObject lower = slicedHull.CreateLowerHull();
-            GameObject upper = slicedHull.CreateUpperHull();
-            GameObjectDisappear();
-
-            SetUpSlicedObject(lower);
-            SetUpSlicedObject(upper);
+            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
+            Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
         }
+        else
+        {
+            gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+            Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
+        }
+        if (gos != null)
+        {
+            foreach (GameObject gameObject in gos)
+            {
+                SetUpSlicedObject(gameObject, cutDirection);
+            }
+        }
+        else
+        {
+            Debug.LogError(gameObject.name + " destroyed like a very bad boy.", this);
+        }
+        GameObjectDisappear();
     }
 
     void GameObjectDisappear()
     {
-        foreach (MeshRenderer meshRenderer in transform.GetComponentsInChildren<MeshRenderer>())
+        if (isWithSkinnedMeshRenderer)
         {
-            meshRenderer.enabled = false;
+            mySkinnedMeshrenderer.enabled = false;
         }
-        foreach (Collider2D collider in transform.GetComponentsInChildren<Collider2D>())
+        else
         {
-            collider.enabled = false;
+            foreach (MeshRenderer mesh in myMeshRenderers)
+                mesh.enabled = false;
         }
+
+        myCollider.enabled = false;
 
         rb.velocity = Vector2.zero;
         rb.simulated = false;
     }
 
-    GameObject SetUpSlicedObject(GameObject slicedObject)
+    GameObject SetUpSlicedObject(GameObject slicedObject, Vector2 _direction)
     {
         slicedObject.transform.SetParent(transform);
         slicedObject.tag = "SlicedObject";
@@ -177,9 +217,15 @@ public abstract class ObjectToSlice : MonoBehaviour
 
         /*BoxCollider2D col = */
         slicedObject.AddComponent<BoxCollider2D>();
+        slicedObject.AddComponent<Rigidbody2D>();
 
-        slicedObject.AddComponent<SlicedObjectBehaviour>().SetUp(transform.position, slicedObject.transform.position - transform.position, deathTime, 1f, UnityEngine.Random.Range(-360f, 360f));
-        //////////////////WIP à enrichir quand on va vouloir couper plusieurs fois
+        slicedObject.AddComponent<SlicedObjectBehaviour>().SetUp(
+            transform.position,
+            _direction,
+            deathTime,
+            5f,
+            UnityEngine.Random.Range(-30f, 30f),
+            this);
 
         return slicedObject;
     }
