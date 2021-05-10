@@ -6,6 +6,8 @@ public class FingerController : MonoBehaviour
     #region Initialization
     [Header("Touch Properties")]
     [SerializeField] float minCuttingSpeed = 0.1f;
+    [Tooltip("Max Time for a tap input between beginning touching the screen and letting go of the screen")]
+    [SerializeField] [Range(0, 0.5f)] float maxTapTiming = 0.2f;
     [SerializeField] [Range(.01f, 2f)] float fingerRadius = 0.1f;
     /*[SerializeField] [Range(0f, 1f)]*/
     float sliceLerp = 0.6f;
@@ -25,12 +27,16 @@ public class FingerController : MonoBehaviour
     Vector3 inputScreenPosition;
     Vector3 touchWorldPosition;
     Vector2 inputLastPosition;
+    Vector2 inputFirstPosition;
     Vector2 inputPreviousPosition;
     Vector2 nextWorldPos = new Vector2(-55,0);//WIP
     RaycastHit2D rayHit;
 
     int emptyTapFXIndex = 0;
     bool mouseInControl = false;
+    float inputStartTime;
+    bool hasBegunCutting = false;
+    bool hasTriedCutting = false;
     #endregion
 
     #region UNITY_CALLBACKS
@@ -75,15 +81,10 @@ public class FingerController : MonoBehaviour
         if (Input.touchCount > 0)
         {
             touch = Input.GetTouch(0);
-            //StartCoroutine(DrawTapInput(touch.position));
             if (touch.phase == TouchPhase.Began)
             {
-                TapObjectsToSolve(touch.position);
-
-                //StartCoroutine(DrawTapInput(touch.position));
-
-                inputPreviousPosition = inputLastPosition;
-                inputLastPosition = touch.position;
+                inputPreviousPosition = inputFirstPosition = inputLastPosition = touch.position;
+                inputStartTime = Time.time;
             }
 
             if (touch.phase == TouchPhase.Moved)
@@ -93,6 +94,11 @@ public class FingerController : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
+                if(Time.time<inputStartTime + maxTapTiming)
+                {
+                    TapObjectsToSolve(inputFirstPosition);
+                }
+                hasBegunCutting = false;
                 isCutting = false;
                 trail.Clear();
             }
@@ -101,22 +107,25 @@ public class FingerController : MonoBehaviour
 
     void MouseControl()
     {
-        Vector2 mousePos = Input.mousePosition;
-        //StartCoroutine(DrawTapInput(mousePos));
         if (Input.GetMouseButtonDown(0))
         {
-            TapObjectsToSolve(mousePos);
-            //StartCoroutine(DrawTapInput(mousePos));
-            inputLastPosition = mousePos;
+            inputPreviousPosition = inputFirstPosition = inputLastPosition = Input.mousePosition;
+            inputStartTime = Time.time;
         }
 
         if (Input.GetMouseButton(0))
         {
-            SliceObjectsToKill(mousePos);
+            SliceObjectsToKill(Input.mousePosition);
         }
 
         if (Input.GetMouseButtonUp(0))
         {
+            if (Time.time < inputStartTime + maxTapTiming && !hasTriedCutting)
+            {
+                TapObjectsToSolve(inputFirstPosition);
+            }
+            hasBegunCutting = false;
+            hasTriedCutting = false;
             isCutting = false;
             trail.Clear();
         }
@@ -144,6 +153,14 @@ public class FingerController : MonoBehaviour
     {
         if (Vector2.Distance(inputLastPosition, inputPosition) * Time.deltaTime > minCuttingSpeed)
         {
+            if (!hasBegunCutting)
+            {
+                hasBegunCutting = hasTriedCutting = true;
+                inputPreviousPosition = inputLastPosition = inputPosition;
+                transform.position = nextWorldPos = WorldPositionFromInput(inputPosition);
+                trail.emitting = true;
+                trail.Clear();
+            }
             trail.emitting = true;
             isCutting = true;
 
@@ -154,6 +171,7 @@ public class FingerController : MonoBehaviour
         }
         else
         {
+            hasBegunCutting = false;
             isCutting = false;
             trail.emitting = false;
             trail.Clear();
