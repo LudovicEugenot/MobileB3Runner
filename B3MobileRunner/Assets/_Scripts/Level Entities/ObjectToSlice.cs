@@ -4,6 +4,7 @@ using EzySlice;
 
 [SelectionBase]
 [Serializable]
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class ObjectToSlice : MonoBehaviour
 {
     #region Initialization
@@ -16,7 +17,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     [Header("Tweakable Values")]
     [Range(1, 10)] public int healthPoints = 1;
-    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 9f;
+    [SerializeField] [Range(-4f, 20f)] protected float distanceToActivation = 9f;
     [Range(0.1f, 3f)] public float deathTime = .8f;
 
 
@@ -28,7 +29,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     float deathLerp;
     float deathStartTime;
     [HideInInspector] public bool amActive = false;
-    bool amDying = false;
+    protected bool amDying = false;
     bool startedDying = false;
     protected abstract bool distanceToActivationVisualIsRelevant();
     #endregion
@@ -75,7 +76,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     public abstract void Init();
     public abstract void AliveBehaviour();
 
-    private void DyingAnimation()
+    protected virtual void DyingAnimation()
     {
         if (deathLerp < .99)
         {

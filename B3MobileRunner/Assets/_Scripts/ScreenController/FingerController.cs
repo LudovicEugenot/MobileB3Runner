@@ -29,7 +29,7 @@ public class FingerController : MonoBehaviour
     Vector2 inputLastPosition;
     Vector2 inputFirstPosition;
     Vector2 inputPreviousPosition;
-    Vector2 nextWorldPos = new Vector2(-55,0);//WIP
+    Vector2 nextWorldPos;
     RaycastHit2D rayHit;
 
     int emptyTapFXIndex = 0;
@@ -70,6 +70,14 @@ public class FingerController : MonoBehaviour
         if (collision.transform.CompareTag("ToKill"))
         {
             ObjectToSlice enemyScript = collision.collider.GetComponentInParent<ObjectToSlice>();
+            enemyScript.HitThis(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        if (collider.transform.CompareTag("Sliceable"))
+        {
+            ObjectToSlice enemyScript = collider.GetComponentInParent<ObjectToSlice>();
             enemyScript.HitThis(transform.position, nextWorldPos - (Vector2)WorldPositionFromInput(inputPreviousPosition));
         }
     }
@@ -184,7 +192,7 @@ public class FingerController : MonoBehaviour
     {
         if (Vector2.Distance(transform.position, nextWorldPos) > .6f)
         {
-            rayHit = Physics2D.Raycast(transform.position, nextWorldPos, Vector2.Distance(transform.position, nextWorldPos), LayerMask.GetMask("ToKill", "SlicedObject"));
+            rayHit = Physics2D.Raycast(transform.position, nextWorldPos, Vector2.Distance(transform.position, nextWorldPos), LayerMask.GetMask("ToKill", "Sliceable", "SlicedObject"));
 
             if (rayHit)
             {

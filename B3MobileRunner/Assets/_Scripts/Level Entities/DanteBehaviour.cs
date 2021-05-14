@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[SelectionBase]
 public class DanteBehaviour : MonoBehaviour
 {
     #region Initialization
@@ -13,7 +14,7 @@ public class DanteBehaviour : MonoBehaviour
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
 
     [Header("Testing")]
-    [Range(4f, 8f)] public float moveSpeed = 4f;
+    [Range(4f, 12f)] public float moveSpeed = 4f;
     [SerializeField] bool isTestingSpeed = false;
 
     //Code
