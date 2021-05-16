@@ -39,8 +39,6 @@ public class BadApple : ObjectToSlice
         for (int i = 0; i < wormCountInApple; i++)
         {
             worm = Instantiate(wormPrefab, transform.position, Quaternion.identity);
-            BadAppleWorm script = worm.GetComponent<BadAppleWorm>(); //WIP
-            //script.FonctionDInit();
         }
     }
 }
