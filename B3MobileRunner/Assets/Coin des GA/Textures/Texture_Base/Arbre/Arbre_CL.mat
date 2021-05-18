@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Arbre_CL
-  m_Shader: {fileID: -6465566751694194690, guid: 783349a7f3294124d9f515433f94cf5b,
+  m_Shader: {fileID: -6465566751694194690, guid: 09cafd0ce6c454043ae265994dfc8bcb,
     type: 3}
   m_ShaderKeywords: _NORMALMAP
   m_LightmapFlags: 4
@@ -34,7 +34,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_1C4CF9D1:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 90b49c3a59738914cbd53c7bee0cd2a9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -63,6 +63,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_214BAE56_Texture_1:
         m_Texture: {fileID: 2800000, guid: 6786736851ad8ba4d8ede7a519b23692, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_37278F61_Texture_1:
+        m_Texture: {fileID: 2800000, guid: e0c22c3113717b144a6180992faf61a4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_6EE10627_Texture_1:
@@ -100,7 +104,9 @@ Material:
     m_Floats:
     - Vector1_131A89EB: 3.5
     - Vector1_1B6331E1: 3
+    - Vector1_39C3F45: 0
     - Vector1_42C0110B: 193.21
+    - Vector1_45831FD: 0.8
     - Vector1_D433544D: 0.25
     - _AlphaClip: 0
     - _Blend: 0
