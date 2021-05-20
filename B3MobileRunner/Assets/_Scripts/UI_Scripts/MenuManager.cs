@@ -10,7 +10,7 @@ public class MenuManager : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.UnloadSceneAsync("TitleMenuUI");
-        SceneManager.LoadScene("LTN_TestScene");
+        SceneManager.LoadScene("Milestone19_04");
         Time.timeScale = 1f;
         gamePaused = false;
     }
@@ -32,7 +32,7 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.UnloadSceneAsync("LTN_TestScene");
+        SceneManager.UnloadSceneAsync("Milestone19_04");
         SceneManager.LoadScene("TitleMenuUI");
         Time.timeScale = 0f;
         gamePaused = true;

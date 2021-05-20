@@ -9,7 +9,7 @@ public class BoxFillPath : ObjectToTap
     Vector2 partEndPos;
     float completedLerp;
     float completedStartTime;
-    float completedTime = .8f;
+    float completedTime = 4f;
 
     bool startedCompleting = false;
     #endregion
@@ -31,7 +31,7 @@ public class BoxFillPath : ObjectToTap
                 completedStartTime = Time.time;
                 startedCompleting = true;
             }
-            completedLerp = completedCurve.Evaluate((Time.time - completedStartTime) / completedTime);
+            completedLerp = completedCurve.Evaluate((Time.time - completedStartTime) * Manager.Instance.playerScript.moveSpeed / completedTime);
 
             myTransform.position = Vector3.Lerp(partStartPos, partEndPos, completedLerp);
         }
@@ -57,5 +57,10 @@ public class BoxFillPath : ObjectToTap
         Gizmos.color = Color.red;
         Gizmos.DrawCube(objectLinked.transform.position /*+ (Vector2)transform.position*/, Vector3.one);
         Gizmos.DrawLine(transform.position, objectLinked.transform.position);
+    }
+
+    protected override void BehaviourBeforeGettingTapped()
+    {
+
     }
 }

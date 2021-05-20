@@ -1,25 +1,60 @@
 ﻿using UnityEngine;
 public class BridgeRope : ObjectToSlice
 {
-    [SerializeField]ObjectLinked bridgeLinked;
+    [SerializeField] Transform bridgeLinked;
+    [SerializeField] Collider2D bridgeCollider;
+    [SerializeField] Animator animator;
+    [SerializeField] AnimationCurve bridgeGettingDown;
+    [SerializeField] Vector3 ropeFinalPos;
+
+    [Tooltip("Time of bridge animation at lowest run speed.")]
+    [SerializeField] [Range(.5f, 5f)] float bridgeAnimationTime;
+
+    float lerpValue = 0f;
+    float startTimeRopeCut;
+    bool amSolved = false;
+    Vector3 originalRopePos;
 
     protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
-        bridgeLinked.animator.SetTrigger("GetActivated");
+        bridgeCollider.isTrigger = true;
+        startTimeRopeCut = Time.time;
+        amDying = true; //trigger l'update de DyingAnimation
+
+        animator.SetTrigger("GetActivated");
+    }
+
+    protected override void DyingAnimation()
+    {
+        if (lerpValue < 1)
+        {
+            lerpValue = Mathf.InverseLerp(startTimeRopeCut, startTimeRopeCut + bridgeAnimationTime / Manager.Instance.playerScript.moveSpeed, Time.time);
+            bridgeLinked.eulerAngles = new Vector3(0, 0, -bridgeGettingDown.Evaluate(lerpValue));
+            transform.localPosition = Vector3.Lerp(originalRopePos, ropeFinalPos, Mathf.Clamp01(lerpValue * 4));
+
+        }
+        else if (transform.position.x < Manager.Instance.playerTrsf.position.x + ObjectsData.ScreenLimitLeft - 4)
+        {
+            Destroy(transform.parent.gameObject);
+        }
     }
 
     public override void AliveBehaviour()
     {
-
+        if (!amSolved)
+        {
+            Manager.Instance.playerScript.DoorInMyFace();
+        }
     }
 
     public override void Init()
     {
-
+        bridgeCollider.isTrigger = false;
+        originalRopePos = transform.localPosition;
     }
 
     protected override bool distanceToActivationVisualIsRelevant()
     {
-        return false;
+        return true;
     }
 }

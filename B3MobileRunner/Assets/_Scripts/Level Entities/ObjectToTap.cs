@@ -6,15 +6,32 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class ObjectToTap : MonoBehaviour
 {
-    #region Initiatlization
-    protected bool amTapped = false;
+    #region Initialization
+    protected bool amTappedOut = false;
+    protected bool amTappedNotMax = false;
     [SerializeField] protected BoxCollider2D myCollider;
     [SerializeField] [Range(-4f, 0f)] protected float placeToCheckIfSolvedOffset = -1f;
+    [SerializeField] [Range(1, 15)] protected int tapCount = 1;
     [SerializeField] protected ObjectLinked objectLinked;
+    [SerializeField] protected ParticleSystem FXParticleSystem;
 
     protected abstract bool placeToCheckIfSolvedVisualIsRelevant();
     private float PlaceToCheckIfSolved { get { return placeToCheckIfSolvedOffset + objectLinked.transform.position.x; } }
     #endregion
+
+    private void Awake()
+    {
+        #region set particle system
+        FXParticleSystem.gameObject.SetActive(true);
+        ParticleSystem.MainModule main = FXParticleSystem.main;
+        main.loop = false;
+        ParticleSystem.EmissionModule emission = FXParticleSystem.emission;
+        emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0f, 1, 1, 1, .01f) });
+        emission.rateOverTime = 0f;
+        FXParticleSystem.Stop(true);
+        FXParticleSystem.Clear(true);
+        #endregion
+    }
 
     protected void Start()
     {
@@ -30,25 +47,44 @@ public abstract class ObjectToTap : MonoBehaviour
     {
         if (Manager.Instance.gameOngoing)
         {
-            if (amTapped)
+            if (amTappedOut)
             {
                 IHaveBeenTapped();
             }
-            else if (Manager.Instance.playerTrsf.position.x > PlaceToCheckIfSolved)
+            else if (Manager.Instance.playerTrsf.position.x > PlaceToCheckIfSolved && Manager.Instance.playerTrsf.position.x - PlaceToCheckIfSolved < 5f)
             {
                 PlayerFail();
+            }
+            else
+            {
+                BehaviourBeforeGettingTapped();
             }
         }
     }
 
     protected abstract void OnStart();
+    protected abstract void BehaviourBeforeGettingTapped();
     protected abstract void IHaveBeenTapped();
     protected abstract void PlayerFail();
     public void GetTapped()
     {
-        amTapped = true;
-        GetTappedEvents();
+        if (tapCount > 1)
+        {
+            GetTappedNotMax();
+        }
+        else if (!amTappedOut)
+        {
+            amTappedOut = true;
+            FXParticleSystem.Play(true);
+            GetTappedEvents();
+        }
     }
+
+    protected virtual void GetTappedNotMax()
+    {
+
+    }
+
     public virtual void GetTappedEvents()
     {
 

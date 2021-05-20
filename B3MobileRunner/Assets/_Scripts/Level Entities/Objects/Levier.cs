@@ -37,4 +37,9 @@ public class Levier : ObjectToTap
     {
         return true;
     }
+
+    protected override void BehaviourBeforeGettingTapped()
+    {
+
+    }
 }

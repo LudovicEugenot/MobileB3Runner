@@ -11,7 +11,6 @@ public class Manager : MonoBehaviour
 
     [Header("Game Info")]
     public bool gameOngoing = false;
-    [Range(0f,300f)] public float gameTimeMaxSpeed = 30f;
     public int CoinAmount
     {
         get { return _coinAmount; }
@@ -27,9 +26,11 @@ public class Manager : MonoBehaviour
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
     [HideInInspector] public float gameStartTime;
+    [HideInInspector] public int currentFloor; //premier étage 1, deuxième étage 2...
     int _coinAmount = 0;
     #endregion
 
+    #region UNITY_CALLBACKS
     void Awake()
     {
         #region Singleton
@@ -51,12 +52,14 @@ public class Manager : MonoBehaviour
 
         GameInit();
     }
+    #endregion
 
+    #region PUBLIC_FUNCTIONS
     public void GameInit()
     {
         gameOngoing = true;
         gameStartTime = Time.time;
-        gameTimeMaxSpeed += gameStartTime;
         CoinAmount = 0;
     }
+    #endregion
 }

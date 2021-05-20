@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[SelectionBase]
 public class DanteBehaviour : MonoBehaviour
 {
     #region Initialization
     [Header("References")]
     public Rigidbody2D rb2D;
     public Collider2D myCollider;
+    public Animator animator;
 
     [Header("Values")]
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
 
     [Header("Testing")]
-    [Range(4f, 8f)] public float moveSpeed = 4f;
+    [Range(4f, 12f)] public float moveSpeed = 4f;
     [SerializeField] bool isTestingSpeed = false;
 
     //Code
@@ -21,13 +23,16 @@ public class DanteBehaviour : MonoBehaviour
     bool amFalling = false;
     float moveSpeedMalus = 0f;
     #endregion
-
     void Start()
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
         myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
+        animator = animator ? animator : GetComponentInChildren<Animator>();
         if (!isTestingSpeed)
+        {
+            UpdateLerpValues();
             InitPlayerValues();
+        }
     }
 
     private void InitPlayerValues()
@@ -37,6 +42,7 @@ public class DanteBehaviour : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.K)) Debug.Break();
         if (!amDying)
         {
             MovementUpdate();
@@ -61,13 +67,20 @@ public class DanteBehaviour : MonoBehaviour
         if (!isTestingSpeed)
         {
             moveSpeed = SpeedEvolution();
+            //adaptation de l'animation à chaque palier de vitesse
+            if (moveSpeed % 1f < .05f)
+            {
+                animator.speed = moveSpeed*.15f;
+            }
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
+
+        if (transform.position.x > 200f) UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
     }
 
     int speedLerpIndex = -1;
-    float previousSpeedValue; float nextSpeedValue;
-    float previousUpdateTime; float nextUpdateTime = 0f;
+    float previousSpeedValue = 1; float nextSpeedValue = -1f;
+    float previousUpdateTime; float nextUpdateTime = -1f;
     float SpeedEvolution()
     {
         if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime)
@@ -86,6 +99,11 @@ public class DanteBehaviour : MonoBehaviour
     void UpdateLerpValues()
     {
         speedLerpIndex++;
+        if (nextSpeedValue < 0) //première frame
+        {
+            nextUpdateTime = ObjectsData.PlayerSpeedOverTime[0].x;
+            nextSpeedValue = ObjectsData.PlayerSpeedOverTime[0].y;
+        }
         previousUpdateTime = nextUpdateTime;
         previousSpeedValue = nextSpeedValue;
 
@@ -113,6 +131,7 @@ public class DanteBehaviour : MonoBehaviour
     {
         if (collision.transform.CompareTag("ToKill"))
         {
+            Debug.Log(collision.transform.name + " killed me.", collision.transform.gameObject);
             StartCoroutine(Die());
         }
     }
@@ -127,6 +146,7 @@ public class DanteBehaviour : MonoBehaviour
     public void DoorInMyFace()
     {
         Debug.Log("<Color=red> Bonk the door (et prog la mort par porte btw) </Color=red>");
+        StartCoroutine(Die());
         //Script de mort après avoir touché la porte
     }
 
@@ -135,6 +155,11 @@ public class DanteBehaviour : MonoBehaviour
         if (amDead)//if (transform.position.y < -1 || Physics.Raycast(transform.position, Vector2.right, 0.6f))
         {
             transform.Rotate(Vector3.forward, -145f * Time.deltaTime);
+
+            if (transform.position.y < -20)
+            {
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
+            }
         }
     }
 
@@ -149,6 +174,7 @@ public class DanteBehaviour : MonoBehaviour
         rb2D.angularVelocity = 0f;
         rb2D.gravityScale = 0f;
         rb2D.velocity = Vector2.zero;
+        transform.GetChild(0).GetComponent<Animator>().enabled = false; //WIP
         yield return new WaitForSeconds(ohOhDeathTime);
         //Ragdoll start
         transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);
