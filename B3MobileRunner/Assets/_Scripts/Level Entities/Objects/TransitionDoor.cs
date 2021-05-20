@@ -2,24 +2,31 @@
 using UnityEngine;
 
 
-public class TransitionDoor : MonoBehaviour
+public class TransitionDoor : ObjectToSlice
 {
     #region Initialization
     [SerializeField] TransitionDoorChain[] myChains;
     #endregion
 
-    void Awake()
+    protected override void OnUpdate()
     {
-        
+
+    }
+    public override void AliveBehaviour()
+    {
+        throw new System.NotImplementedException();
     }
 
-    void Start()
+    public override void Init()
     {
-        
+        foreach (TransitionDoorChain chain in myChains) 
+        {
+
+        }
     }
 
-    void Update()
+    protected override bool distanceToActivationVisualIsRelevant()
     {
-        
+        throw new System.NotImplementedException();
     }
 }
