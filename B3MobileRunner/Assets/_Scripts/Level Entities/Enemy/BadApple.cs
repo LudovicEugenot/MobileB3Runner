@@ -26,7 +26,7 @@ public class BadApple : ObjectToSlice
     protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
         SpawnWorms();
-        base.OnDeath(cutImpact, cutDirection);
+        base.OnDeath(cutImpact, cutDirection); //WIP problème de découpe des pommes, go voir model 3D pomme (/CoinGA/3D Models/ennemi/Enemies/Pomme)
     }
 
     protected override bool distanceToActivationVisualIsRelevant()

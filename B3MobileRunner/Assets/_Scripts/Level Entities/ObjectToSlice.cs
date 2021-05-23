@@ -37,7 +37,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     private void Start()
     {
         rb = rb ? rb : GetComponent<Rigidbody2D>();
-        myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
+        myTransform = myTransform ? myTransform : transform;
         if (!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
         myCollider = myTransform.GetComponent<Collider2D>();
         startPos = transform.position;

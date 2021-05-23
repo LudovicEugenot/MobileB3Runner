@@ -7,10 +7,15 @@ public class MenuManager : MonoBehaviour
 {
     public static bool gamePaused = true;
 
+    private void Start()
+    {
+        Screen.orientation = ScreenOrientation.Landscape;
+    }
+
     public void PlayGame()
     {
-        SceneManager.UnloadSceneAsync("TitleMenuUI");
-        SceneManager.LoadScene("Milestone19_04");
+        SceneManager.UnloadSceneAsync(ObjectsData.MainMenu);
+        SceneManager.LoadScene(ObjectsData.MainGameScene);
         Time.timeScale = 1f;
         gamePaused = false;
     }

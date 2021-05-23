@@ -31,7 +31,6 @@ public class SingleCoin : Collectible
         {
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
             if (rb.velocity.magnitude < 5f) transform.position = new Vector2(transform.position.x, -0.5f);
-            if (transform.position.y < -.6f) Debug.Log("HEY YO WTF, " + rb.velocity.magnitude, this);
         }
     }
 }

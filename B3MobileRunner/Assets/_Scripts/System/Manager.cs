@@ -50,6 +50,7 @@ public class Manager : MonoBehaviour
         if (!playerScript) Debug.LogWarning("Il faut mettre le runner ici", this);
         playerTrsf = playerScript.transform;
 
+        Screen.orientation = ScreenOrientation.Landscape;
         GameInit();
     }
     #endregion

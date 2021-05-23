@@ -8,11 +8,11 @@ public class BagOfCoinsToTap : ObjectToTap
     [SerializeField] [Range(1, 10)] int coinsReleasedOnHit = 2;
     [SerializeField] [Range(1, 50)] int coinsReleasedOnDeath = 8;
     [SerializeField] [Range(0f, 1f)] float delayBetweenHits = .2f;
-    [SerializeField] [Range(0f, 10f)] float noiseAmount = 1f;
+
+    [SerializeField] ParticleSystem sparkle;
+    [SerializeField] Animator animator;
 
     //code related
-    Vector2 originalPosition;
-    Quaternion originalRotation;
     bool canBeHit;
     float lerpValue = 0f;
     float startTimeNoise = 0f;
@@ -23,11 +23,7 @@ public class BagOfCoinsToTap : ObjectToTap
         if (lerpValue > 0f)
         {
             lerpValue = Mathf.InverseLerp(startTimeNoise + delayBetweenHits, startTimeNoise, Time.time);
-            transform.position = Vector2.Lerp(
-                originalPosition,
-                originalPosition + new Vector2(Random.Range(-noiseAmount, noiseAmount), Random.Range(-noiseAmount, noiseAmount)),
-                lerpValue);
-            if (lerpValue < .3f) transform.rotation = Quaternion.Lerp(originalRotation, transform.rotation, .2f);
+
         }
         else
         {
@@ -44,6 +40,8 @@ public class BagOfCoinsToTap : ObjectToTap
             canBeHit = false;
             lerpValue = 1;
             startTimeNoise = Time.time;
+
+            animator.SetTrigger("GetActivated");
 
             for (int i = 0; i < coinsReleasedOnHit; i++)
             {
@@ -63,17 +61,14 @@ public class BagOfCoinsToTap : ObjectToTap
                 Instantiate(coinPrefabToRelease, transform.position, Quaternion.identity);
             }
             noMoreCoinsToGive = true;
+
+            sparkle.Stop();
+            sparkle.Clear();
             
             //WIP explode or change color... feedbacks... something
         }
     }
 
-
-    protected override void OnStart()
-    {
-        originalPosition = transform.position;
-        originalRotation = transform.rotation;
-    }
 
     protected override bool placeToCheckIfSolvedVisualIsRelevant()
     {
