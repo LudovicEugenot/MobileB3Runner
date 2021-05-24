@@ -69,6 +69,10 @@ public class BagOfCoinsToTap : ObjectToTap
         }
     }
 
+    protected override void OnStart()
+    {
+
+    }
 
     protected override bool placeToCheckIfSolvedVisualIsRelevant()
     {

@@ -184,7 +184,7 @@ public abstract class ObjectToSlice : MonoBehaviour
         GameObjectDisappear();
     }
 
-    void GameObjectDisappear()
+    protected void GameObjectDisappear()
     {
         if (isWithSkinnedMeshRenderer)
         {
@@ -202,7 +202,7 @@ public abstract class ObjectToSlice : MonoBehaviour
         rb.simulated = false;
     }
 
-    GameObject SetUpSlicedObject(GameObject slicedObject, Vector2 _direction)
+    protected GameObject SetUpSlicedObject(GameObject slicedObject, Vector2 _direction)
     {
         slicedObject.transform.SetParent(transform);
         slicedObject.tag = "SlicedObject";

@@ -73,6 +73,11 @@ namespace EzySlice
             }
         }
 
+        public static GameObject[] SliceInstantiateSpecificObject(GameObject obj, Vector3 position, Vector3 direction, Material crossSectionMat)
+        {
+            return SliceInstantiate(obj, position, direction, new TextureRegion(0.0f, 0.0f, 1.0f, 1.0f), crossSectionMat);
+        }
+
         public static GameObject[] SliceInstantiate(this GameObject obj, Vector3 position, Vector3 direction, TextureRegion cuttingRegion, Material crossSectionMaterial = null)
         {
             EzySlice.Plane cuttingPlane = new EzySlice.Plane();
@@ -121,7 +126,7 @@ namespace EzySlice
             // nothing to return, so return nothing!
             return null;
         }
-        
+
         public static GameObject[] SliceInstantiateSkinnedMeshRenderer(this GameObject obj, Vector3 position, Vector3 direction, TextureRegion cuttingRegion, SkinnedMeshRenderer smr, Material crossSectionMaterial = null)
         {
             EzySlice.Plane cuttingPlane = new EzySlice.Plane();

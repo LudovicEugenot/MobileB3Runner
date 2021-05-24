@@ -25,7 +25,7 @@ public class BadAppleWorm : ObjectToSlice
     {
         if (transform.position.y < -.5f && rb.velocity.y < -0.01f)
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, new Quaternion(0, 0, .7f, .7f), 3f);
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 90), .4f);
 
         //si bug qui les fait pas spawn loin, on peut les couper quand même
         if (Vector2.Distance(transform.position, Manager.Instance.playerTrsf.position) < 4f)
