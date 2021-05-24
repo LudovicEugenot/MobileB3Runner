@@ -11,7 +11,6 @@ public class Manager : MonoBehaviour
 
     [Header("Game Info")]
     public bool gameOngoing = false;
-    [Range(0f,300f)] public float gameTimeMaxSpeed = 30f;
     public int CoinAmount
     {
         get { return _coinAmount; }
@@ -27,6 +26,7 @@ public class Manager : MonoBehaviour
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
     [HideInInspector] public float gameStartTime;
+    [HideInInspector] public int currentFloor; //premier étage 1, deuxième étage 2...
     int _coinAmount = 0;
     #endregion
 
@@ -50,6 +50,7 @@ public class Manager : MonoBehaviour
         if (!playerScript) Debug.LogWarning("Il faut mettre le runner ici", this);
         playerTrsf = playerScript.transform;
 
+        Screen.orientation = ScreenOrientation.Landscape;
         GameInit();
     }
     #endregion
@@ -59,7 +60,6 @@ public class Manager : MonoBehaviour
     {
         gameOngoing = true;
         gameStartTime = Time.time;
-        gameTimeMaxSpeed += gameStartTime;
         CoinAmount = 0;
     }
     #endregion

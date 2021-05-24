@@ -1,18 +1,21 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[SelectionBase]
 public class DanteBehaviour : MonoBehaviour
 {
     #region Initialization
     [Header("References")]
     public Rigidbody2D rb2D;
     public Collider2D myCollider;
+    public Animator animator;
+    [SerializeField] ParticleSystem runFx;
 
     [Header("Values")]
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
 
     [Header("Testing")]
-    [Range(4f, 8f)] public float moveSpeed = 4f;
+    [Range(4f, 12f)] public float moveSpeed = 4f;
     [SerializeField] bool isTestingSpeed = false;
 
     //Code
@@ -25,6 +28,8 @@ public class DanteBehaviour : MonoBehaviour
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
         myCollider = myCollider ? myCollider : GetComponent<Collider2D>();
+        runFx = runFx ? runFx : GetComponentInChildren<ParticleSystem>();
+        animator = animator ? animator : GetComponentInChildren<Animator>();
         if (!isTestingSpeed)
         {
             UpdateLerpValues();
@@ -63,6 +68,11 @@ public class DanteBehaviour : MonoBehaviour
         if (!isTestingSpeed)
         {
             moveSpeed = SpeedEvolution();
+            //adaptation de l'animation à chaque palier de vitesse
+            if (moveSpeed % 1f < .05f)
+            {
+                animator.speed = moveSpeed*.15f;
+            }
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
 
@@ -70,8 +80,8 @@ public class DanteBehaviour : MonoBehaviour
     }
 
     int speedLerpIndex = -1;
-    float previousSpeedValue = 1; float nextSpeedValue = 1;
-    float previousUpdateTime; float nextUpdateTime = 0f;
+    float previousSpeedValue = 1; float nextSpeedValue = -1f;
+    float previousUpdateTime; float nextUpdateTime = -1f;
     float SpeedEvolution()
     {
         if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime)
@@ -90,6 +100,11 @@ public class DanteBehaviour : MonoBehaviour
     void UpdateLerpValues()
     {
         speedLerpIndex++;
+        if (nextSpeedValue < 0) //première frame
+        {
+            nextUpdateTime = ObjectsData.PlayerSpeedOverTime[0].x;
+            nextSpeedValue = ObjectsData.PlayerSpeedOverTime[0].y;
+        }
         previousUpdateTime = nextUpdateTime;
         previousSpeedValue = nextSpeedValue;
 
@@ -131,7 +146,7 @@ public class DanteBehaviour : MonoBehaviour
 
     public void DoorInMyFace()
     {
-        Debug.Log("<Color=red> Bonk the door (et prog la mort par porte btw) </Color=red>");
+        Debug.Log("<color=red> Bonk the door (et prog la mort par porte btw) </color>");
         StartCoroutine(Die());
         //Script de mort après avoir touché la porte
     }
@@ -160,12 +175,16 @@ public class DanteBehaviour : MonoBehaviour
         rb2D.angularVelocity = 0f;
         rb2D.gravityScale = 0f;
         rb2D.velocity = Vector2.zero;
-        transform.GetChild(0).GetComponent<Animator>().enabled = false; //WIP
+        transform.GetChild(0).GetComponent<Animator>().enabled = false;
+        runFx.Pause();
         yield return new WaitForSeconds(ohOhDeathTime);
         //Ragdoll start
         transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);
         rb2D.gravityScale = 2;
         rb2D.AddForce(new Vector2(2500, 15000));
+
+        runFx.Stop();
+        runFx.Clear();
 
         amDead = true;
     }

@@ -6,12 +6,15 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider2D))]
 public abstract class ObjectToTap : MonoBehaviour
 {
-    #region Initiatlization
-    protected bool amTapped = false;
+    #region Initialization
+    protected bool amTappedOut = false;
+    protected bool amTappedNotMax = false;
     [SerializeField] protected BoxCollider2D myCollider;
     [SerializeField] [Range(-4f, 0f)] protected float placeToCheckIfSolvedOffset = -1f;
+    [SerializeField] [Range(1, 15)] protected int tapCount = 1;
     [SerializeField] protected ObjectLinked objectLinked;
-    [SerializeField] protected ParticleSystem FXParticleSystem;
+    [SerializeField] protected ParticleSystem FXParticleSystemTapDone;
+    [SerializeField] protected ParticleSystem FXParticleSystemInvitTapMe;
 
     protected abstract bool placeToCheckIfSolvedVisualIsRelevant();
     private float PlaceToCheckIfSolved { get { return placeToCheckIfSolvedOffset + objectLinked.transform.position.x; } }
@@ -20,14 +23,15 @@ public abstract class ObjectToTap : MonoBehaviour
     private void Awake()
     {
         #region set particle system
-        FXParticleSystem.gameObject.SetActive(true);
-        ParticleSystem.MainModule main = FXParticleSystem.main;
+        FXParticleSystemTapDone.gameObject.SetActive(true);
+        ParticleSystem.MainModule main = FXParticleSystemTapDone.main;
         main.loop = false;
-        ParticleSystem.EmissionModule emission = FXParticleSystem.emission;
+        ParticleSystem.EmissionModule emission = FXParticleSystemTapDone.emission;
         emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0f, 1, 1, 1, .01f) });
         emission.rateOverTime = 0f;
-        FXParticleSystem.Stop(true);
-        FXParticleSystem.Clear(true);
+        FXParticleSystemTapDone.Stop(true);
+        FXParticleSystemTapDone.Clear(true);
+        if (FXParticleSystemInvitTapMe == null) Debug.LogWarning("need le visuel de tap");
         #endregion
     }
 
@@ -45,7 +49,7 @@ public abstract class ObjectToTap : MonoBehaviour
     {
         if (Manager.Instance.gameOngoing)
         {
-            if (amTapped)
+            if (amTappedOut)
             {
                 IHaveBeenTapped();
             }
@@ -53,18 +57,37 @@ public abstract class ObjectToTap : MonoBehaviour
             {
                 PlayerFail();
             }
+            else
+            {
+                BehaviourBeforeGettingTapped();
+            }
         }
     }
 
     protected abstract void OnStart();
+    protected abstract void BehaviourBeforeGettingTapped();
     protected abstract void IHaveBeenTapped();
     protected abstract void PlayerFail();
     public void GetTapped()
     {
-        amTapped = true;
-        FXParticleSystem.Play(true);
-        GetTappedEvents();
+        if (tapCount > 1)
+        {
+            GetTappedNotMax();
+        }
+        else if (!amTappedOut)
+        {
+            amTappedOut = true;
+            FXParticleSystemTapDone.Play(true);
+            FXParticleSystemInvitTapMe.Stop();
+            GetTappedEvents();
+        }
     }
+
+    protected virtual void GetTappedNotMax()
+    {
+
+    }
+
     public virtual void GetTappedEvents()
     {
 

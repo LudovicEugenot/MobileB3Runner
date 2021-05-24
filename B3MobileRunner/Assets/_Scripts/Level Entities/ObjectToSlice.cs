@@ -4,6 +4,7 @@ using EzySlice;
 
 [SelectionBase]
 [Serializable]
+[RequireComponent(typeof(Rigidbody2D))]
 public abstract class ObjectToSlice : MonoBehaviour
 {
     #region Initialization
@@ -16,8 +17,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     [Header("Tweakable Values")]
     [Range(1, 10)] public int healthPoints = 1;
-    [SerializeField] [Range(0f, 20f)] protected float distanceToActivation = 4f;
-    [SerializeField] AnimationCurve deathCurve;
+    [SerializeField] [Range(-4f, 20f)] protected float distanceToActivation = 9f;
     [Range(0.1f, 3f)] public float deathTime = .8f;
 
 
@@ -25,24 +25,24 @@ public abstract class ObjectToSlice : MonoBehaviour
     [HideInInspector] public int cutAmount = 0;
     MeshRenderer[] myMeshRenderers;
     Collider2D myCollider;
-    protected Vector2 mainPartStartPos;
+    protected Vector2 startPos;
     float deathLerp;
     float deathStartTime;
     [HideInInspector] public bool amActive = false;
-    bool amDying = false;
+    protected bool amDying = false;
     bool startedDying = false;
     protected abstract bool distanceToActivationVisualIsRelevant();
     #endregion
 
     private void Start()
     {
-        Init();
-
-        rb = GetComponent<Rigidbody2D>();
-        myTransform = myTransform ? myTransform : transform;// transform.GetChild(0).transform;
+        rb = rb ? rb : GetComponent<Rigidbody2D>();
+        myTransform = myTransform ? myTransform : transform;
         if (!isWithSkinnedMeshRenderer) myMeshRenderers = myTransform.GetComponentsInChildren<MeshRenderer>();
         myCollider = myTransform.GetComponent<Collider2D>();
-        mainPartStartPos = transform.position;
+        startPos = transform.position;
+
+        Init();
     }
 
     private void Update()
@@ -76,25 +76,17 @@ public abstract class ObjectToSlice : MonoBehaviour
     public abstract void Init();
     public abstract void AliveBehaviour();
 
-    private void DyingAnimation()
+    protected virtual void DyingAnimation()
     {
         if (deathLerp < .99)
         {
             if (deathLerp <= 0 && !startedDying)
             {
-                /*rb.simulated = false;
-                part1StartPos = part1.position;
-                part2StartPos = part2.position;
-                part1EndPos = part1.position + new Vector3(3, 0, 0);
-                part2EndPos = part2.position - new Vector3(3, 0, 0);*/
                 deathStartTime = Time.time;
                 startedDying = true;
 
             }
-            deathLerp = deathCurve.Evaluate((Time.time - deathStartTime) / deathTime);
-            /*
-            part1.position = Vector3.Lerp(part1StartPos, part1EndPos, deathLerp);
-            part2.position = Vector3.Lerp(part2StartPos, part2EndPos, deathLerp);*/
+            deathLerp = (Time.time - deathStartTime) / deathTime;
         }
         else
         {
@@ -126,7 +118,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     protected virtual void OnHit(Vector2 cutImpact, Vector2 cutDirection)
     {
-
+        healthPoints--;
     }
 
     protected virtual void OnUpdate()
@@ -177,6 +169,7 @@ public abstract class ObjectToSlice : MonoBehaviour
             gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
         }
+
         if (gos != null)
         {
             foreach (GameObject gameObject in gos)
