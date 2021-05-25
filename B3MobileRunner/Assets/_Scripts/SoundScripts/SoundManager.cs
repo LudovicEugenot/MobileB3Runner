@@ -36,6 +36,8 @@ public class SoundManager : MonoBehaviour
     private AudioSource bridge;
     [SerializeField]
     private AudioSource coinPickup;
+    [SerializeField]
+    private AudioSource levier;
 
 
     private void Start()
@@ -50,6 +52,7 @@ public class SoundManager : MonoBehaviour
         bell = gameSounds[5];
         bridge = gameSounds[6];
         coinPickup = gameSounds[7];
+        levier = gameSounds[8];
     }
 
     public void PlayTap()
@@ -90,5 +93,10 @@ public class SoundManager : MonoBehaviour
     public void PlayCoin()
     {
         coinPickup.Play();
+    }
+
+    public void PlayLevier()
+    {
+        levier.Play();
     }
 }

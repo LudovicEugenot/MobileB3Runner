@@ -26,6 +26,7 @@ public class BoxFillPath : ObjectToTap
         {
             if (completedLerp <= 0 && !startedCompleting)
             {
+                Manager.Instance.sound.PlayTap();
                 partStartPos = myTransform.position;
                 partEndPos = objectLinked.transform.position;
                 completedStartTime = Time.time;
