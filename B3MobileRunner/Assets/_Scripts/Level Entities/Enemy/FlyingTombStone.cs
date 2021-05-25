@@ -15,7 +15,7 @@ public class FlyingTombStone : ObjectToSlice
     bool startedBehaviour = false;
 
     //arrêt et noise
-    float noiseAmount = .5f; //WIP à enleer quand l'anim est là
+    float noiseAmount = .2f; //WIP à enleer quand l'anim est là
     bool startedNoise = false;
     bool finishedNoise = false;
     bool startedFalling = false;
@@ -40,7 +40,7 @@ public class FlyingTombStone : ObjectToSlice
             }
 
             outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
-            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .4f * playerSpeed+3.2f, ObjectsData.TombstoneMenacingPlayerHeight);
+            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .1f * playerSpeed + 4.5f, ObjectsData.TombstoneMenacingPlayerHeight);
             lerpValue = Mathf.Clamp01(Mathf.InverseLerp(startBehaviourPosX, endBehaviourPosX, transform.position.x) * 1.5f);
 
             transform.position = Vector2.Lerp(outsideScreenLeftPos, menacingPlayerPos, lerpValue);

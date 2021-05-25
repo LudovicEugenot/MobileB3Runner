@@ -9,6 +9,8 @@ public class Manager : MonoBehaviour
     public FingerController fingerController;
     public SoundManager sound;
     public Cinemachine.CinemachineVirtualCamera virtualCamera;
+    [SerializeField] Transform endOfLevelPoint;
+
 
     [Header("Game Info")]
     public bool gameOngoing = false;
@@ -28,6 +30,7 @@ public class Manager : MonoBehaviour
     [HideInInspector] public Transform playerTrsf;
     [HideInInspector] public float gameStartTime;
     [HideInInspector] public int currentFloor; //premier étage 1, deuxième étage 2...
+    [HideInInspector] public float endOfLevelDistance { get { return endOfLevelPoint.position.x; } }
     int _coinAmount = 0;
     #endregion
 
@@ -61,7 +64,7 @@ public class Manager : MonoBehaviour
     {
         gameOngoing = true;
         gameStartTime = Time.time;
-        CoinAmount = 0;
+        CoinAmount = 0; //WIP to delete when consistent coin amount
     }
     #endregion
 }

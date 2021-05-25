@@ -67,27 +67,4 @@ public class BadAppleWorm : ObjectToSlice
             base.OnDeath(cutImpact, cutDirection);
         }
     }
-
-    protected override void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
-    {
-        cutAmount++;
-        amDying = true;
-        GameObject[] gos;
-
-        gos = mySkinnedMeshrenderer.transform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
-        Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
-
-        if (gos != null)
-        {
-            foreach (GameObject gameObject in gos)
-            {
-                SetUpSlicedObject(gameObject, cutDirection);
-            }
-        }
-        else
-        {
-            Debug.LogError(gameObject.name + " destroyed like a very bad boy.", this);
-        }
-        GameObjectDisappear();
-    }
 }

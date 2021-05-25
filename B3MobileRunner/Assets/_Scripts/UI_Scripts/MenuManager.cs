@@ -15,7 +15,7 @@ public class MenuManager : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.UnloadSceneAsync(ObjectsData.MainMenu);
-        SceneManager.LoadScene(ObjectsData.MainGameScene);
+        SceneManager.LoadScene(ObjectsData.RedLevels[0]); //WIP avec truc de saves pour pas jouer same level deux fois d'affilée
         Time.timeScale = 1f;
         gamePaused = false;
     }

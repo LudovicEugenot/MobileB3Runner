@@ -72,7 +72,7 @@ public class DanteBehaviour : MonoBehaviour
             //adaptation de l'animation à chaque palier de vitesse
             if (moveSpeed % 1f < .05f)
             {
-                animator.speed = moveSpeed*.15f;
+                animator.speed = moveSpeed * .15f;
             }
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
@@ -147,7 +147,7 @@ public class DanteBehaviour : MonoBehaviour
 
     public void DoorInMyFace()
     {
-        Debug.Log("<color=red> Bonk the door (et prog la mort par porte btw) </color>");
+        Debug.Log("<color=red> Bonk the door </color>");
         StartCoroutine(Die());
         //Script de mort après avoir touché la porte
     }
@@ -167,28 +167,35 @@ public class DanteBehaviour : MonoBehaviour
 
     public IEnumerator Die()
     {
-        amDying = true;
-        Manager.Instance.gameOngoing = false;
-        Manager.Instance.virtualCamera.Follow = null;
-        Manager.Instance.virtualCamera.LookAt = null;
-        Manager.Instance.sound.PlayDeath();
-        gameObject.layer = LayerMask.NameToLayer("PlayerDead");
+        if (Mathf.Abs(transform.position.x - Manager.Instance.endOfLevelDistance) < 5f) //peut pas mourir si très proche de la fin
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        else
+        {
+            amDying = true;
+            Manager.Instance.gameOngoing = false;
+            Manager.Instance.virtualCamera.Follow = null;
+            Manager.Instance.virtualCamera.LookAt = null;
+            Manager.Instance.sound.PlayDeath();
+            gameObject.layer = LayerMask.NameToLayer("PlayerDead");
 
-        rb2D.angularVelocity = 0f;
-        rb2D.gravityScale = 0f;
-        rb2D.velocity = Vector2.zero;
-        transform.GetChild(0).GetComponent<Animator>().enabled = false;
-        runFx.Pause();
-        yield return new WaitForSeconds(ohOhDeathTime);
-        //Ragdoll start
-        transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);
-        rb2D.gravityScale = 2;
-        rb2D.AddForce(new Vector2(2500, 15000));
+            rb2D.angularVelocity = 0f;
+            rb2D.gravityScale = 0f;
+            rb2D.velocity = Vector2.zero;
+            transform.GetChild(0).GetComponent<Animator>().enabled = false;
+            runFx.Pause();
+            yield return new WaitForSeconds(ohOhDeathTime);
+            //Ragdoll start
+            transform.position = new Vector3(transform.position.x, transform.position.y, -.5f);
+            rb2D.gravityScale = 2;
+            rb2D.AddForce(new Vector2(2500, 15000));
 
-        runFx.Stop();
-        runFx.Clear();
+            runFx.Stop();
+            runFx.Clear();
 
-        amDead = true;
+            amDead = true;
+        }
     }
     #endregion
 }

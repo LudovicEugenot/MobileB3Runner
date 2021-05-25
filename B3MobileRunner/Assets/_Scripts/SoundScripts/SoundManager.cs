@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
@@ -23,9 +21,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField]
     private AudioSource tap;
     [SerializeField]
-    private AudioSource slash1;
-    [SerializeField]
-    private AudioSource slash2;
+    private AudioSource[] slash;
     [SerializeField]
     private AudioSource deathPlayer;
     [SerializeField]
@@ -40,7 +36,7 @@ public class SoundManager : MonoBehaviour
     private AudioSource levier;
 
 
-    private void Start()
+    /*private void Start()
     {
         gameSounds = GetComponents<AudioSource>();
 
@@ -53,21 +49,16 @@ public class SoundManager : MonoBehaviour
         bridge = gameSounds[6];
         coinPickup = gameSounds[7];
         levier = gameSounds[8];
-    }
+    }*/
 
     public void PlayTap()
     {
         tap.Play();
     }
 
-    public void PlaySlashFirst()
+    public void PlaySlash()
     {
-        slash1.Play();
-    }
-
-    public void PlaySlashSecond()
-    {
-        slash2.Play();
+        slash[Random.Range(0, slash.Length)].Play();
     }
 
     public void PlayDeath()

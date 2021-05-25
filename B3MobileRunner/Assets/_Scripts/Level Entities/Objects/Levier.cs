@@ -3,6 +3,8 @@
 public class Levier : ObjectToTap
 {
     [SerializeField] Animator leverAnimator;
+
+    bool gotTapped = false;
     //objectLinked = ouverture porte
 
     protected override void OnStart()
@@ -12,9 +14,13 @@ public class Levier : ObjectToTap
 
     protected override void IHaveBeenTapped()
     {
-        leverAnimator.SetTrigger("GetActivated");
-        objectLinked.GetActivated();
-        Manager.Instance.sound.PlayLevier();
+        if (!gotTapped)
+        {
+            gotTapped = true;
+            leverAnimator.SetTrigger("GetActivated");
+            objectLinked.GetActivated();
+            Manager.Instance.sound.PlayLevier();
+        }
         /*if (doorOpeningLerp < .99f)
         {
             //événements sur la première frame
