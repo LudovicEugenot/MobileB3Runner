@@ -77,7 +77,7 @@ public class DanteBehaviour : MonoBehaviour
         }
         transform.position = new Vector3(transform.position.x + (moveSpeed - moveSpeedMalus) * Time.deltaTime, transform.position.y);
 
-        if (transform.position.x > 200f) UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
+        if (transform.position.x > Manager.Instance.endOfLevelDistance) Manager.Instance.GoToNextLevel();
     }
 
     int speedLerpIndex = -1;

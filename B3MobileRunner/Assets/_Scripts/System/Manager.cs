@@ -29,7 +29,7 @@ public class Manager : MonoBehaviour
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
     [HideInInspector] public float gameStartTime;
-    [HideInInspector] public int currentFloor; //premier étage 1, deuxième étage 2...
+    [HideInInspector] public bool amOnRedLevel;
     [HideInInspector] public float endOfLevelDistance { get { return endOfLevelPoint.position.x; } }
     int _coinAmount = 0;
     #endregion
@@ -65,6 +65,21 @@ public class Manager : MonoBehaviour
         gameOngoing = true;
         gameStartTime = Time.time;
         CoinAmount = 0; //WIP to delete when consistent coin amount
+    }
+
+    public void GoToNextLevel()
+    {
+        if (amOnRedLevel) 
+            //grâce au truc de saves, bien faire attention à : 
+            //1. jouer tous les niveaux les uns après les autres
+            //2. pas jouer le même niveau deux fois d'affilée
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.BlueLevels[Random.Range(0, ObjectsData.BlueLevels.Length)]);
+        }
+        else
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.RedLevels[Random.Range(0, ObjectsData.RedLevels.Length)]);
+        }
     }
     #endregion
 }
