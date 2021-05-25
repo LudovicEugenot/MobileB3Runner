@@ -10,9 +10,9 @@ public abstract class ObjectToSlice : MonoBehaviour
     #region Initialization
     [Header("References")]
     public Rigidbody2D rb;
-    [SerializeField] Transform myTransform;
+    [SerializeField] protected Transform myTransform;
     [SerializeField] bool isWithSkinnedMeshRenderer;
-    [SerializeField] SkinnedMeshRenderer mySkinnedMeshrenderer;
+    [SerializeField] protected SkinnedMeshRenderer mySkinnedMeshrenderer;
     public Material cutMat;
 
     [Header("Tweakable Values")]
