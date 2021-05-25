@@ -19,6 +19,7 @@ public class BridgeRope : ObjectToSlice
     {
         bridgeCollider.isTrigger = true;
         startTimeRopeCut = Time.time;
+        Manager.Instance.sound.PlayBridge();
         amDying = true; //trigger l'update de DyingAnimation
 
         animator.SetTrigger("GetActivated");

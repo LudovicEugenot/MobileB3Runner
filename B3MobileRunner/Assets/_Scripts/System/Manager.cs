@@ -7,6 +7,7 @@ public class Manager : MonoBehaviour
     public UIManager UI;
     public DanteBehaviour playerScript;
     public FingerController fingerController;
+    public SoundManager sound;
     public Cinemachine.CinemachineVirtualCamera virtualCamera;
 
     [Header("Game Info")]

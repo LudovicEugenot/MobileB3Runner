@@ -14,6 +14,7 @@ public class Levier : ObjectToTap
     {
         leverAnimator.SetTrigger("GetActivated");
         objectLinked.GetActivated();
+        Manager.Instance.sound.PlayLevier();
         /*if (doorOpeningLerp < .99f)
         {
             //événements sur la première frame

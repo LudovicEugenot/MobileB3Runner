@@ -7,10 +7,13 @@ public class SingleCoin : Collectible
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] Vector2 minSpawnEjectionForce;
     [SerializeField] Vector2 maxSpawnEjectionForce;
+
+    private SoundManager soundManager;
     #endregion
 
     public override void OnStart()
     {
+        soundManager.GetComponentInChildren<SoundManager>();
         if (rb == null) Debug.LogWarning("renseigne le rigidbody dans l'inspecteur !", this);
 
         rb.AddForce(new Vector2(
@@ -22,6 +25,7 @@ public class SingleCoin : Collectible
     public override void GetCollected()
     {
         Manager.Instance.CoinAmount += ObjectsData.CoinValue; //WIP feature mort qui collecte pièces quand il est au dessus du sol
+        soundManager.PlayCoin();
         Destroy(gameObject);
     }
 

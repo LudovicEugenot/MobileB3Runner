@@ -35,7 +35,7 @@ public class BagOfCoinsToTap : ObjectToTap
     {
         if (canBeHit)
         {
-            //Play dong sound
+            Manager.Instance.sound.PlayBell();
             tapCount--;
             canBeHit = false;
             lerpValue = 1;
@@ -58,6 +58,7 @@ public class BagOfCoinsToTap : ObjectToTap
         {
             for (int i = 0; i < coinsReleasedOnDeath - coinsReleasedOnHit; i++)
             {
+                Manager.Instance.sound.PlayBell();
                 Instantiate(coinPrefabToRelease, transform.position, Quaternion.identity);
             }
             noMoreCoinsToGive = true;

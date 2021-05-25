@@ -129,6 +129,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     protected virtual void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
         GetSliced(cutImpact, cutDirection);
+        Manager.Instance.sound.PlaySlashFirst();
     }
 
     private void OnDrawGizmosSelected()

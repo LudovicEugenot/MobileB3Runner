@@ -23,6 +23,7 @@ public class DanteBehaviour : MonoBehaviour
     bool amDead = false;
     bool amFalling = false;
     float moveSpeedMalus = 0f;
+
     #endregion
     void Start()
     {
@@ -170,6 +171,7 @@ public class DanteBehaviour : MonoBehaviour
         Manager.Instance.gameOngoing = false;
         Manager.Instance.virtualCamera.Follow = null;
         Manager.Instance.virtualCamera.LookAt = null;
+        Manager.Instance.sound.PlayDeath();
         gameObject.layer = LayerMask.NameToLayer("PlayerDead");
 
         rb2D.angularVelocity = 0f;
