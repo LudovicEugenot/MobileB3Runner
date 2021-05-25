@@ -69,6 +69,10 @@ public class BagOfCoinsToTap : ObjectToTap
         }
     }
 
+    protected override void OnStart()
+    {
+        throw new System.NotImplementedException();
+    }
 
     protected override bool placeToCheckIfSolvedVisualIsRelevant()
     {
