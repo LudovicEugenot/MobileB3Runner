@@ -22,6 +22,9 @@ public class DanteBehaviour : MonoBehaviour
     bool amDead = false;
     bool amFalling = false;
     float moveSpeedMalus = 0f;
+
+    private SoundManager soundManager;
+
     #endregion
     void Start()
     {
@@ -33,6 +36,8 @@ public class DanteBehaviour : MonoBehaviour
             UpdateLerpValues();
             InitPlayerValues();
         }
+
+        soundManager.GetComponentInChildren<SoundManager>();
     }
 
     private void InitPlayerValues()
@@ -171,6 +176,7 @@ public class DanteBehaviour : MonoBehaviour
         Manager.Instance.virtualCamera.LookAt = null;
         gameObject.layer = LayerMask.NameToLayer("PlayerDead");
 
+        soundManager.PlayDeath();
         rb2D.angularVelocity = 0f;
         rb2D.gravityScale = 0f;
         rb2D.velocity = Vector2.zero;
