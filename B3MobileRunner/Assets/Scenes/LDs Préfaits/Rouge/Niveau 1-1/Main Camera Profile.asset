@@ -1,6 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7641810879416905735
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
+  m_Name: Main Camera Profile
+  m_EditorClassIdentifier: 
+  components:
+  - {fileID: 9084227879544053101}
+  - {fileID: 7895038133940623772}
+  - {fileID: 8366666782682759358}
+--- !u!114 &7895038133940623772
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,33 +28,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
   m_Name: ColorAdjustments
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   m_AdvancedMode: 0
   postExposure:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.3
   contrast:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 3
     min: -100
     max: 100
   colorFilter:
     m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_Value: {r: 0.9150943, g: 0.9150943, b: 0.9150943, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   hueShift:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: -2
     min: -180
     max: 180
   saturation:
-    m_OverrideState: 1
-    m_Value: -100
+    m_OverrideState: 0
+    m_Value: 10
     min: -100
     max: 100
---- !u!114 &-3542316358843205881
+--- !u!114 &8366666782682759358
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
+  m_Name: LiftGammaGain
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  lift:
+    m_OverrideState: 1
+    m_Value: {x: 0.8727006, y: 0.9368915, z: 1, w: 0}
+  gamma:
+    m_OverrideState: 1
+    m_Value: {x: 0.9325987, y: 0.9565712, z: 1, w: 0}
+  gain:
+    m_OverrideState: 1
+    m_Value: {x: 0.98854613, y: 1, z: 0.7999305, w: 0}
+--- !u!114 &9084227879544053101
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,7 +96,7 @@ MonoBehaviour:
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 16
+    m_Value: 15
     min: 0
   gaussianEnd:
     m_OverrideState: 1
@@ -70,7 +109,7 @@ MonoBehaviour:
     max: 1.5
   highQualitySampling:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 1
   focusDistance:
     m_OverrideState: 0
     m_Value: 10
@@ -100,18 +139,3 @@ MonoBehaviour:
     m_Value: 0
     min: -180
     max: 180
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7fd9488000d3734a9e00ee676215985, type: 3}
-  m_Name: Cinemachine Virtual Camera Profile
-  m_EditorClassIdentifier: 
-  components:
-  - {fileID: -3542316358843205881}
-  - {fileID: -7641810879416905735}
