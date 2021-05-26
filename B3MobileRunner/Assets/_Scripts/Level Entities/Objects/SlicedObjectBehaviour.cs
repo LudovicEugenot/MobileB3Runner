@@ -81,7 +81,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
             }
             else
             {
-                Debug.LogError(gameObject.name + " destroyed like a very bad boy.", this);
+                Debug.LogError(gameObject.name + " (parent : " + transform.parent.name + ") destroyed like a very bad boy.", this);
                 //Time.timeScale = 0;
             }
             GameObjectDisappear();

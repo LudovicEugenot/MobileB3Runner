@@ -59,8 +59,8 @@ public class DanteBehaviour : MonoBehaviour
     {
         if (amFalling)
         {
-            moveSpeedMalus += moveSpeed * .5f * Time.deltaTime;
-            if (transform.position.y < Manager.Instance.neutralYOffset - 1)
+            moveSpeedMalus += moveSpeed * Time.deltaTime; //WIP faut tomber beaucoup plus vite que ça
+            if (transform.position.y < Manager.Instance.neutralYOffset - 2)
             {
                 StartCoroutine(Die());
             }
@@ -85,7 +85,7 @@ public class DanteBehaviour : MonoBehaviour
     float previousUpdateTime; float nextUpdateTime = -1f;
     float SpeedEvolution()
     {
-        if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime)
+        if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime) //WIP faut pas que ce soit le gamestarttime mais le temps du fichier de save
         {
             UpdateLerpValues();
         }
@@ -140,8 +140,13 @@ public class DanteBehaviour : MonoBehaviour
 
     public void FallInASmallPit()
     {
+        myCollider.isTrigger = true;
         rb2D.gravityScale = 1f;
         amFalling = true;
+        /*if (!Physics2D.Raycast(transform.position, Vector2.down, 3f, LayerMask.NameToLayer("Default")))
+        {
+            rb2D.AddForce(Vector2.down * 9.81f);
+        }*/
         //ralentir quand plus rien sous le joueur histoire qu'il tombe à haute vitesse
     }
 

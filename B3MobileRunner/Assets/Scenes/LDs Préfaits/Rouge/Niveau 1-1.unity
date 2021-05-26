@@ -272,7 +272,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 139767064}
-  m_LocalRotation: {x: -0.028465334, y: 0.000000017266563, z: 4.916977e-10, w: 0.9995948}
+  m_LocalRotation: {x: -0.028465355, y: -0.000000017165883, z: -4.888309e-10, w: 0.9995948}
   m_LocalPosition: {x: -33.41, y: -0.089999914, z: -9.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1191,7 +1191,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1627667742}
-  m_LocalRotation: {x: -0.028465334, y: 0.000000017266563, z: 4.916977e-10, w: 0.9995948}
+  m_LocalRotation: {x: -0.028465355, y: -0.000000017165883, z: -4.888309e-10, w: 0.9995948}
   m_LocalPosition: {x: -33.41, y: -0.089999914, z: -9.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1914,7 +1914,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -47
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4940074902809895818, guid: dec314aa9e185c04ea1dc85e486f12b7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dec314aa9e185c04ea1dc85e486f12b7, type: 3}
 --- !u!1001 &3517155934982744214
 PrefabInstance:
@@ -1936,7 +1937,7 @@ PrefabInstance:
     - target: {fileID: 6094448496167552558, guid: ef9f7acc7de76ac4c9d770ca04ae3afb,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -25.999985
+      value: -26
       objectReference: {fileID: 0}
     - target: {fileID: 6094448496812865736, guid: ef9f7acc7de76ac4c9d770ca04ae3afb,
         type: 3}
@@ -2068,7 +2069,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Dune2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6094448496812865737, guid: ef9f7acc7de76ac4c9d770ca04ae3afb, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ef9f7acc7de76ac4c9d770ca04ae3afb, type: 3}
 --- !u!1001 &3517155935320159263
 PrefabInstance:
@@ -2222,7 +2224,8 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1627667746}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1580533087832296390, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
 --- !u!1001 &3517155935689801770
 PrefabInstance:
@@ -2361,7 +2364,8 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1627667746}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 286298261995485862, guid: debc8769f37650143b09c1587262c996, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: debc8769f37650143b09c1587262c996, type: 3}
 --- !u!1001 &5519285552831171213
 PrefabInstance:
@@ -2433,12 +2437,17 @@ PrefabInstance:
     - target: {fileID: 6244756475066671280, guid: 4b4cc225ff0122248ac5a2ba09b0332b,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6244756475066671308, guid: 4b4cc225ff0122248ac5a2ba09b0332b,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6244756475066671309, guid: 4b4cc225ff0122248ac5a2ba09b0332b,
+        type: 3}
+      propertyPath: fadeToBlackTime
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6496684619005031528, guid: 4b4cc225ff0122248ac5a2ba09b0332b,
         type: 3}
@@ -2578,28 +2587,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &7462219580364889083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7462219580364889087}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3029f2b69222074e8665a6d7b73bf5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rockWarningParent: {fileID: 0}
-  rockWarningPrefab: {fileID: 524302197073443586, guid: 2cf7ffdb84c9c1840a28559c4ce861b5,
-    type: 3}
-  coinText: {fileID: 0}
-  screenSize:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
 --- !u!114 &7462219580364889084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2648,7 +2635,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7462219580364889080}
-  - component: {fileID: 7462219580364889083}
   - component: {fileID: 7462219580364889082}
   - component: {fileID: 7462219580364889085}
   - component: {fileID: 7462219580364889084}
@@ -2826,7 +2812,8 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 51.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1580533087832296390, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
 --- !u!1001 &8241604170393091646
 PrefabInstance:
@@ -2995,7 +2982,8 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 64.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1580533087832296390, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
 --- !u!1001 &8241604171075896638
 PrefabInstance:
@@ -3164,5 +3152,6 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 24.5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1580533087832296390, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: cd54d948b1a4d1142b2e397661fa621c, type: 3}

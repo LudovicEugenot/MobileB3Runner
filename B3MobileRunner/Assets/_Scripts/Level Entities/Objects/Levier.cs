@@ -21,15 +21,6 @@ public class Levier : ObjectToTap
             objectLinked.GetActivated();
             Manager.Instance.sound.PlayLevier();
         }
-        /*if (doorOpeningLerp < .99f)
-        {
-            //événements sur la première frame
-            if (doorOpeningLerp <= 0f)
-            {
-                objectLinked.collider.isTrigger = true;
-            }
-            doorOpeningLerp += Time.deltaTime;
-        }*/
     }
     public override void GetTappedEvents()
     {

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-public static class ObjectsData
+public struct ObjectsData
 {
     //Player
     /// <summary>
@@ -58,4 +58,10 @@ public static class ObjectsData
     public static float ScreenLimitRight { get { return 17f; } }
     public static float ScreenLimitUp { get { return 10f; } }
     public static float ScreenLimitDown { get { return -3.5f; } }
+
+
+
+    //Save system related
+    public static string SavedGlobalDataPath { get { return "/myGlobalGameData.weow"; } }
+    public static string SavedCurrentRunDataPath { get { return "/myCurrentRunData.zoinks"; } }
 }
