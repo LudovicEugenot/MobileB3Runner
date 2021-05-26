@@ -178,12 +178,12 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (sliceableGameobject)
             {
-                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
             }
             else
             {
-                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
             }
         }

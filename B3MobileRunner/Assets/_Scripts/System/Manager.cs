@@ -14,6 +14,7 @@ public class Manager : MonoBehaviour
 
     [Header("Game Info")]
     public bool gameOngoing = false;
+
     public int CoinAmount
     {
         get { return _coinAmount; }
@@ -28,6 +29,7 @@ public class Manager : MonoBehaviour
     //other hidden useful stuff
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
+    [HideInInspector] public float neutralYOffset;
     [HideInInspector] public float gameStartTime;
     [HideInInspector] public bool amOnRedLevel;
     [HideInInspector] public float endOfLevelDistance { get { return endOfLevelPoint.position.x; } }
@@ -53,8 +55,8 @@ public class Manager : MonoBehaviour
     {
         if (!playerScript) Debug.LogWarning("Il faut mettre le runner ici", this);
         playerTrsf = playerScript.transform;
+        neutralYOffset = playerTrsf.position.y;
 
-        Screen.orientation = ScreenOrientation.Landscape;
         GameInit();
     }
     #endregion

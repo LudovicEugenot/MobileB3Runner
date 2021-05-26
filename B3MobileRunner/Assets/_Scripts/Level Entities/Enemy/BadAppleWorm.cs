@@ -27,7 +27,7 @@ public class BadAppleWorm : ObjectToSlice
 
     public override void AliveBehaviour()
     {
-        if (transform.position.y < -.5f && rb.velocity.y < -0.01f)
+        if (transform.position.y < Manager.Instance.neutralYOffset -.5f && rb.velocity.y < -0.01f)
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
         transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 0), .4f);
 

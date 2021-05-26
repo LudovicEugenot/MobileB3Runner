@@ -1,16 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
     public static bool gamePaused = true;
-
-    private void Start()
-    {
-        Screen.orientation = ScreenOrientation.Landscape;
-    }
 
     public void PlayGame()
     {

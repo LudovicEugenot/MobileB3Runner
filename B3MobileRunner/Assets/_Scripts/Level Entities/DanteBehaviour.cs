@@ -60,7 +60,7 @@ public class DanteBehaviour : MonoBehaviour
         if (amFalling)
         {
             moveSpeedMalus += moveSpeed * .5f * Time.deltaTime;
-            if (transform.position.y < -1)
+            if (transform.position.y < Manager.Instance.neutralYOffset - 1)
             {
                 StartCoroutine(Die());
             }
@@ -158,7 +158,7 @@ public class DanteBehaviour : MonoBehaviour
         {
             transform.Rotate(Vector3.forward, -145f * Time.deltaTime);
 
-            if (transform.position.y < -20)
+            if (transform.position.y < Manager.Instance.neutralYOffset - 20)
             {
                 UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
             }

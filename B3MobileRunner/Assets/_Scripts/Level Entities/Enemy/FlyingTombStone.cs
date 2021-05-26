@@ -34,13 +34,13 @@ public class FlyingTombStone : ObjectToSlice
         {
             if (!startedBehaviour)
             {
-                transform.position = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
+                transform.position = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, Manager.Instance.neutralYOffset + ObjectsData.TombstoneMenacingPlayerHeight);
                 startBehaviourPosX = playerPos.x + ObjectsData.ScreenLimitLeft;
                 startedBehaviour = true;
             }
 
-            outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
-            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .1f * playerSpeed + 4.5f, ObjectsData.TombstoneMenacingPlayerHeight);
+            outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, Manager.Instance.neutralYOffset + ObjectsData.TombstoneMenacingPlayerHeight);
+            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .1f * playerSpeed + 4.5f, Manager.Instance.neutralYOffset + ObjectsData.TombstoneMenacingPlayerHeight);
             lerpValue = Mathf.Clamp01(Mathf.InverseLerp(startBehaviourPosX, endBehaviourPosX, transform.position.x) * 1.5f);
 
             transform.position = Vector2.Lerp(outsideScreenLeftPos, menacingPlayerPos, lerpValue);

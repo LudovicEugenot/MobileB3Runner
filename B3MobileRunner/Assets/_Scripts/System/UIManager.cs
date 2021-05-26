@@ -20,6 +20,6 @@ public class UIManager : MonoBehaviour
 
     public void UpdateCoinsUI(int coinsAmount)
     {
-        coinText.text = "Coins : " + coinsAmount.ToString();
+        coinText.text = coinsAmount.ToString();
     }
 }
