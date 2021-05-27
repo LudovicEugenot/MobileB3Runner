@@ -1,9 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
+using EzySlice;
 
 public class BadAppleWorm : ObjectToSlice
 {
     #region Initialization
+    [SerializeField] Animator animator;
     [SerializeField] Vector2 minSpawnEjectionForce;
     [SerializeField] Vector2 maxSpawnEjectionForce;
     [SerializeField] [Range(0f, 15f)] float speed = 5;
@@ -18,14 +20,16 @@ public class BadAppleWorm : ObjectToSlice
             Random.Range(minSpawnEjectionForce.x, maxSpawnEjectionForce.x) + Manager.Instance.playerScript.moveSpeed,
             Random.Range(minSpawnEjectionForce.y, maxSpawnEjectionForce.y)),
             ForceMode2D.Impulse);
+
+        animator = animator ? animator : mySkinnedMeshrenderer.transform.GetComponent<Animator>();
         //Debug.Log(rb.velocity);
     }
 
     public override void AliveBehaviour()
     {
-        if (transform.position.y < -.5f && rb.velocity.y < -0.01f)
+        if (transform.position.y < Manager.Instance.neutralYOffset -.5f && rb.velocity.y < -0.01f)
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, new Quaternion(0, 0, .7f, .7f), 3f);
+        transform.eulerAngles = Vector3.Lerp(transform.eulerAngles, new Vector3(0, 0, 0), .4f);
 
         //si bug qui les fait pas spawn loin, on peut les couper quand même
         if (Vector2.Distance(transform.position, Manager.Instance.playerTrsf.position) < 4f)
@@ -43,6 +47,8 @@ public class BadAppleWorm : ObjectToSlice
             if (Mathf.Abs(rb.velocity.y) < .1 || startedGoingLeft)
             {
                 startedGoingLeft = true;
+
+                animator.SetTrigger("GetActivated");
 
                 rb.AddForce(Vector2.left * speed);
             }

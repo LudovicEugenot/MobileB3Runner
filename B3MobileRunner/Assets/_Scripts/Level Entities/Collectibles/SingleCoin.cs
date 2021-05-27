@@ -22,15 +22,23 @@ public class SingleCoin : Collectible
     public override void GetCollected()
     {
         Manager.Instance.CoinAmount += ObjectsData.CoinValue; //WIP feature mort qui collecte pièces quand il est au dessus du sol
+        Manager.Instance.sound.PlayCoin();
         Destroy(gameObject);
     }
 
     public override void OnUpdate()
     {
-        if (transform.position.y < -.5f && rb.velocity.y<0)
+        if (transform.position.y < Manager.Instance.neutralYOffset -.5f && rb.velocity.y<0)
         {
             rb.velocity = new Vector2(rb.velocity.x, -rb.velocity.y);
-            if (rb.velocity.magnitude < 5f) transform.position = new Vector2(transform.position.x, -0.5f);
+            if (rb.velocity.magnitude < 5f) transform.position = new Vector2(transform.position.x, Manager.Instance.neutralYOffset - 0.5f);
         }
+    }
+
+    public override bool CollectionConditions()
+    {
+        if (Vector2.Distance(Manager.Instance.playerTrsf.position, transform.position) < 1f)
+            return true;
+        return rb.velocity.x < .5f;
     }
 }

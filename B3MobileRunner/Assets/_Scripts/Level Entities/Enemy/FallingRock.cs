@@ -17,7 +17,7 @@ public class FallingRock : ObjectToSlice //UI à faire
 
     public override void Init()
     {
-        transform.position = new Vector3(transform.position.x, ObjectsData.RockFallHeight, 0f);
+        transform.position = new Vector3(transform.position.x, Manager.Instance.neutralYOffset + ObjectsData.RockFallHeight, 0f);
     }
 
     public override void AliveBehaviour()

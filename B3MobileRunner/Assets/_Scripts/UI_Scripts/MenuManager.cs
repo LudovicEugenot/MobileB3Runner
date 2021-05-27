@@ -1,21 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
     public static bool gamePaused = true;
 
-    private void Start()
-    {
-        Screen.orientation = ScreenOrientation.Landscape;
-    }
-
     public void PlayGame()
     {
-        SceneManager.UnloadSceneAsync(ObjectsData.MainMenu);
-        SceneManager.LoadScene(ObjectsData.MainGameScene);
+        //SceneManager.UnloadSceneAsync(ObjectsData.MainMenu);
+        SceneManager.LoadScene(LevelLoader.LoadARedLevel());
         Time.timeScale = 1f;
         gamePaused = false;
     }
@@ -37,8 +30,9 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.UnloadSceneAsync("Milestone19_04");
-        SceneManager.LoadScene("TitleMenuUI");
+        //SceneManager.UnloadSceneAsync("Milestone19_04");
+        SaveSystem.ResetCurrentRunData();
+        SceneManager.LoadScene(ObjectsData.MainMenu);
         Time.timeScale = 0f;
         gamePaused = true;
     }

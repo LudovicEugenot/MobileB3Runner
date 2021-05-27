@@ -15,7 +15,7 @@ public class FlyingTombStone : ObjectToSlice
     bool startedBehaviour = false;
 
     //arrêt et noise
-    float noiseAmount = .5f; //WIP à enleer quand l'anim est là
+    float noiseAmount = .2f; //WIP à enleer quand l'anim est là
     bool startedNoise = false;
     bool finishedNoise = false;
     bool startedFalling = false;
@@ -34,13 +34,13 @@ public class FlyingTombStone : ObjectToSlice
         {
             if (!startedBehaviour)
             {
-                transform.position = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
+                transform.position = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, Manager.Instance.neutralYOffset + ObjectsData.TombstoneMenacingPlayerHeight);
                 startBehaviourPosX = playerPos.x + ObjectsData.ScreenLimitLeft;
                 startedBehaviour = true;
             }
 
-            outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, ObjectsData.TombstoneMenacingPlayerHeight);
-            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .4f * playerSpeed+3.2f, ObjectsData.TombstoneMenacingPlayerHeight);
+            outsideScreenLeftPos = new Vector2(playerPos.x + ObjectsData.ScreenLimitLeft, Manager.Instance.neutralYOffset + ObjectsData.TombstoneMenacingPlayerHeight);
+            menacingPlayerPos = new Vector2(playerPos.x + /*coefficient*/ .1f * playerSpeed + 4.5f, Manager.Instance.neutralYOffset + ObjectsData.TombstoneMenacingPlayerHeight);
             lerpValue = Mathf.Clamp01(Mathf.InverseLerp(startBehaviourPosX, endBehaviourPosX, transform.position.x) * 1.5f);
 
             transform.position = Vector2.Lerp(outsideScreenLeftPos, menacingPlayerPos, lerpValue);
@@ -69,7 +69,7 @@ public class FlyingTombStone : ObjectToSlice
             if (!startedFalling)
             {
                 startedFalling = true;
-                rb.simulated = true;
+                rb.gravityScale = 1;
                 rb.AddForce(Vector2.down * playerSpeed * 10f, ForceMode2D.Impulse);
             }
             //continue de tomber avec gravité
@@ -82,7 +82,7 @@ public class FlyingTombStone : ObjectToSlice
 
     public override void Init()
     {
-        rb.simulated = false;
+        rb.gravityScale = 0;
         endBehaviourPosX = transform.position.x;
         transform.position = new Vector3(transform.position.x - .1f, 20f, 0f); //mettre la pierre bien au dessus de l'écran et à gauche pour le if ligne 33
     }

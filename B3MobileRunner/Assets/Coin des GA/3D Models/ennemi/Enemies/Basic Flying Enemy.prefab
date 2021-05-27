@@ -65,49 +65,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cutMat: {fileID: 0}
-  myTransform: {fileID: 7939789337023161429}
-  cutAmount: 0
-  deathCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 7.216852
-      outSlope: 7.216852
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.049091224
-    - serializedVersion: 3
-      time: 0.33951047
-      value: 0.96955323
-      inSlope: 0.25443217
-      outSlope: 0.25443217
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.23083636
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  distanceToActivation: 9
-  deathTime: 0.8
-  mySkinnedMeshrenderer: {fileID: 7201201654072814385}
-  isWithSkinnedMeshRenderer: 1
   rb: {fileID: 7939789337023161430}
+  myTransform: {fileID: 7939789337023161429}
+  isWithSkinnedMeshRenderer: 1
+  mySkinnedMeshrenderer: {fileID: 7201201654072814385}
+  cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
+  sliceableGameobject: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 12
+  deathTime: 0.8
+  cutAmount: 0
   amActive: 0
-  speed: 3.81
+  speed: 15
 --- !u!61 &3598802006461700183
 BoxCollider2D:
   m_ObjectHideFlags: 0

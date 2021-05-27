@@ -7,10 +7,14 @@ public class Manager : MonoBehaviour
     public UIManager UI;
     public DanteBehaviour playerScript;
     public FingerController fingerController;
+    public SoundManager sound;
     public Cinemachine.CinemachineVirtualCamera virtualCamera;
+    [SerializeField] Transform endOfLevelPoint;
+
 
     [Header("Game Info")]
     public bool gameOngoing = false;
+
     public int CoinAmount
     {
         get { return _coinAmount; }
@@ -25,8 +29,9 @@ public class Manager : MonoBehaviour
     //other hidden useful stuff
     public static Manager Instance;
     [HideInInspector] public Transform playerTrsf;
+    [HideInInspector] public float neutralYOffset;
     [HideInInspector] public float gameStartTime;
-    [HideInInspector] public int currentFloor; //premier étage 1, deuxième étage 2...
+    [HideInInspector] public float endOfLevelDistance { get { return endOfLevelPoint.position.x; } }
     int _coinAmount = 0;
     #endregion
 
@@ -49,8 +54,8 @@ public class Manager : MonoBehaviour
     {
         if (!playerScript) Debug.LogWarning("Il faut mettre le runner ici", this);
         playerTrsf = playerScript.transform;
+        neutralYOffset = playerTrsf.position.y;
 
-        Screen.orientation = ScreenOrientation.Landscape;
         GameInit();
     }
     #endregion
@@ -59,8 +64,15 @@ public class Manager : MonoBehaviour
     public void GameInit()
     {
         gameOngoing = true;
-        gameStartTime = Time.time;
-        CoinAmount = 0;
+
+        SavedCurrentRunData currentRunData = SaveSystem.LoadCurrentRunData();
+        gameStartTime = Time.time + currentRunData.currentRunTime;
+        CoinAmount = currentRunData.currentRunCoinAmount;
+    }
+
+    public void GoToNextLevel()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LevelLoader.LoadNextLevel());
     }
     #endregion
 }

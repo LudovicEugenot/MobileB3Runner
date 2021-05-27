@@ -121,7 +121,7 @@ namespace EzySlice
             // nothing to return, so return nothing!
             return null;
         }
-        
+
         public static GameObject[] SliceInstantiateSkinnedMeshRenderer(this GameObject obj, Vector3 position, Vector3 direction, TextureRegion cuttingRegion, SkinnedMeshRenderer smr, Material crossSectionMaterial = null)
         {
             EzySlice.Plane cuttingPlane = new EzySlice.Plane();
