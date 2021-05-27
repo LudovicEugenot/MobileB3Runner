@@ -9,12 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4940074902809895817}
-  - component: {fileID: 4940074902809895818}
   - component: {fileID: 4940074902809895819}
   - component: {fileID: 4940074902809895820}
   - component: {fileID: 4940074902809895821}
   m_Layer: 5
-  m_Name: Canvas_Dune1 (1)
+  m_Name: Canvas_Dune1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,27 +39,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &4940074902809895818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4940074902809895822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3029f2b69222074e8665a6d7b73bf5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rockWarningParent: {fileID: 0}
-  rockWarningPrefab: {fileID: 524302197073443586, guid: 2cf7ffdb84c9c1840a28559c4ce861b5,
-    type: 3}
-  screenSize:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 0
-    height: 0
 --- !u!223 &4940074902809895819
 Canvas:
   m_ObjectHideFlags: 0
@@ -147,7 +125,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4940074903455194478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0157511, y: 0.29347903, z: 0.14903848}
   m_Children: []
   m_Father: {fileID: 4940074902809895817}
@@ -155,7 +133,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -5}
+  m_AnchoredPosition: {x: 0, y: -47}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4940074903455194475
