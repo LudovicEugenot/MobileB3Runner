@@ -43,7 +43,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + ObjectsData.SavedCurrentRunDataPath;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SavedCurrentRunData data = new SavedCurrentRunData(coinAmount, currentSpeed, currentTime);
+        SavedCurrentRunData data = new SavedCurrentRunData(coinAmount, currentTime);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -54,7 +54,7 @@ public static class SaveSystem
         string path = Application.persistentDataPath + ObjectsData.SavedCurrentRunDataPath;
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SavedCurrentRunData data = new SavedCurrentRunData(0, 0, 0);
+        SavedCurrentRunData data = new SavedCurrentRunData(0, 0);
 
         formatter.Serialize(stream, data);
         stream.Close();

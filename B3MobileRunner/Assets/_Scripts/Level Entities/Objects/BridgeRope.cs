@@ -33,11 +33,11 @@ public class BridgeRope : ObjectToSlice
             bridgeLinked.eulerAngles = new Vector3(0, 0, -bridgeGettingDown.Evaluate(lerpValue));
             transform.localPosition = Vector3.Lerp(originalRopePos, ropeFinalPos, Mathf.Clamp01(lerpValue * 4));
 
-        }
-        else if (transform.position.x < Manager.Instance.playerTrsf.position.x + ObjectsData.ScreenLimitLeft - 4)
+        }/*
+        else if (transform.position.x < Manager.Instance.playerTrsf.position.x + ObjectsData.ScreenLimitLeft * 2)
         {
             Destroy(transform.parent.gameObject);
-        }
+        }*/
     }
 
     public override void AliveBehaviour()

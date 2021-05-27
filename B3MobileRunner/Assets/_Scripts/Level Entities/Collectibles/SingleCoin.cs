@@ -34,4 +34,11 @@ public class SingleCoin : Collectible
             if (rb.velocity.magnitude < 5f) transform.position = new Vector2(transform.position.x, Manager.Instance.neutralYOffset - 0.5f);
         }
     }
+
+    public override bool CollectionConditions()
+    {
+        if (Vector2.Distance(Manager.Instance.playerTrsf.position, transform.position) < 1f)
+            return true;
+        return rb.velocity.x < .5f;
+    }
 }

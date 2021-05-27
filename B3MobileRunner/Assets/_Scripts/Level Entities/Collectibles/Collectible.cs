@@ -16,7 +16,7 @@ public abstract class Collectible : MonoBehaviour
 
     void Update()
     {
-        if (Manager.Instance.playerTrsf.position.x >= transform.position.x)
+        if (Manager.Instance.playerTrsf.position.x >= transform.position.x && CollectionConditions())
         {
             GetCollected();
         }
@@ -29,4 +29,5 @@ public abstract class Collectible : MonoBehaviour
     public abstract void OnStart();
     public abstract void GetCollected();
     public abstract void OnUpdate();
+    public abstract bool CollectionConditions();
 }

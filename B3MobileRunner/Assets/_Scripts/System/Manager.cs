@@ -31,7 +31,6 @@ public class Manager : MonoBehaviour
     [HideInInspector] public Transform playerTrsf;
     [HideInInspector] public float neutralYOffset;
     [HideInInspector] public float gameStartTime;
-    [HideInInspector] public float completeRunTime;
     [HideInInspector] public float endOfLevelDistance { get { return endOfLevelPoint.position.x; } }
     int _coinAmount = 0;
     #endregion
@@ -65,12 +64,10 @@ public class Manager : MonoBehaviour
     public void GameInit()
     {
         gameOngoing = true;
-        gameStartTime = Time.time;
-        Debug.Log(gameStartTime);
 
         SavedCurrentRunData currentRunData = SaveSystem.LoadCurrentRunData();
-        CoinAmount = currentRunData.currentRunCoinAmount; //WIP to delete when consistent coin amount
-        completeRunTime = currentRunData.currentRunTime; //WIP inconsistance entr runtime et startTime
+        gameStartTime = Time.time + currentRunData.currentRunTime;
+        CoinAmount = currentRunData.currentRunCoinAmount;
     }
 
     public void GoToNextLevel()

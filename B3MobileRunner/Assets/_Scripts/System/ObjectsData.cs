@@ -36,7 +36,7 @@ public struct ObjectsData
         {
             return new string[]
             {
-                "Scenes/LDs Prefaits/Rouge/Niveau 1-1", //WIP deux fois le premier niveau ?
+                "Scenes/LDs Prefaits/Rouge/Niveau 1-1",
                 "Scenes/LDs Prefaits/Rouge/Niveau 1-2",
                 "Scenes/LDs Prefaits/Rouge/Niveau 2",
                 "Scenes/LDs Prefaits/Rouge/Niveau 3",
@@ -58,7 +58,7 @@ public struct ObjectsData
     }
 
 
-    //Limites de l'écran en coordonnées monde par rapport à la position de Dante sur l'écran (si la cam bouge au fur et à mesure de la partie : à update WIP)
+    //Limites de l'écran en coordonnées monde par rapport à la position de Dante sur l'écran
     public static float ScreenLimitLeft { get { return -7f; } }
     public static float ScreenLimitRight { get { return 17f; } }
     public static float ScreenLimitUp { get { return 11f; } }
