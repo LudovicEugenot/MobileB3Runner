@@ -165,7 +165,15 @@ public class DanteBehaviour : MonoBehaviour
 
             if (transform.position.y < Manager.Instance.neutralYOffset - 20)
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu); //WIP
+                int globalCoinAmount = SaveSystem.LoadGlobalData().globalCoinAmount;
+
+                globalCoinAmount += Manager.Instance.CoinAmount;
+
+                SaveSystem.ResetCurrentRunData();
+
+                SaveSystem.SaveGlobalData(globalCoinAmount);
+
+                UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu);
             }
         }
     }

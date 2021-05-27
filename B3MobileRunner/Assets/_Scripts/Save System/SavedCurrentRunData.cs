@@ -1,5 +1,5 @@
 ﻿
-
+[System.Serializable]
 public class SavedCurrentRunData
 {
     public int currentRunCoinAmount = 0;

@@ -69,7 +69,7 @@ public class FlyingTombStone : ObjectToSlice
             if (!startedFalling)
             {
                 startedFalling = true;
-                rb.simulated = true;
+                rb.gravityScale = 1;
                 rb.AddForce(Vector2.down * playerSpeed * 10f, ForceMode2D.Impulse);
             }
             //continue de tomber avec gravité
@@ -82,7 +82,7 @@ public class FlyingTombStone : ObjectToSlice
 
     public override void Init()
     {
-        rb.simulated = false;
+        rb.gravityScale = 0;
         endBehaviourPosX = transform.position.x;
         transform.position = new Vector3(transform.position.x - .1f, 20f, 0f); //mettre la pierre bien au dessus de l'écran et à gauche pour le if ligne 33
     }

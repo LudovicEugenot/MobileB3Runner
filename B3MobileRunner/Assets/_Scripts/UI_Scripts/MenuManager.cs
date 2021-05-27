@@ -8,7 +8,7 @@ public class MenuManager : MonoBehaviour
     public void PlayGame()
     {
         //SceneManager.UnloadSceneAsync(ObjectsData.MainMenu);
-        SceneManager.LoadScene(ObjectsData.RedLevels[0]); //WIP avec truc de saves pour pas jouer same level deux fois d'affilée
+        SceneManager.LoadScene(LevelLoader.LoadARedLevel());
         Time.timeScale = 1f;
         gamePaused = false;
     }
@@ -30,8 +30,9 @@ public class MenuManager : MonoBehaviour
     public void ExitGame()
     {
         //SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        SceneManager.UnloadSceneAsync("Milestone19_04");
-        SceneManager.LoadScene("TitleMenuUI");
+        //SceneManager.UnloadSceneAsync("Milestone19_04");
+        SaveSystem.ResetCurrentRunData();
+        SceneManager.LoadScene(ObjectsData.MainMenu);
         Time.timeScale = 0f;
         gamePaused = true;
     }

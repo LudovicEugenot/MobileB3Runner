@@ -20,7 +20,7 @@ public struct ObjectsData
 
 
     //Enemies
-    public static float RockFallHeight { get { return 10f; } }
+    public static float RockFallHeight { get { return 11f; } }
     public static float TombstoneMenacingPlayerHeight { get { return 5f; } }
 
 
@@ -30,13 +30,16 @@ public struct ObjectsData
 
     //Scene names
     public static string MainMenu { get { return "TitleMenuUI"; } }
-    public static string[] RedLevels //WIP
+    public static string[] RedLevels
     {
         get
         {
             return new string[]
             {
-                "Niveau 1-1"
+                "Scenes/LDs Prefaits/Rouge/Niveau 1-1", //WIP deux fois le premier niveau ?
+                "Scenes/LDs Prefaits/Rouge/Niveau 1-2",
+                "Scenes/LDs Prefaits/Rouge/Niveau 2",
+                "Scenes/LDs Prefaits/Rouge/Niveau 3",
             };
         }
     }
@@ -46,8 +49,10 @@ public struct ObjectsData
         {
             return new string[]
             {
-                "",
-                ""
+                "Scenes/LDs Prefaits/Bleu/Niveau 1",
+                "Scenes/LDs Prefaits/Bleu/Niveau 2",
+                "Scenes/LDs Prefaits/Bleu/Niveau 3",
+                "Scenes/LDs Prefaits/Bleu/Niveau 4"
             };
         }
     }
@@ -56,7 +61,7 @@ public struct ObjectsData
     //Limites de l'écran en coordonnées monde par rapport à la position de Dante sur l'écran (si la cam bouge au fur et à mesure de la partie : à update WIP)
     public static float ScreenLimitLeft { get { return -7f; } }
     public static float ScreenLimitRight { get { return 17f; } }
-    public static float ScreenLimitUp { get { return 10f; } }
+    public static float ScreenLimitUp { get { return 11f; } }
     public static float ScreenLimitDown { get { return -3.5f; } }
 
 
@@ -64,4 +69,5 @@ public struct ObjectsData
     //Save system related
     public static string SavedGlobalDataPath { get { return "/myGlobalGameData.weow"; } }
     public static string SavedCurrentRunDataPath { get { return "/myCurrentRunData.zoinks"; } }
+    public static string SavedLevelsPlayedDataPath { get { return "/myLevelsPlayed.smartPrograming"; } }
 }

@@ -31,7 +31,7 @@ public class Manager : MonoBehaviour
     [HideInInspector] public Transform playerTrsf;
     [HideInInspector] public float neutralYOffset;
     [HideInInspector] public float gameStartTime;
-    [HideInInspector] public bool amOnRedLevel;
+    [HideInInspector] public float completeRunTime;
     [HideInInspector] public float endOfLevelDistance { get { return endOfLevelPoint.position.x; } }
     int _coinAmount = 0;
     #endregion
@@ -66,22 +66,16 @@ public class Manager : MonoBehaviour
     {
         gameOngoing = true;
         gameStartTime = Time.time;
-        CoinAmount = 0; //WIP to delete when consistent coin amount
+        Debug.Log(gameStartTime);
+
+        SavedCurrentRunData currentRunData = SaveSystem.LoadCurrentRunData();
+        CoinAmount = currentRunData.currentRunCoinAmount; //WIP to delete when consistent coin amount
+        completeRunTime = currentRunData.currentRunTime; //WIP inconsistance entr runtime et startTime
     }
 
     public void GoToNextLevel()
     {
-        if (amOnRedLevel) 
-            //grâce au truc de saves, bien faire attention à : 
-            //1. jouer tous les niveaux les uns après les autres
-            //2. pas jouer le même niveau deux fois d'affilée
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.BlueLevels[Random.Range(0, ObjectsData.BlueLevels.Length)]);
-        }
-        else
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.RedLevels[Random.Range(0, ObjectsData.RedLevels.Length)]);
-        }
+        UnityEngine.SceneManagement.SceneManager.LoadScene(LevelLoader.LoadNextLevel());
     }
     #endregion
 }
