@@ -45,7 +45,7 @@ public class BoxFillPath : ObjectToTap
 
     protected override void PlayerFail()
     {
-        Manager.Instance.playerScript.FallInASmallPit();
+        Manager.Instance.playerScript.FallInASmallPit(this);
     }
 
     protected override bool placeToCheckIfSolvedVisualIsRelevant()

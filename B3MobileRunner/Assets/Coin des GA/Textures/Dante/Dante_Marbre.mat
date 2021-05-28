@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4290795136500389171
+--- !u!114 &-2682003540419747986
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,10 +20,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Dante_texture
-  m_Shader: {fileID: -6465566751694194690, guid: d6d938c827318b240a9efb8f8ae1f44b,
+  m_Name: Dante_Marbre
+  m_Shader: {fileID: -6465566751694194690, guid: 0c9d9b9afe7bafe4abafebc2aa0ab203,
     type: 3}
-  m_ShaderKeywords: _METALLICSPECGLOSSMAP _NORMALMAP
+  m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -33,12 +33,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_CB24313:
+        m_Texture: {fileID: 2800000, guid: 90b49c3a59738914cbd53c7bee0cd2a9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: bac247aa619653042b4f9e5f41bd2fa4, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: f8cbe702624edc9459f7cc0bf50567b6, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -46,35 +50,19 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: bac247aa619653042b4f9e5f41bd2fa4, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
-        m_Texture: {fileID: 2800000, guid: c18e2f3456696fa45b5c98ede079af4b, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_2507C82_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 047a9daed25929747aed4955403bf20e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_3D0F3725_Texture_1:
-        m_Texture: {fileID: 2800000, guid: 766af14cd26e1834e90cec8bff7b7c16, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_89ECFFFD_Texture_1:
-        m_Texture: {fileID: 2800000, guid: c18e2f3456696fa45b5c98ede079af4b, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_96A2216B_Texture_1:
-        m_Texture: {fileID: 2800000, guid: bac247aa619653042b4f9e5f41bd2fa4, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _SampleTexture2D_D5C16F69_Texture_1:
-        m_Texture: {fileID: 2800000, guid: f8cbe702624edc9459f7cc0bf50567b6, type: 3}
+    - _SampleTexture2D_CC9B7DD9_Texture_1:
+        m_Texture: {fileID: 2800000, guid: e4c49cf99af6da8488662b4547c8c8dc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -82,7 +70,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_6618D6F6: 0.82
+    - Vector1_1943FB2C: 4
+    - Vector1_54EB912: 2
+    - Vector1_F8845B05: 0.25
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -105,6 +95,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_A934DCC9: {r: 1, g: 1, b: 1, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
