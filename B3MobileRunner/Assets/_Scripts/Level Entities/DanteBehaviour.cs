@@ -191,6 +191,7 @@ public class DanteBehaviour : MonoBehaviour
             Manager.Instance.virtualCamera.Follow = null;
             Manager.Instance.virtualCamera.LookAt = null;
             Manager.Instance.sound.PlayDeath();
+            Manager.Instance.sound.StopBGM();
             gameObject.layer = LayerMask.NameToLayer("PlayerDead");
 
             rb2D.angularVelocity = 0f;

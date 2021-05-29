@@ -10,12 +10,14 @@ public class MenuManager : MonoBehaviour
         //SceneManager.UnloadSceneAsync(ObjectsData.MainMenu);
         SceneManager.LoadScene(LevelLoader.LoadARedLevel());
         Time.timeScale = 1f;
+        //Manager.Instance.sound.PlayBGM();
         gamePaused = false;
     }
 
     public void PauseGame()
     {
         Time.timeScale = 0f;
+        Manager.Instance.sound.PauseBGM();
         //SceneManager.LoadScene("PauseMenuScene", LoadSceneMode.Additive);
         gamePaused = true;
     }
@@ -24,6 +26,7 @@ public class MenuManager : MonoBehaviour
     {
         //SceneManager.UnloadSceneAsync("PauseMenuScene");
         Time.timeScale = 1f;
+        Manager.Instance.sound.PlayBGM();
         gamePaused = false;
     }
 
@@ -34,6 +37,7 @@ public class MenuManager : MonoBehaviour
         SaveSystem.ResetCurrentRunData();
         SceneManager.LoadScene(ObjectsData.MainMenu);
         Time.timeScale = 0f;
+        //Manager.Instance.sound.StopBGM();
         gamePaused = true;
     }
 }
