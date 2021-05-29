@@ -53,7 +53,6 @@ public static class Skin
 
     public static SkinType GetSkinFromString(string skinString)
     {
-        Debug.Log(skinString);
         return (SkinType) System.Enum.Parse(typeof(SkinType), skinString);
     }
 }

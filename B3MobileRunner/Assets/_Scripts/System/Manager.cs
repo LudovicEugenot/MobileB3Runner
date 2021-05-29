@@ -84,7 +84,7 @@ public class Manager : MonoBehaviour
 
     public void GoToNextLevel()
     {
-        SaveSystem.SaveCurrentRunData(CoinAmount, completeRunTime, true); //WIP
+        SaveSystem.SaveCurrentRunData(CoinAmount, completeRunTime, playerScript.isInvincible);
         UnityEngine.SceneManagement.SceneManager.LoadScene(LevelLoader.LoadNextLevel());
     }
     #endregion

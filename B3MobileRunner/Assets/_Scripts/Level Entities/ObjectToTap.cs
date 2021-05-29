@@ -23,14 +23,7 @@ public abstract class ObjectToTap : MonoBehaviour
     private void Awake()
     {
         #region set particle system
-        FXParticleSystemTapDone.gameObject.SetActive(true);
-        ParticleSystem.MainModule main = FXParticleSystemTapDone.main;
-        main.loop = false;
-        ParticleSystem.EmissionModule emission = FXParticleSystemTapDone.emission;
-        emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0f, 1, 1, 1, .01f) });
-        emission.rateOverTime = 0f;
-        FXParticleSystemTapDone.Stop(true);
-        FXParticleSystemTapDone.Clear(true);
+        SetParticleSystemDone(FXParticleSystemTapDone);
         if (FXParticleSystemInvitTapMe == null) Debug.LogWarning("need le visuel de tap");
         #endregion
     }
@@ -106,5 +99,17 @@ public abstract class ObjectToTap : MonoBehaviour
     protected virtual void MoreGizmos()
     {
 
+    }
+
+    protected void SetParticleSystemDone(ParticleSystem partSys)
+    {
+        partSys.gameObject.SetActive(true);
+        ParticleSystem.MainModule main = partSys.main;
+        main.loop = false;
+        ParticleSystem.EmissionModule emission = partSys.emission;
+        emission.SetBursts(new ParticleSystem.Burst[] { new ParticleSystem.Burst(0f, 1, 1, 1, .01f) });
+        emission.rateOverTime = 0f;
+        partSys.Stop(true);
+        partSys.Clear(true);
     }
 }

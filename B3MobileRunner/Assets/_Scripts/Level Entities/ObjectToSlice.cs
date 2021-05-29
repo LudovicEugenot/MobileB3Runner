@@ -165,12 +165,12 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (sliceableGameobject)
             {
-                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
+                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, sliceableGameobject.transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
             }
             else
             {
-                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
+                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, myTransform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
             }
         }
@@ -178,12 +178,12 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (sliceableGameobject)
             {
-                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
+                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, sliceableGameobject.transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
             }
             else
             {
-                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
+                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, myTransform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
             }
         }
