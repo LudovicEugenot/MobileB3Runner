@@ -13,6 +13,9 @@ public class DanteBehaviour : MonoBehaviour
 
     [Header("Values")]
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
+    [SerializeField] [Range(0f, 3f)] float losingInvincibilityDelay = 1f;
+    [SerializeField] [Range(0f, 1f)] float invincibilityMaterialSwitchFlickerTime = .2f;
+    [HideInInspector] public bool isInvincible = false;
 
     [Header("Testing")]
     [Range(4f, 12f)] public float moveSpeed = 4f;
@@ -24,7 +27,12 @@ public class DanteBehaviour : MonoBehaviour
     bool amFalling = false;
     float moveSpeedMalus = 0f;
 
+    bool amLosingInvincibility = false;
+    float currentInvincibilityLoss;
+    float currentMatSwitch;
     #endregion
+
+    #region MainBehaviour
     void Start()
     {
         rb2D = rb2D ? rb2D : GetComponent<Rigidbody2D>();
@@ -41,6 +49,9 @@ public class DanteBehaviour : MonoBehaviour
     private void InitPlayerValues()
     {
         moveSpeed = ObjectsData.PlayerSpeedOverTime[0].y;
+        currentInvincibilityLoss = losingInvincibilityDelay;
+        currentMatSwitch = invincibilityMaterialSwitchFlickerTime;
+        if (SaveSystem.LoadCurrentRunData().isCurrentlyInvincible) GetInvincibility();
     }
 
     void Update()
@@ -48,6 +59,8 @@ public class DanteBehaviour : MonoBehaviour
         if (!amDying)
         {
             MovementUpdate();
+
+            ManageInvincibility();
         }
         else
         {
@@ -85,7 +98,7 @@ public class DanteBehaviour : MonoBehaviour
     float previousUpdateTime; float nextUpdateTime = -1f;
     float SpeedEvolution()
     {
-        if (Time.time - Manager.Instance.gameStartTime > nextUpdateTime) //WIP faut pas que ce soit le gamestarttime mais le temps du fichier de save
+        if (Manager.Instance.completeRunTime - Manager.Instance.gameStartTime > nextUpdateTime) //WIP faut pas que ce soit le gamestarttime mais le temps du fichier de save
         {
             UpdateLerpValues();
         }
@@ -95,7 +108,7 @@ public class DanteBehaviour : MonoBehaviour
             Mathf.InverseLerp(
                 previousUpdateTime,
                 nextUpdateTime,
-                Time.time));
+                Manager.Instance.completeRunTime));
     }
 
     void UpdateLerpValues()
@@ -111,7 +124,7 @@ public class DanteBehaviour : MonoBehaviour
 
         //si l'in game time est compris dans les valeurs du tableau préfait, alors on augmente la vitesse selon ce tableau, 
         //sinon, augmentation linéaire selon MaxSpeedGainOverTime
-        if (Time.time - Manager.Instance.gameStartTime < ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x)
+        if (Manager.Instance.completeRunTime - Manager.Instance.gameStartTime < ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x)
         {
             //vitesses de PlayerSpeedOverTime
             nextUpdateTime = ObjectsData.PlayerSpeedOverTime[speedLerpIndex + 1].x;
@@ -127,34 +140,55 @@ public class DanteBehaviour : MonoBehaviour
             nextSpeedValue += ObjectsData.MaxSpeedGainOverTime.y;
         }
     }
+    #endregion
 
     #region Death Related
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.CompareTag("ToKill"))
         {
-            Debug.Log(collision.transform.name + " killed me.", collision.transform.gameObject);
-            StartCoroutine(Die());
+            if (!isInvincible)
+                StartCoroutine(Die());
+            else
+            {
+                ObjectToSlice slice;
+                if (collision.transform.TryGetComponent(out slice))
+                    BreakInvincibility(slice);
+            }
         }
     }
 
-    public void FallInASmallPit()
+    public void FallInASmallPit(BoxFillPath thisRef)
     {
-        myCollider.isTrigger = true;
-        rb2D.gravityScale = 1f;
-        amFalling = true;
-        /*if (!Physics2D.Raycast(transform.position, Vector2.down, 3f, LayerMask.NameToLayer("Default")))
+        if (isInvincible)
         {
-            rb2D.AddForce(Vector2.down * 9.81f);
-        }*/
-        //ralentir quand plus rien sous le joueur histoire qu'il tombe à haute vitesse
+            BreakInvincibility(thisRef);
+        }
+        else
+        {
+            myCollider.isTrigger = true;
+            rb2D.gravityScale = 1f;
+            amFalling = true;
+            /*if (!Physics2D.Raycast(transform.position, Vector2.down, 3f, LayerMask.NameToLayer("Default")))
+            {
+                rb2D.AddForce(Vector2.down * 9.81f);
+            }*/
+            //ralentir quand plus rien sous le joueur histoire qu'il tombe à haute vitesse
+        }
     }
 
-    public void DoorInMyFace()
+    public void DoorInMyFace(MonoBehaviour theDoor)
     {
-        Debug.Log("<color=red> Bonk the door </color>");
-        StartCoroutine(Die());
-        //Script de mort après avoir touché la porte
+        if (isInvincible)
+        {
+            BreakInvincibility(theDoor);
+        }
+        else
+        {
+            Debug.Log("<color=red> Bonk the door </color>");
+            StartCoroutine(Die());
+            //Script de mort après avoir touché la porte
+        }
     }
 
     private void DeathAnimation()
@@ -171,7 +205,7 @@ public class DanteBehaviour : MonoBehaviour
 
                 SaveSystem.ResetCurrentRunData();
 
-                SaveSystem.SaveGlobalData(globalCoinAmount);
+                SaveSystem.SaveGlobalData(globalCoinAmount, Skin.CurrentRunSkin()); //Manager.Instance.playerScript.skin);
 
                 UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu);
             }
@@ -210,6 +244,87 @@ public class DanteBehaviour : MonoBehaviour
 
             amDead = true;
         }
+    }
+    #endregion
+
+    #region Invincibility related
+    public void GetInvincibility()
+    {
+        isInvincible = true;
+
+        Skin.ChangeDanteSkin(Skin.SkinType.ShieldPower);
+
+        if (amLosingInvincibility)
+        {
+            amLosingInvincibility = false;
+            currentInvincibilityLoss = losingInvincibilityDelay;
+        }
+
+    }
+    void ManageInvincibility() //called in Update
+    {
+        if (isInvincible)
+        {
+            if (amLosingInvincibility)
+            {
+                FlickerInvincibilityMat();
+
+                currentInvincibilityLoss -= Time.deltaTime;
+
+                if (currentInvincibilityLoss < 0f)
+                {
+                    Skin.ChangeDanteSkin(Skin.CurrentRunSkin());
+                    isInvincible = false;
+                    amLosingInvincibility = false;
+                    currentInvincibilityLoss = losingInvincibilityDelay;
+                    currentMatSwitch = invincibilityMaterialSwitchFlickerTime;
+                }
+            }
+        }
+    }
+
+    void FlickerInvincibilityMat()
+    {
+        if (currentMatSwitch < 0)
+        {
+            if (Manager.Instance.Skins.danteSMR.material == Manager.Instance.Skins.FindDanteSkin(Skin.SkinType.ShieldPower))
+                Skin.ChangeDanteSkin(Skin.CurrentRunSkin());
+            else
+                Skin.ChangeDanteSkin(Skin.SkinType.ShieldPower);
+
+            currentMatSwitch = invincibilityMaterialSwitchFlickerTime;
+        }
+        else
+        {
+            currentMatSwitch -= Time.deltaTime;
+        }
+    }
+
+    void BreakInvincibility(MonoBehaviour whoHurtMe)
+    {
+        switch (whoHurtMe.GetType().ToString())
+        {
+            //if (whoHurtMe.GetType() == typeof(ObjectToSlice))
+            case "BasicEnemyFlying":
+            case "BadAppleWorm":
+            case "BadApple":
+            case "FallingRock":
+            case "FlyingTombStone":
+                whoHurtMe.GetComponent<ObjectToSlice>().HitThis(whoHurtMe.transform.position, whoHurtMe.transform.position - transform.position);
+                break;
+            //else if (whoHurtMe.GetType() == typeof(ObjectToTap))
+            case "Levier":
+            case "ShieldPickUp":
+            case "BagOfCoinsToTap":
+            case "BoxFillPath":
+                whoHurtMe.GetComponent<ObjectToTap>().GetTapped();
+                break;
+            default:
+                Debug.Log("death not planned, " + whoHurtMe.ToString() + " hit me. please code this");
+                break;
+        }
+
+        amLosingInvincibility = true;
     }
     #endregion
 }

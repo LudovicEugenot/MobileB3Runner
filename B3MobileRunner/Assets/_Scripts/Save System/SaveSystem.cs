@@ -5,13 +5,13 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class SaveSystem
 {
     #region Global Data
-    public static void SaveGlobalData(int newGlobalCoinAmount)
+    public static void SaveGlobalData(int newGlobalCoinAmount, Skin.SkinType nextRunSkin)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ObjectsData.SavedGlobalDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedGlobalDataPath);
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SavedGlobalGameData data = new SavedGlobalGameData(newGlobalCoinAmount);
+        SavedGlobalGameData data = new SavedGlobalGameData(newGlobalCoinAmount, nextRunSkin.ToString());
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -19,10 +19,10 @@ public static class SaveSystem
 
     public static SavedGlobalGameData LoadGlobalData()
     {
-        string path = Application.persistentDataPath + ObjectsData.SavedGlobalDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedGlobalDataPath);
         if (!File.Exists(path))
         {
-            SaveGlobalData(0);
+            SaveGlobalData(0, Skin.SkinType.Basic);
         }
 
 
@@ -37,13 +37,13 @@ public static class SaveSystem
     #endregion
 
     #region Current Run Data
-    public static void SaveCurrentRunData(int coinAmount, float currentSpeed, float currentTime)
+    public static void SaveCurrentRunData(int coinAmount, float currentTime, bool isInvincible)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ObjectsData.SavedCurrentRunDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedCurrentRunDataPath);
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SavedCurrentRunData data = new SavedCurrentRunData(coinAmount, currentSpeed, currentTime);
+        SavedCurrentRunData data = new SavedCurrentRunData(coinAmount, currentTime, isInvincible);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -51,10 +51,10 @@ public static class SaveSystem
     public static void ResetCurrentRunData()
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ObjectsData.SavedCurrentRunDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedCurrentRunDataPath);
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SavedCurrentRunData data = new SavedCurrentRunData(0, 0, 0);
+        SavedCurrentRunData data = new SavedCurrentRunData(0, 0, false);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -62,7 +62,7 @@ public static class SaveSystem
 
     public static SavedCurrentRunData LoadCurrentRunData()
     {
-        string path = Application.persistentDataPath + ObjectsData.SavedCurrentRunDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedCurrentRunDataPath);
         if (!File.Exists(path))
         {
             ResetCurrentRunData();
@@ -83,7 +83,7 @@ public static class SaveSystem
     public static void SaveLevelsPlayedData(SavedLevelsPlayedData incData)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ObjectsData.SavedLevelsPlayedDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedLevelsPlayedDataPath);
         FileStream stream = new FileStream(path, FileMode.Create);
 
         SavedLevelsPlayedData goingOutData = new SavedLevelsPlayedData(incData.redLastLevelPlayed, incData.blueLastLevelPlayed, incData.redLevelsPlayed, incData.blueLevelsPlayed);
@@ -94,7 +94,7 @@ public static class SaveSystem
     public static void SaveLevelsPlayedData(string redLastLevelPlayed, string blueLastLevelPlayed, string[] redLevelsPlayed, string[] blueLevelsPlayed)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + ObjectsData.SavedLevelsPlayedDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedLevelsPlayedDataPath);
         FileStream stream = new FileStream(path, FileMode.Create);
 
         SavedLevelsPlayedData data = new SavedLevelsPlayedData(redLastLevelPlayed, blueLastLevelPlayed, redLevelsPlayed, blueLevelsPlayed);
@@ -105,7 +105,7 @@ public static class SaveSystem
 
     public static SavedLevelsPlayedData LoadLevelsPlayedData()
     {
-        string path = Application.persistentDataPath + ObjectsData.SavedLevelsPlayedDataPath;
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedLevelsPlayedDataPath);
 
         if (!File.Exists(path))
         {

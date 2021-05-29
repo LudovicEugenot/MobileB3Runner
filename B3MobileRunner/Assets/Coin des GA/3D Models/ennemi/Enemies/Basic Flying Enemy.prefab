@@ -47,7 +47,7 @@ Transform:
   m_GameObject: {fileID: 7939789337023161428}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.41, y: -0.98, z: 0.031847}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 1895347154326402148}
   m_Father: {fileID: 0}
@@ -69,14 +69,14 @@ MonoBehaviour:
   myTransform: {fileID: 7939789337023161429}
   isWithSkinnedMeshRenderer: 1
   mySkinnedMeshrenderer: {fileID: 7201201654072814385}
-  cutMat: {fileID: 0}
+  cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
   sliceableGameobject: {fileID: 0}
   healthPoints: 1
   distanceToActivation: 12
   deathTime: 0.8
   cutAmount: 0
   amActive: 0
-  speed: 8
+  speed: 15
 --- !u!61 &3598802006461700183
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -186,6 +186,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -132619189760919362, guid: 90099dfb6e1b22941a1473247e18d9ab,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9724c45f8e73dbc4db761563412508fe, type: 2}
     - target: {fileID: 919132149155446097, guid: 90099dfb6e1b22941a1473247e18d9ab,
         type: 3}
       propertyPath: m_Name

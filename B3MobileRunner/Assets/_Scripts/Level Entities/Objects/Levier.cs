@@ -28,7 +28,7 @@ public class Levier : ObjectToTap
     }
     protected override void PlayerFail()
     {
-        Manager.Instance.playerScript.DoorInMyFace();
+        Manager.Instance.playerScript.DoorInMyFace(this);
     }
 
     protected override bool placeToCheckIfSolvedVisualIsRelevant()

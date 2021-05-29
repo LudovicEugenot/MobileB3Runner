@@ -102,7 +102,7 @@ public class FingerController : MonoBehaviour
 
             if (touch.phase == TouchPhase.Ended)
             {
-                if(Time.time<inputStartTime + maxTapTiming)
+                if (Time.time < inputStartTime + maxTapTiming)
                 {
                     TapObjectsToSolve(inputFirstPosition);
                 }
@@ -139,17 +139,26 @@ public class FingerController : MonoBehaviour
         }
     }
 
+    Collider2D[] tapResults;
     Collider2D tapResult;
+    float tapDistance;
     private void TapObjectsToSolve(Vector2 inputPosition)
     {
         transform.position = WorldPositionFromInput(inputPosition);
+        tapDistance = 10000f;
+        tapResults = Physics2D.OverlapCircleAll(transform.position, fingerRadius, LayerMask.GetMask("ToSolve"));
 
-        tapResult = Physics2D.OverlapCircle(transform.position, fingerRadius, LayerMask.GetMask("ToSolve"));
-
-        if (tapResult != null)
+        if (tapResults.Length > 0)
         {
-            ObjectToTap enemyScript = tapResult.GetComponentInParent<ObjectToTap>();
-            enemyScript.GetTapped();
+            foreach (Collider2D item in tapResults)
+            {
+                if (Vector2.Distance(item.transform.position, transform.position) < tapDistance)
+                {
+                    tapDistance = Vector2.Distance(item.transform.position, transform.position);
+                    tapResult = item;
+                }
+            }
+            tapResult.GetComponentInParent<ObjectToTap>().GetTapped();
         }
         else
         {
@@ -259,7 +268,7 @@ public class FingerController : MonoBehaviour
         line.SetPositions(points);
 
         yield return new WaitForEndOfFrame();
-        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
         Destroy(line.gameObject);
     }*/
     #endregion

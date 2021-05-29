@@ -5,6 +5,7 @@ public class Manager : MonoBehaviour
     #region Initialization
     [Header("References")]
     public UIManager UI;
+    public MaterialManager Skins;
     public DanteBehaviour playerScript;
     public FingerController fingerController;
     public SoundManager sound;
@@ -59,22 +60,31 @@ public class Manager : MonoBehaviour
 
         GameInit();
     }
+
+    private void Update()
+    {
+        completeRunTime += Time.deltaTime;
+    }
     #endregion
 
     #region PUBLIC_FUNCTIONS
     public void GameInit()
     {
         gameOngoing = true;
-        gameStartTime = Time.time;
-        Debug.Log(gameStartTime);
 
         SavedCurrentRunData currentRunData = SaveSystem.LoadCurrentRunData();
-        CoinAmount = currentRunData.currentRunCoinAmount; //WIP to delete when consistent coin amount
-        completeRunTime = currentRunData.currentRunTime; //WIP inconsistance entr runtime et startTime
+        gameStartTime = currentRunData.currentRunTime;
+        CoinAmount = currentRunData.currentRunCoinAmount;
+
+        Skins = Skins ? Skins : GetComponent<MaterialManager>();
+        Skins.currentRunSkin = Skin.GetSkinFromString(SaveSystem.LoadGlobalData().nextRunSkin);
+
+        completeRunTime = gameStartTime;
     }
 
     public void GoToNextLevel()
     {
+        SaveSystem.SaveCurrentRunData(CoinAmount, completeRunTime, true); //WIP
         UnityEngine.SceneManagement.SceneManager.LoadScene(LevelLoader.LoadNextLevel());
     }
     #endregion

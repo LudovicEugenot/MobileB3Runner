@@ -102,6 +102,7 @@ public abstract class ObjectToSlice : MonoBehaviour
 
     public void HitThis(Vector2 cutImpact, Vector2 cutDirection)
     {
+        Manager.Instance.sound.PlaySlash();
         if (healthPoints > 1)
         {
             OnHit(cutImpact, cutDirection);
@@ -130,7 +131,6 @@ public abstract class ObjectToSlice : MonoBehaviour
     protected virtual void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
         GetSliced(cutImpact, cutDirection);
-        Manager.Instance.sound.PlaySlash();
     }
 
     private void OnDrawGizmosSelected()
