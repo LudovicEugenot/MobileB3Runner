@@ -120,23 +120,27 @@ public class MenuManager : MonoBehaviour
         oldSkin.InitSkin(Skin.CheckIfSkinIsBought(oldSkin.skinRelated));
         lutinSkin.InitSkin(Skin.CheckIfSkinIsBought(lutinSkin.skinRelated));
 
-        
+
     }
 
     public void UpdateMenu()
     {
-        //update data
+        data = SaveSystem.LoadGlobalData();
 
+        moneyText.text = data.globalCoinAmount.ToString();
     }
 
     public void BuyPreviewSkin()
     {
         if (!Skin.CheckIfSkinIsBought(currentPreviewSkin.skinRelated))
         {
-            Skin.BuySkinFromStore(currentPreviewSkin.priceValue, currentPreviewSkin.skinRelated);
-            Skin.SelectNextRunSkin(currentPreviewSkin.skinRelated);
+            if (currentPreviewSkin.priceValue < data.globalCoinAmount)
+            {
+                Skin.BuySkinFromStore(currentPreviewSkin.priceValue, currentPreviewSkin.skinRelated);
+                Skin.SelectNextRunSkin(currentPreviewSkin.skinRelated);
 
-            SelectMenuSkinFromSkinType(currentPreviewSkin.skinRelated).InitSkin(true);
+                SelectMenuSkinFromSkinType(currentPreviewSkin.skinRelated).InitSkin(true);
+            }
         }
 
         UpdateMenu();

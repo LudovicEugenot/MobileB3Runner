@@ -108,7 +108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -30}
+  m_AnchoredPosition: {x: 181, y: -45}
   m_SizeDelta: {x: 254, y: 99}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &5071002243417492477
@@ -366,7 +366,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 662.1, y: 283}
+  m_AnchoredPosition: {x: -648, y: 283}
   m_SizeDelta: {x: 81, y: 81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4514174791514756018
@@ -689,7 +689,6 @@ MonoBehaviour:
     price: {fileID: 0}
     priceValue: 0
     image: {fileID: 0}
-    button: {fileID: 0}
   redSkin:
     skinRelated: 0
     isBought: 0
@@ -698,7 +697,6 @@ MonoBehaviour:
     price: {fileID: 0}
     priceValue: 0
     image: {fileID: 0}
-    button: {fileID: 0}
   blackSkin:
     skinRelated: 0
     isBought: 0
@@ -707,7 +705,6 @@ MonoBehaviour:
     price: {fileID: 0}
     priceValue: 0
     image: {fileID: 0}
-    button: {fileID: 0}
   oldSkin:
     skinRelated: 0
     isBought: 0
@@ -716,7 +713,6 @@ MonoBehaviour:
     price: {fileID: 0}
     priceValue: 0
     image: {fileID: 0}
-    button: {fileID: 0}
   lutinSkin:
     skinRelated: 0
     isBought: 0
@@ -725,7 +721,6 @@ MonoBehaviour:
     price: {fileID: 0}
     priceValue: 0
     image: {fileID: 0}
-    button: {fileID: 0}
   basicSkinPreview: {fileID: 0}
   redSkinPreview: {fileID: 0}
   blackSkinPreview: {fileID: 0}
@@ -1408,7 +1403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 156.80005, y: -47.80005}
+  m_AnchoredPosition: {x: 287.80005, y: -62.80005}
   m_SizeDelta: {x: 129.1, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &6244756475275267109
@@ -1865,6 +1860,11 @@ PrefabInstance:
     - target: {fileID: 572902111691890205, guid: 735baea867631764b92198b522132061,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2517620602473976480, guid: 735baea867631764b92198b522132061,
+        type: 3}
+      propertyPath: Loop
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

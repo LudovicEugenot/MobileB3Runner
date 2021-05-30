@@ -20,6 +20,7 @@ public abstract class ObjectToSlice : MonoBehaviour
     [Range(1, 10)] public int healthPoints = 1;
     [SerializeField] [Range(-4f, 20f)] protected float distanceToActivation = 9f;
     [Range(0.1f, 3f)] public float deathTime = .8f;
+    [SerializeField][Range(0f, 1f)] float cutCloseToCentre = .8f;
 
 
     //Code related
@@ -165,12 +166,12 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (sliceableGameobject)
             {
-                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, sliceableGameobject.transform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
+                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, sliceableGameobject.transform.position, cutCloseToCentre), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
             Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
             }
             else
             {
-                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, myTransform.position, .8f), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
+                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, myTransform.position, cutCloseToCentre), //WIP le .8f // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, true, mySkinnedMeshrenderer);
             }
         }
@@ -178,12 +179,12 @@ public abstract class ObjectToSlice : MonoBehaviour
         {
             if (sliceableGameobject)
             {
-                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, sliceableGameobject.transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
+                gos = sliceableGameobject.SliceInstantiate(Vector3.Lerp(cutImpact, sliceableGameobject.transform.position, cutCloseToCentre), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
             }
             else
             {
-                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, myTransform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
+                gos = myTransform.gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, myTransform.position, cutCloseToCentre), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), cutMat, false);
             }
         }
