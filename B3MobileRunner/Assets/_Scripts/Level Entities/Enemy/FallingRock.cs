@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
-public class FallingRock : ObjectToSlice //UI à faire
+public class FallingRock : ObjectToSlice
 {
     #region Initialization
     RectTransform rockWarning;
-    [SerializeField] float warningTextOffset = 20f;
+    [SerializeField] float warningTextYOffset = 20f;
+    [SerializeField] [Range(-100f, 100f)] float warningTextXOffset = -75f;
 
     float warningTime = .4f;
 
@@ -17,8 +17,7 @@ public class FallingRock : ObjectToSlice //UI à faire
 
     public override void Init()
     {
-        transform.position = new Vector3(transform.position.x, ObjectsData.RockFallHeight, 0f);
-        distanceToActivation = Manager.Instance.playerScript.moveSpeed * 1.4f;
+        transform.position = new Vector3(transform.position.x, Manager.Instance.neutralYOffset + ObjectsData.RockFallHeight, 0f);
     }
 
     public override void AliveBehaviour()
@@ -42,8 +41,14 @@ public class FallingRock : ObjectToSlice //UI à faire
     {
         readyToFall = true;
         rockWarning = Instantiate(Manager.Instance.UI.rockWarningPrefab, Manager.Instance.UI.rockWarningParent);
-        yield return new WaitForSeconds(warningTime -
-            Mathf.Lerp(ObjectsData.PlayerSlowestSpeed, ObjectsData.PlayerFastestSpeed, Manager.Instance.playerScript.moveSpeed) * warningTime * .3f);
+        yield return new WaitForSeconds(
+            warningTime -
+            Mathf.InverseLerp(
+                ObjectsData.PlayerSpeedOverTime[0].y,
+                ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].y,
+                Manager.Instance.playerScript.moveSpeed)
+            * warningTime
+            * .3f);
         amFalling = true;
     }
 
@@ -66,17 +71,23 @@ public class FallingRock : ObjectToSlice //UI à faire
                 else
                 {
                     rockWarning.position = new Vector3(
-                        UIPosFromWorldPos(transform.position).x, 
-                        Manager.Instance.UI.screenSize.height - warningTextOffset);
+                        UIPosFromWorldPos(transform.position).x + warningTextXOffset,
+                        Manager.Instance.UI.screenSize.height + warningTextYOffset);
                 }
             }
         }
     }
 
-    protected override void OnDeath()
+    protected override void OnUpdate()
+    {
+        distanceToActivation = Manager.Instance.playerScript.moveSpeed * 1.7f + 1.8f;
+    }
+
+    protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)
     {
         if (rockWarning)
-            Destroy(rockWarning);
+            Destroy(rockWarning.gameObject);
+        base.OnDeath(cutImpact, cutDirection);
     }
 
     Vector2 UIPosFromWorldPos(Vector2 worldPos)

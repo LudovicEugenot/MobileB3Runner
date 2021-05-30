@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BoxFillPath : ObjectToTap
 {
@@ -10,54 +9,59 @@ public class BoxFillPath : ObjectToTap
     Vector2 partEndPos;
     float completedLerp;
     float completedStartTime;
-    float completedTime = .8f;
+    float completedTime = 4f;
 
-    bool amCompleting = false;
     bool startedCompleting = false;
     #endregion
 
 
-    protected override void Init()
+    protected override void OnStart()
     {
         myTransform = myTransform ? myTransform : transform.GetChild(0).transform;
     }
 
     protected override void IHaveBeenTapped()
     {
-        if (amCompleting)
+        if (completedLerp < .99)
         {
-            if (completedLerp < .99)
+            if (completedLerp <= 0 && !startedCompleting)
             {
-                if (completedLerp <= 0 && !startedCompleting)
-                {
-                    partStartPos = myTransform.position;
-                    partEndPos = objectLinked.transform.position;
-                    completedStartTime = Time.time;
-                    startedCompleting = true;
-                }
-                completedLerp = completedCurve.Evaluate((Time.time - completedStartTime) / completedTime);
+                Manager.Instance.sound.PlayTap();
+                partStartPos = myTransform.position;
+                partEndPos = objectLinked.transform.position;
+                completedStartTime = Time.time;
+                startedCompleting = true;
+            }
+            completedLerp = completedCurve.Evaluate((Time.time - completedStartTime) * Manager.Instance.playerScript.moveSpeed / completedTime);
 
-                myTransform.position = Vector3.Lerp(partStartPos, partEndPos, completedLerp);
-            }
-            else
-            {
-                myCollider.isTrigger = false;
-            }
+            myTransform.position = Vector3.Lerp(partStartPos, partEndPos, completedLerp);
         }
+        else
+        {
+            myCollider.isTrigger = false;
+        }
+
     }
 
-    public override void GetTapped()
+    protected override void PlayerFail()
     {
-        amTapped = true;
-        amCompleting = true;
+        Manager.Instance.playerScript.FallInASmallPit(this);
     }
 
-    private void OnDrawGizmosSelected()
+    protected override bool placeToCheckIfSolvedVisualIsRelevant()
     {
-        Gizmos.color = new Color(1, .92f, .16f, .5f);
-        Gizmos.DrawCube(transform.position - new Vector3(placeToCheckIfSolved, 0, 0), new Vector3(.1f, 100f, 5f));
+        return true;
+    }
+
+    protected override void MoreGizmos()
+    {
         Gizmos.color = Color.red;
         Gizmos.DrawCube(objectLinked.transform.position /*+ (Vector2)transform.position*/, Vector3.one);
         Gizmos.DrawLine(transform.position, objectLinked.transform.position);
+    }
+
+    protected override void BehaviourBeforeGettingTapped()
+    {
+
     }
 }
