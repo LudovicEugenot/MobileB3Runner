@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class FallingRock : ObjectToSlice //UI à faire
+public class FallingRock : ObjectToSlice
 {
     #region Initialization
     RectTransform rockWarning;
@@ -80,7 +80,7 @@ public class FallingRock : ObjectToSlice //UI à faire
 
     protected override void OnUpdate()
     {
-        distanceToActivation = Manager.Instance.playerScript.moveSpeed * 1.4f + 2;
+        distanceToActivation = Manager.Instance.playerScript.moveSpeed * 1.7f + 1.8f;
     }
 
     protected override void OnDeath(Vector2 cutImpact, Vector2 cutDirection)

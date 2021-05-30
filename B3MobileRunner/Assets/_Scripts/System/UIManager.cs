@@ -60,7 +60,7 @@ public class UIManager : MonoBehaviour
                 }
                 FadeToBlackAlpha = Mathf.InverseLerp(startTimeFade, startTimeFade + fadeToBlackTime, Time.time);
 
-                if (FadeToBlackAlpha > 0.99f) hasStartedFading = false;
+                //if (FadeToBlackAlpha > 0.99f) hasStartedFading = false;
             }
         }
     }

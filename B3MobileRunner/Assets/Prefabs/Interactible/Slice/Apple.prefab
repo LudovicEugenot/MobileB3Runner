@@ -51,6 +51,7 @@ MonoBehaviour:
   isWithSkinnedMeshRenderer: 0
   mySkinnedMeshrenderer: {fileID: 0}
   cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
+  sliceableGameobject: {fileID: 0}
   healthPoints: 1
   distanceToActivation: 9
   deathTime: 0.8
@@ -58,6 +59,7 @@ MonoBehaviour:
   amActive: 0
   wormPrefab: {fileID: 1841445377352178900, guid: 5c7d1a2876945bd4487e6c2f8b01e9d9,
     type: 3}
+  apple: {fileID: 5431717637136461165}
   wormCountInApple: 3
 --- !u!58 &4841889447846721928
 CircleCollider2D:
@@ -163,6 +165,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: pomme anim
       objectReference: {fileID: 0}
+    - target: {fileID: 8793313596588546723, guid: 5c9b8bfc4a529fd4994299e12d58d25e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4651446339867493392, guid: 5c9b8bfc4a529fd4994299e12d58d25e, type: 3}
     - {fileID: 7687366780776272214, guid: 5c9b8bfc4a529fd4994299e12d58d25e, type: 3}
@@ -172,6 +179,12 @@ PrefabInstance:
 --- !u!4 &8162160022652224684 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4624254547604239202, guid: 5c9b8bfc4a529fd4994299e12d58d25e,
+    type: 3}
+  m_PrefabInstance: {fileID: 3560507036636280782}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5431717637136461165 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8793313596588546723, guid: 5c9b8bfc4a529fd4994299e12d58d25e,
     type: 3}
   m_PrefabInstance: {fileID: 3560507036636280782}
   m_PrefabAsset: {fileID: 0}

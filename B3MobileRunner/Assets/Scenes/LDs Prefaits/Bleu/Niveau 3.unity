@@ -619,7 +619,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 318980882}
   m_LocalRotation: {x: -0.028465334, y: 0.000000017266562, z: 4.916976e-10, w: 0.9995948}
-  m_LocalPosition: {x: -26, y: 2.58, z: -9.87}
+  m_LocalPosition: {x: -35, y: 2.58, z: -9.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 831424464}
@@ -1834,7 +1834,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1537907077}
   m_LocalRotation: {x: -0.028465334, y: 0.000000017266562, z: 4.916976e-10, w: 0.9995948}
-  m_LocalPosition: {x: -26, y: 2.58, z: -9.87}
+  m_LocalPosition: {x: -35, y: 2.58, z: -9.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1388192549}
@@ -1914,6 +1914,12 @@ PrefabInstance:
 --- !u!4 &1660826914 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7725030634275035490, guid: 6a3b07970bc17cb4abe0790633397dcd,
+    type: 3}
+  m_PrefabInstance: {fileID: 1660826913}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &1660826915 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8774092855076957017, guid: 6a3b07970bc17cb4abe0790633397dcd,
     type: 3}
   m_PrefabInstance: {fileID: 1660826913}
   m_PrefabAsset: {fileID: 0}
@@ -2357,8 +2363,11 @@ MonoBehaviour:
   rb2D: {fileID: 2101046404}
   myCollider: {fileID: 2101046403}
   animator: {fileID: 173675517}
-  runFx: {fileID: 0}
+  runFx: {fileID: 1660826915}
   ohOhDeathTime: 1
+  losingInvincibilityDelay: 3
+  invincibilityMaterialSwitchFlickerTime: 0.2
+  isInvincible: 0
   moveSpeed: 7.74
   isTestingSpeed: 0
 --- !u!1001 &954872178872021591
