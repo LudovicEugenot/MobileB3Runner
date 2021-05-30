@@ -49,6 +49,7 @@ public class ShieldPickUp : ObjectToTap
     IEnumerator ShieldCollected()
     {
         coroutineRun = true;
+        Manager.Instance.sound.PlayTap();
         Manager.Instance.playerScript.GetInvincibility();
         shieldRenderer.enabled = false;
         FXParticleSystemTapDone.Play();

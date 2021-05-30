@@ -36,10 +36,10 @@ public struct ObjectsData
         {
             return new string[]
             {
-                "Scenes/LDs Prefaits/Rouge/Niveau 1-1",
-                "Scenes/LDs Prefaits/Rouge/Niveau 1-2",
-                "Scenes/LDs Prefaits/Rouge/Niveau 2",
-                "Scenes/LDs Prefaits/Rouge/Niveau 3",
+                "Scenes/LDs Prefaits/Rouge/Niveau 1-1 rouge",
+                "Scenes/LDs Prefaits/Rouge/Niveau 1-2 rouge",
+                "Scenes/LDs Prefaits/Rouge/Niveau 2 rouge",
+                "Scenes/LDs Prefaits/Rouge/Niveau 3 rouge",
             };
         }
     }
@@ -49,10 +49,10 @@ public struct ObjectsData
         {
             return new string[]
             {
-                "Scenes/LDs Prefaits/Bleu/Niveau 1",
-                "Scenes/LDs Prefaits/Bleu/Niveau 2",
-                "Scenes/LDs Prefaits/Bleu/Niveau 3",
-                "Scenes/LDs Prefaits/Bleu/Niveau 4"
+                "Scenes/LDs Prefaits/Bleu/Niveau 1 bleu",
+                "Scenes/LDs Prefaits/Bleu/Niveau 2 bleu",
+                "Scenes/LDs Prefaits/Bleu/Niveau 3 bleu",
+                "Scenes/LDs Prefaits/Bleu/Niveau 4 bleu"
             };
         }
     }

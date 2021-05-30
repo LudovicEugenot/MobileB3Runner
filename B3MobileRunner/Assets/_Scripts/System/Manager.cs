@@ -79,6 +79,9 @@ public class Manager : MonoBehaviour
         Skins = Skins ? Skins : GetComponent<MaterialManager>();
         Skins.currentRunSkin = Skin.GetSkinFromString(SaveSystem.LoadGlobalData().nextRunSkin);
 
+        sound.BGM.time = currentRunData.currentRunTime % sound.BGM.clip.length;
+        sound.BGM.Play();
+
         completeRunTime = gameStartTime;
     }
 

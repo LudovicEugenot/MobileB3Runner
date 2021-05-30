@@ -116,7 +116,10 @@ public static class LevelLoader
             {
                 return true;
             }
-            else if (ObjectsData.BlueLevels[i].Contains(currentLevelName))
+        }
+        for (int i = 0; i < ObjectsData.BlueLevels.Length; i++)
+        {
+            if (ObjectsData.BlueLevels[i].Contains(currentLevelName))
             {
                 return false;
             }

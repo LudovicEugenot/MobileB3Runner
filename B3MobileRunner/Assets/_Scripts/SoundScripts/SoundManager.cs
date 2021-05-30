@@ -24,8 +24,7 @@ public class SoundManager : MonoBehaviour
     private AudioSource[] slash;
     [SerializeField]
     private AudioSource deathPlayer;
-    [SerializeField]
-    private AudioSource deathEnemy;
+    //[SerializeField] private AudioSource deathEnemy;
     [SerializeField]
     private AudioSource bell;
     [SerializeField]
@@ -34,8 +33,7 @@ public class SoundManager : MonoBehaviour
     private AudioSource coinPickup;
     [SerializeField]
     private AudioSource levier;
-    [SerializeField]
-    private AudioSource BGM;
+    public AudioSource BGM;
 
 
     /*private void Start()
@@ -68,10 +66,10 @@ public class SoundManager : MonoBehaviour
         deathPlayer.Play();
     }
 
-    public void PlayEnemyDeath()
+    /*public void PlayEnemyDeath()
     {
         deathEnemy.Play();
-    }
+    }*/
 
     public void PlayBell()
     {

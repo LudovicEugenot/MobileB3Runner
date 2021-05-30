@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7939789337023161428
+--- !u!1 &2397405662601262425
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,90 +8,40 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7939789337023161429}
-  - component: {fileID: 7939789337023161431}
-  - component: {fileID: 3598802006461700183}
-  - component: {fileID: 7939789337023161430}
+  - component: {fileID: 3488290408184514462}
+  - component: {fileID: 8551829045930045892}
+  - component: {fileID: 6428242461103348154}
+  - component: {fileID: 5698579723107134759}
   m_Layer: 8
-  m_Name: Basic Flying Enemy
+  m_Name: AppleSkull
   m_TagString: ToKill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7939789337023161429
+--- !u!4 &3488290408184514462
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939789337023161428}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.41, y: -0.98, z: 0.031847}
+  m_GameObject: {fileID: 2397405662601262425}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 36.993378, y: 3.3566673, z: -3.7309914}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
-  - {fileID: 1895347154326402148}
+  - {fileID: 6469563181566819769}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7939789337023161431
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939789337023161428}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66cec2db8051db84abd70ef7bc1fc18d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 7939789337023161430}
-  myTransform: {fileID: 7939789337023161429}
-  isWithSkinnedMeshRenderer: 1
-  mySkinnedMeshrenderer: {fileID: 7201201654072814385}
-  cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
-  sliceableGameobject: {fileID: 0}
-  healthPoints: 1
-  distanceToActivation: 15
-  deathTime: 0.8
-  cutAmount: 0
-  amActive: 0
-  speed: 15
---- !u!61 &3598802006461700183
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939789337023161428}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.25, y: 0.4}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
---- !u!50 &7939789337023161430
+--- !u!50 &8551829045930045892
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7939789337023161428}
+  m_GameObject: {fileID: 2397405662601262425}
   m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
@@ -105,12 +55,62 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1001 &6933265095286521222
+--- !u!61 &6428242461103348154
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397405662601262425}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!114 &5698579723107134759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397405662601262425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d080005eb037f74ab5ed887c4bb247d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8551829045930045892}
+  myTransform: {fileID: 3488290408184514462}
+  isWithSkinnedMeshRenderer: 1
+  mySkinnedMeshrenderer: {fileID: 2335942820380500716}
+  cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
+  sliceableGameobject: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 20
+  deathTime: 0.8
+  cutAmount: 0
+  amActive: 0
+  speed: 25
+--- !u!1001 &2572336592802460763
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 7939789337023161429}
+    m_TransformParent: {fileID: 3488290408184514462}
     m_Modifications:
     - target: {fileID: 8156466717304197976, guid: 2eb4d7ca043baaa44981c5f99be752a2,
         type: 3}
@@ -174,15 +174,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2eb4d7ca043baaa44981c5f99be752a2, type: 3}
---- !u!4 &1895347154326402148 stripped
+--- !u!4 &6469563181566819769 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8825445512171145698, guid: 2eb4d7ca043baaa44981c5f99be752a2,
     type: 3}
-  m_PrefabInstance: {fileID: 6933265095286521222}
+  m_PrefabInstance: {fileID: 2572336592802460763}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &7201201654072814385 stripped
+--- !u!137 &2335942820380500716 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 277016589950113463, guid: 2eb4d7ca043baaa44981c5f99be752a2,
     type: 3}
-  m_PrefabInstance: {fileID: 6933265095286521222}
+  m_PrefabInstance: {fileID: 2572336592802460763}
   m_PrefabAsset: {fileID: 0}

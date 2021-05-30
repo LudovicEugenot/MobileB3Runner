@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 
-public class BasicEnemyFlying : ObjectToSlice
+public class AppleSkull : ObjectToSlice
 {
     #region Initiatlization
     [SerializeField] [Range(0f, 25f)] float speed = .5f;
 
     float playerSpeed;
+    float timeUntilCuttable = .4f;
     #endregion
 
     public override void AliveBehaviour()
@@ -16,6 +17,17 @@ public class BasicEnemyFlying : ObjectToSlice
             * speed
             / playerSpeed
             * Time.deltaTime;
+        
+        //si bug qui les fait pas spawn loin, on peut les couper quand même
+        if (Vector2.Distance(transform.position, Manager.Instance.playerTrsf.position) < 4f)
+        {
+            timeUntilCuttable = 0;
+        }
+
+        if (timeUntilCuttable > 0)
+        {
+            timeUntilCuttable -= Time.deltaTime;
+        }
     }
 
     public override void Init()
@@ -36,5 +48,11 @@ public class BasicEnemyFlying : ObjectToSlice
             //offset more reduced with fewer distance
             (Vector3.Distance(transform.position, Manager.Instance.playerTrsf.position) * .5f + transform.position.y * .5f);
         return Manager.Instance.playerTrsf.position + xOffset * .2f - transform.position;
+    }
+
+    protected override void GetSliced(Vector2 cutImpact, Vector2 cutDirection)
+    {
+        if (timeUntilCuttable <= 0)
+            base.GetSliced(cutImpact, cutDirection);
     }
 }

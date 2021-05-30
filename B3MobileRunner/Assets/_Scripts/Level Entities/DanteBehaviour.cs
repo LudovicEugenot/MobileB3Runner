@@ -101,7 +101,7 @@ public class DanteBehaviour : MonoBehaviour
     float previousUpdateTime; float nextUpdateTime = -1f;
     float SpeedEvolution()
     {
-        if (Manager.Instance.completeRunTime - Manager.Instance.gameStartTime > nextUpdateTime) //WIP faut pas que ce soit le gamestarttime mais le temps du fichier de save
+        if (Manager.Instance.completeRunTime > nextUpdateTime) //WIP faut pas que ce soit le gamestarttime mais le temps du fichier de save
         {
             UpdateLerpValues();
         }
@@ -127,7 +127,7 @@ public class DanteBehaviour : MonoBehaviour
 
         //si l'in game time est compris dans les valeurs du tableau préfait, alors on augmente la vitesse selon ce tableau, 
         //sinon, augmentation linéaire selon MaxSpeedGainOverTime
-        if (Manager.Instance.completeRunTime - Manager.Instance.gameStartTime < ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x)
+        if (Manager.Instance.completeRunTime < ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x)
         {
             //vitesses de PlayerSpeedOverTime
             nextUpdateTime = ObjectsData.PlayerSpeedOverTime[speedLerpIndex + 1].x;
@@ -137,7 +137,7 @@ public class DanteBehaviour : MonoBehaviour
         {
             //gain de vitesse de MaxSpeedGainOverTime
             nextUpdateTime =
-                Manager.Instance.gameStartTime +
+                -Manager.Instance.completeRunTime +
                 ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x +
                 ObjectsData.MaxSpeedGainOverTime.x * speedLerpIndex - ObjectsData.PlayerSpeedOverTime[ObjectsData.PlayerSpeedOverTime.Length - 1].x;
             nextSpeedValue += ObjectsData.MaxSpeedGainOverTime.y;
