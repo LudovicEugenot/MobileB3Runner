@@ -13,7 +13,7 @@ public class DanteBehaviour : MonoBehaviour
 
     [Header("Values")]
     [SerializeField] [Range(0f, 2f)] float ohOhDeathTime = 1f;
-    [SerializeField] [Range(0f, 3f)] float losingInvincibilityDelay = 1f;
+    [SerializeField] [Range(0f, 8f)] float losingInvincibilityDelay = 3f;
     [SerializeField] [Range(0f, 1f)] float invincibilityMaterialSwitchFlickerTime = .2f;
     [HideInInspector] public bool isInvincible = false;
 
@@ -51,6 +51,9 @@ public class DanteBehaviour : MonoBehaviour
         moveSpeed = ObjectsData.PlayerSpeedOverTime[0].y;
         currentInvincibilityLoss = losingInvincibilityDelay;
         currentMatSwitch = invincibilityMaterialSwitchFlickerTime;
+
+        rb2D.constraints = RigidbodyConstraints2D.FreezeRotation;
+
         if (SaveSystem.LoadCurrentRunData().isCurrentlyInvincible) GetInvincibility();
     }
 
@@ -199,13 +202,13 @@ public class DanteBehaviour : MonoBehaviour
 
             if (transform.position.y < Manager.Instance.neutralYOffset - 20)
             {
-                int globalCoinAmount = SaveSystem.LoadGlobalData().globalCoinAmount;
+                SavedGlobalGameData data= SaveSystem.LoadGlobalData();
 
-                globalCoinAmount += Manager.Instance.CoinAmount;
+                data.globalCoinAmount += Manager.Instance.CoinAmount;
 
                 SaveSystem.ResetCurrentRunData();
 
-                SaveSystem.SaveGlobalData(globalCoinAmount, Skin.CurrentRunSkin()); //Manager.Instance.playerScript.skin);
+                SaveSystem.SaveGlobalData(data.globalCoinAmount, Skin.CurrentRunSkin(), Skin.GetSkinArrayFromStringArray(data.skinsOwned)); //Manager.Instance.playerScript.skin);
 
                 UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu);
             }
@@ -221,6 +224,7 @@ public class DanteBehaviour : MonoBehaviour
         else
         {
             amDying = true;
+            rb2D.constraints = RigidbodyConstraints2D.None;
             Manager.Instance.gameOngoing = false;
             Manager.Instance.virtualCamera.Follow = null;
             Manager.Instance.virtualCamera.LookAt = null;
@@ -287,7 +291,7 @@ public class DanteBehaviour : MonoBehaviour
     {
         if (currentMatSwitch < 0)
         {
-            if (Manager.Instance.Skins.danteSMR.material == Manager.Instance.Skins.FindDanteSkin(Skin.SkinType.ShieldPower))
+            if (Manager.Instance.Skins.danteSMR.material.ToString().StartsWith("Dante_Marbre"))
                 Skin.ChangeDanteSkin(Skin.CurrentRunSkin());
             else
                 Skin.ChangeDanteSkin(Skin.SkinType.ShieldPower);
@@ -310,6 +314,7 @@ public class DanteBehaviour : MonoBehaviour
             case "BadApple":
             case "FallingRock":
             case "FlyingTombStone":
+            case "BridgeRope":
                 whoHurtMe.GetComponent<ObjectToSlice>().HitThis(whoHurtMe.transform.position, whoHurtMe.transform.position - transform.position);
                 break;
             //else if (whoHurtMe.GetType() == typeof(ObjectToTap))

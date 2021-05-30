@@ -70,7 +70,7 @@ public class SlicedObjectBehaviour : MonoBehaviour
         if (necessaryTimeUntilSlice < 0f && OGScript.cutAmount < 5)
         {
             OGScript.cutAmount++;
-            GameObject[] gos = gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.5f), // rapprocher la coupe du centre de l'objet de moitié
+            GameObject[] gos = gameObject.SliceInstantiate(Vector3.Lerp(cutImpact, transform.position, 0.8f), // rapprocher la coupe du centre de l'objet de moitié
                 Vector3.Cross(cutDirection, Camera.main.transform.forward), OGScript.cutMat);
             if (gos != null)
             {
