@@ -65,11 +65,13 @@ public abstract class ObjectToTap : MonoBehaviour
     {
         if (tapCount > 1)
         {
+            Manager.Instance.sound.PlayTap();
             GetTappedNotMax();
         }
         else if (!amTappedOut)
         {
             amTappedOut = true;
+            Manager.Instance.sound.PlayTap();
             FXParticleSystemTapDone.Play(true);
             FXParticleSystemInvitTapMe.Stop();
             GetTappedEvents();

@@ -34,6 +34,8 @@ public class SoundManager : MonoBehaviour
     private AudioSource coinPickup;
     [SerializeField]
     private AudioSource levier;
+    [SerializeField]
+    private AudioSource BGM;
 
 
     /*private void Start()
@@ -89,5 +91,20 @@ public class SoundManager : MonoBehaviour
     public void PlayLevier()
     {
         levier.Play();
+    }
+
+    public void PlayBGM()
+    {
+        BGM.Play();
+    }
+
+    public void PauseBGM()
+    {
+        BGM.Pause();
+    }
+
+    public void StopBGM()
+    {
+        BGM.Stop();
     }
 }
