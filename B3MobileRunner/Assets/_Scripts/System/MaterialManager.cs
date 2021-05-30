@@ -15,6 +15,7 @@ public class MaterialManager : MonoBehaviour
     private void Start()
     {
         if (Manager.Instance.playerScript) danteSMR = Manager.Instance.playerScript.GetComponentInChildren<SkinnedMeshRenderer>();
+        ChangeDanteSkin(Skin.GetSkinFromString(SaveSystem.LoadGlobalData().nextRunSkin));
     }
 
     public void ChangeDanteSkin(Skin.SkinType skin)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -79,8 +80,20 @@ public class MenuManager : MonoBehaviour
         if (isMainMenu)
         {
             InitSkinMenu();
-
+            InitPreviewSkin();
         }
+    }
+
+    private void InitPreviewSkin()
+    {
+        basicSkinPreview.gameObject.SetActive(true);
+        blackSkinPreview.gameObject.SetActive(true);
+        redSkinPreview.gameObject.SetActive(true);
+        oldSkinPreview.gameObject.SetActive(true);
+        lutinSkinPreview.gameObject.SetActive(true);
+
+        currentPreviewSkin = SelectMenuSkinFromSkinType(Skin.GetSkinFromString(data.nextRunSkin));
+        // init preview avec current skin
     }
 
     #region Main Menu
@@ -107,23 +120,23 @@ public class MenuManager : MonoBehaviour
         oldSkin.InitSkin(Skin.CheckIfSkinIsBought(oldSkin.skinRelated));
         lutinSkin.InitSkin(Skin.CheckIfSkinIsBought(lutinSkin.skinRelated));
 
-        currentPreviewSkin = SelectMenuSkinFromSkinType(Skin.GetSkinFromString(data.nextRunSkin));
-        // init preview avec current skin
+        
     }
 
     public void UpdateMenu()
     {
         //update data
 
-        InitSkinMenu();
     }
 
     public void BuyPreviewSkin()
     {
-        if (Skin.CheckIfSkinIsBought(currentPreviewSkin.skinRelated))
+        if (!Skin.CheckIfSkinIsBought(currentPreviewSkin.skinRelated))
         {
             Skin.BuySkinFromStore(currentPreviewSkin.priceValue, currentPreviewSkin.skinRelated);
             Skin.SelectNextRunSkin(currentPreviewSkin.skinRelated);
+
+            SelectMenuSkinFromSkinType(currentPreviewSkin.skinRelated).InitSkin(true);
         }
 
         UpdateMenu();
@@ -132,6 +145,10 @@ public class MenuManager : MonoBehaviour
     public void SelectPreviewSkin(string skinName)
     {
         currentPreviewSkin = SelectMenuSkinFromSkinType(Skin.GetSkinFromString(skinName));
+        if (Skin.CheckIfSkinIsBought(Skin.GetSkinFromString(skinName)))
+        {
+            Skin.SelectNextRunSkin(Skin.GetSkinFromString(skinName));
+        }
     }
 
     DanteSkinMenu SelectMenuSkinFromSkinType(Skin.SkinType skinType)
@@ -195,18 +212,15 @@ public class DanteSkinMenu
     [SerializeField] RectTransform price;
     public int priceValue;
     [HideInInspector] public Image image;
-    [HideInInspector] public Button button;
 
     public void InitSkin(bool _isBought)
     {
         isBought = _isBought;
         image = skinRectTrsf.GetComponentInChildren<Image>();
-        button = skinRectTrsf.GetComponentInChildren<Button>();
 
 
         skinLock.gameObject.SetActive(!isBought);
         price.gameObject.SetActive(!isBought);
-        button.enabled = !isBought;
 
     }
 }

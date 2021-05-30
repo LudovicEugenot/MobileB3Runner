@@ -15,82 +15,62 @@ public class SoundManager : MonoBehaviour
             return _instance;
         }
     }
+    [Header("Clips")]
+    [SerializeField]
+    private AudioClip tap;
+    [SerializeField]
+    private AudioClip[] slash;
+    [SerializeField]
+    private AudioClip deathPlayer;
+    [SerializeField]
+    private AudioClip bell;
+    [SerializeField]
+    private AudioClip bridge;
+    [SerializeField]
+    private AudioClip[] coinPickup;
+    [SerializeField]
+    private AudioClip levier;
 
-    private AudioSource[] gameSounds;
-
+    [Header("Sources")]
     [SerializeField]
-    private AudioSource tap;
-    [SerializeField]
-    private AudioSource[] slash;
-    [SerializeField]
-    private AudioSource deathPlayer;
-    [SerializeField]
-    private AudioSource deathEnemy;
-    [SerializeField]
-    private AudioSource bell;
-    [SerializeField]
-    private AudioSource bridge;
-    [SerializeField]
-    private AudioSource coinPickup;
-    [SerializeField]
-    private AudioSource levier;
-    [SerializeField]
-    private AudioSource BGM;
+    private AudioSource fx;
+    public AudioSource BGM;
 
 
-    /*private void Start()
-    {
-        gameSounds = GetComponents<AudioSource>();
-
-        tap = gameSounds[0];
-        slash1 = gameSounds[1];
-        slash2 = gameSounds[2];
-        deathPlayer = gameSounds[3];
-        deathEnemy = gameSounds[4];
-        bell = gameSounds[5];
-        bridge = gameSounds[6];
-        coinPickup = gameSounds[7];
-        levier = gameSounds[8];
-    }*/
 
     public void PlayTap()
     {
-        tap.Play();
+        fx.PlayOneShot(tap);
     }
 
     public void PlaySlash()
     {
-        slash[Random.Range(0, slash.Length)].Play();
+        fx.PlayOneShot(slash[Random.Range(0, slash.Length)]);
     }
 
     public void PlayDeath()
     {
-        deathPlayer.Play();
-    }
-
-    public void PlayEnemyDeath()
-    {
-        deathEnemy.Play();
+        fx.PlayOneShot(deathPlayer);
     }
 
     public void PlayBell()
     {
-        bell.Play();
+        fx.PlayOneShot(bell);
     }
 
     public void PlayBridge()
     {
-        bridge.Play();
+        fx.PlayOneShot(bridge);
     }
 
     public void PlayCoin()
     {
-        coinPickup.Play();
+        fx.PlayOneShot(coinPickup[Random.Range(0, coinPickup.Length)]);
     }
 
     public void PlayLevier()
     {
-        levier.Play();
+        fx.PlayOneShot(levier);
     }
 
     public void PlayBGM()
