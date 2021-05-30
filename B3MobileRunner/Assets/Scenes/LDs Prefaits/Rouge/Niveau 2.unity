@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999946, b: 0.99999946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -811,6 +811,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Make Level Work
       objectReference: {fileID: 0}
+    - target: {fileID: 6244756475066671308, guid: 4b4cc225ff0122248ac5a2ba09b0332b,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6496684619005031528, guid: 4b4cc225ff0122248ac5a2ba09b0332b,
         type: 3}
       propertyPath: playerScript
@@ -1138,6 +1143,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf76d656f1e8ef49be30ff27d71c9ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &955724990 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3195488897390019465, guid: f10d64873195df8469685e4b7acb2c0f,
+    type: 3}
+  m_PrefabInstance: {fileID: 955724988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1122269989 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4940074902809895817, guid: dec314aa9e185c04ea1dc85e486f12b7,
@@ -1564,8 +1575,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_LookAt: {fileID: 955724990}
+  m_Follow: {fileID: 955724990}
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 5

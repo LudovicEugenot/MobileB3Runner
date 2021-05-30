@@ -202,13 +202,13 @@ public class DanteBehaviour : MonoBehaviour
 
             if (transform.position.y < Manager.Instance.neutralYOffset - 20)
             {
-                int globalCoinAmount = SaveSystem.LoadGlobalData().globalCoinAmount;
+                SavedGlobalGameData data= SaveSystem.LoadGlobalData();
 
-                globalCoinAmount += Manager.Instance.CoinAmount;
+                data.globalCoinAmount += Manager.Instance.CoinAmount;
 
                 SaveSystem.ResetCurrentRunData();
 
-                SaveSystem.SaveGlobalData(globalCoinAmount, Skin.CurrentRunSkin()); //Manager.Instance.playerScript.skin);
+                SaveSystem.SaveGlobalData(data.globalCoinAmount, Skin.CurrentRunSkin(), Skin.GetSkinArrayFromStringArray(data.skinsOwned)); //Manager.Instance.playerScript.skin);
 
                 UnityEngine.SceneManagement.SceneManager.LoadScene(ObjectsData.MainMenu);
             }

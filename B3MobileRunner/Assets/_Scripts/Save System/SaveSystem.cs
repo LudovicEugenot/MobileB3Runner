@@ -5,13 +5,27 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class SaveSystem
 {
     #region Global Data
-    public static void SaveGlobalData(int newGlobalCoinAmount, Skin.SkinType nextRunSkin)
+    public static void SaveGlobalData(SavedGlobalGameData savedData)
     {
         BinaryFormatter formatter = new BinaryFormatter();
         string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedGlobalDataPath);
         FileStream stream = new FileStream(path, FileMode.Create);
 
-        SavedGlobalGameData data = new SavedGlobalGameData(newGlobalCoinAmount, nextRunSkin.ToString());
+        SavedGlobalGameData data = new SavedGlobalGameData(savedData.globalCoinAmount, savedData.nextRunSkin, savedData.skinsOwned);
+
+        formatter.Serialize(stream, data);
+        stream.Close();
+    }
+    public static void SaveGlobalData(int newGlobalCoinAmount, Skin.SkinType nextRunSkin, Skin.SkinType[] skinsOwned)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedGlobalDataPath);
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        string[] skinsOwnedString = new string[skinsOwned.Length];
+        for (int i = 0; i < skinsOwned.Length; i++) { skinsOwnedString[i] = skinsOwned[i].ToString(); }
+
+        SavedGlobalGameData data = new SavedGlobalGameData(newGlobalCoinAmount, nextRunSkin.ToString(), skinsOwnedString);
 
         formatter.Serialize(stream, data);
         stream.Close();
@@ -22,7 +36,7 @@ public static class SaveSystem
         string path = string.Concat(Application.persistentDataPath, ObjectsData.SavedGlobalDataPath);
         if (!File.Exists(path))
         {
-            SaveGlobalData(0, Skin.SkinType.Basic);
+            SaveGlobalData(0, Skin.SkinType.Basic, new Skin.SkinType[] { Skin.SkinType.Basic });
         }
 
 
