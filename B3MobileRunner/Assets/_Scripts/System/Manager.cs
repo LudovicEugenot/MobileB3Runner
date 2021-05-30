@@ -71,6 +71,7 @@ public class Manager : MonoBehaviour
     public void GameInit()
     {
         gameOngoing = true;
+        Application.targetFrameRate = 60;
 
         SavedCurrentRunData currentRunData = SaveSystem.LoadCurrentRunData();
         gameStartTime = currentRunData.currentRunTime;
