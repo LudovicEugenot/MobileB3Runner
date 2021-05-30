@@ -41,7 +41,7 @@ public struct DanteSkin
 
 public static class Skin
 {
-    public enum SkinType { Basic, ShieldPower, StPatrick, Old, Red, LastOne }
+    public enum SkinType { Basic, ShieldPower, StPatrick, Oldie, Red, Black }
     public static SkinType CurrentRunSkin()
     {
         return Manager.Instance.Skins.currentRunSkin;
@@ -85,7 +85,7 @@ public static class Skin
         SaveSystem.SaveGlobalData(data.globalCoinAmount, skinBought, skinsOwned);
     }
 
-    public static void LoadNewSkin(SkinType skinToLoadNextRun)
+    public static void SelectNextRunSkin(SkinType skinToLoadNextRun)
     {
         if (CheckIfSkinIsBought(skinToLoadNextRun))
         {
