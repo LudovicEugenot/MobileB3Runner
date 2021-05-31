@@ -7,6 +7,10 @@ public class AppleSkull : ObjectToSlice
 
     float playerSpeed;
     float timeUntilCuttable = .4f;
+
+    [SerializeField] SkinnedMeshRenderer smr;
+    [SerializeField] Material blueLevelSkin;
+    [SerializeField] Material redLevelSkin;
     #endregion
 
     public override void AliveBehaviour()
@@ -17,7 +21,7 @@ public class AppleSkull : ObjectToSlice
             * speed
             / playerSpeed
             * Time.deltaTime;
-        
+
         //si bug qui les fait pas spawn loin, on peut les couper quand même
         if (Vector2.Distance(transform.position, Manager.Instance.playerTrsf.position) < 4f)
         {
@@ -32,6 +36,7 @@ public class AppleSkull : ObjectToSlice
 
     public override void Init()
     {
+        smr.material = LevelLoader.LevelIsInRedLevels(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name) ? redLevelSkin : blueLevelSkin;
 
     }
 

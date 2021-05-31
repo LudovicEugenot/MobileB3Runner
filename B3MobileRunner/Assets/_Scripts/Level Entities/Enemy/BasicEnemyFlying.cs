@@ -6,6 +6,11 @@ public class BasicEnemyFlying : ObjectToSlice
     [SerializeField] [Range(0f, 25f)] float speed = .5f;
 
     float playerSpeed;
+
+    [SerializeField] bool isSkull = false;
+    [SerializeField] SkinnedMeshRenderer smr;
+    [SerializeField] Material blueLevelSkin;
+    [SerializeField] Material redLevelSkin;
     #endregion
 
     public override void AliveBehaviour()
@@ -20,7 +25,10 @@ public class BasicEnemyFlying : ObjectToSlice
 
     public override void Init()
     {
-
+        if (isSkull)
+        {
+            smr.material = LevelLoader.LevelIsInRedLevels(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name) ? redLevelSkin : blueLevelSkin;
+        }
     }
 
     protected override bool distanceToActivationVisualIsRelevant()

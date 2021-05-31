@@ -55,9 +55,14 @@ MonoBehaviour:
   healthPoints: 1
   distanceToActivation: 15
   deathTime: 0.8
+  cutCloseToCentre: 0.8
   cutAmount: 0
   amActive: 0
   speed: 15
+  isSkull: 1
+  smr: {fileID: 7201201654072814385}
+  blueLevelSkin: {fileID: 2100000, guid: ccf11d89eeaadf54c80ccaee0d30b2b7, type: 2}
+  redLevelSkin: {fileID: 2100000, guid: 9724c45f8e73dbc4db761563412508fe, type: 2}
 --- !u!61 &3598802006461700183
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -112,6 +117,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7939789337023161429}
     m_Modifications:
+    - target: {fileID: 277016589950113463, guid: 2eb4d7ca043baaa44981c5f99be752a2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ccf11d89eeaadf54c80ccaee0d30b2b7, type: 2}
     - target: {fileID: 8156466717304197976, guid: 2eb4d7ca043baaa44981c5f99be752a2,
         type: 3}
       propertyPath: m_Name

@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3488290408184514462}
+  - component: {fileID: 5698579723107134759}
   - component: {fileID: 8551829045930045892}
   - component: {fileID: 6428242461103348154}
-  - component: {fileID: 5698579723107134759}
   m_Layer: 8
   m_Name: AppleSkull
   m_TagString: ToKill
@@ -34,6 +34,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5698579723107134759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2397405662601262425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d080005eb037f74ab5ed887c4bb247d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8551829045930045892}
+  myTransform: {fileID: 3488290408184514462}
+  isWithSkinnedMeshRenderer: 1
+  mySkinnedMeshrenderer: {fileID: 2335942820380500716}
+  cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
+  sliceableGameobject: {fileID: 0}
+  healthPoints: 1
+  distanceToActivation: 20
+  deathTime: 0.8
+  cutCloseToCentre: 0.8
+  cutAmount: 0
+  amActive: 0
+  speed: 25
+  smr: {fileID: 2335942820380500716}
+  blueLevelSkin: {fileID: 2100000, guid: ccf11d89eeaadf54c80ccaee0d30b2b7, type: 2}
+  redLevelSkin: {fileID: 2100000, guid: 9724c45f8e73dbc4db761563412508fe, type: 2}
 --- !u!50 &8551829045930045892
 Rigidbody2D:
   serializedVersion: 4
@@ -68,7 +96,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.3, y: 0.4}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -81,30 +109,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5698579723107134759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2397405662601262425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d080005eb037f74ab5ed887c4bb247d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rb: {fileID: 8551829045930045892}
-  myTransform: {fileID: 3488290408184514462}
-  isWithSkinnedMeshRenderer: 1
-  mySkinnedMeshrenderer: {fileID: 2335942820380500716}
-  cutMat: {fileID: 2100000, guid: 9965f59e38dd2e54481f998784a229ba, type: 2}
-  sliceableGameobject: {fileID: 0}
-  healthPoints: 1
-  distanceToActivation: 20
-  deathTime: 0.8
-  cutAmount: 0
-  amActive: 0
-  speed: 25
 --- !u!1001 &2572336592802460763
 PrefabInstance:
   m_ObjectHideFlags: 0
